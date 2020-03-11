@@ -1,7 +1,5 @@
 package com.apirest.MedicamentoSolidario.security;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.dto.UsuarioDTO;
@@ -25,9 +19,6 @@ import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 @Configuration
 @EnableWebSecurity
 public class WebSecutiryConfig extends WebSecurityConfigurerAdapter  {
-
-	@Autowired
-	private ImplementsUserDetailsService userDetailsService;
 
 	@Bean
     public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -76,10 +67,6 @@ public class WebSecutiryConfig extends WebSecurityConfigurerAdapter  {
 	@Bean
 	public PasswordEncoder passwordencoder() {
 		return new BCryptPasswordEncoder();
-	}
-
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
 	}
 
 }
