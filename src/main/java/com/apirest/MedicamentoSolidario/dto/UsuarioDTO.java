@@ -1,12 +1,16 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UsuarioDTO {
+public class UsuarioDTO implements UserDetails {
 	private long id;
 	private String nome;
 	private String cpf;
@@ -108,5 +112,51 @@ public class UsuarioDTO {
 		this.fullRole = fullRole;
 	}
 	
+	public UsuarioDTO(Usuario usuario) {
+	    this.cpf = usuario.getCpf();
+	    this.senha = usuario.getSenha();
+	}
+//-------------------------------------
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return senha;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return nome;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 }
