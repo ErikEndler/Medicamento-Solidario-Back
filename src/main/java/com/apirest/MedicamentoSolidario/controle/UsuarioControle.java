@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.controle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,15 +42,21 @@ public class UsuarioControle {
 		//verifica se a role esta vazia
 		if (userDTO.getRole().isEmpty()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Campo role esta vazio! ");
-		} else {
+		} 
+//		else if(!verificaData(userDTO)) {
+//			throw new ResourceNotFoundException(MenssagemErro() + " Campo role esta vazio! ");
+//		}
+		else{
 			//criptografa a senha 
 			String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
 			userDTO.setSenha(senha);
+			//busca o objeto role atraves do nome da role recebido da reqisiçao
 			userDTO.setFullRole(findRole(userDTO.getRole()));
 			Usuario user = userDTO.trsnformaParaObjSalvar();
 			return usuarioRepository.save(user);
 		}
 	}
+
 	//função que busca no banco a role recebida no formulario
 	private Role findRole(String pRole) {
 		pRole.toUpperCase();
@@ -103,6 +110,11 @@ public class UsuarioControle {
 	}
 
 	// ---------------------------------------------------------------//
+	private boolean verificaData(UsuarioDTO userDTO) {
+		Date data =userDTO.getNascimento();
+		//data.
+		return false;
+	}
 	private void verifyIfObjectExists(long id) {
 		String msg = MenssagemErro();
 		Optional<Usuario> retorno = usuarioRepository.findById(id);
