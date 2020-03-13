@@ -32,11 +32,15 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     	//rolerepository = null;
         if (usuarioRepository.count() == 0) {
         	System.out.println("Sem usuarios no banco");
+        	System.out.println();
         	if(rolerepository.count()==0) {
         		System.out.println("Sem roles cadastradas no banco");
+        		System.out.println();
         		Role role = new Role();
             	role.setNameRole("ROLE_ADMIN");
             	rolerepository.save(role);
+            	System.out.println("ROLE CRAIADA");
+            	System.out.println(role);
         	} 
         	System.out.println("Criando novo usuario");
             Usuario usuario = new Usuario();
@@ -45,6 +49,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
             usuario.setSenha(passwordEncoder().encode("admin"));
             usuario.setRole(rolerepository.findByNameRole("ROLE_ADMIN"));
             usuarioRepository.save(usuario);
+            System.out.println("USUARO CRIADO");
+            System.out.println(usuario);
             System.out.println("Usuario admin admin criado");
         }
         builder.userDetailsService(login -> usuarioRepository.findByCpf(login))
