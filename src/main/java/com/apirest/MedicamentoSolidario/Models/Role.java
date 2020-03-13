@@ -20,7 +20,7 @@ public class Role implements GrantedAuthority {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@SequenceGenerators(value = { @SequenceGenerator(name = "id") })
+	//@SequenceGenerators(value = { @SequenceGenerator(name = "id") })
 	private long id;
 	
 	private String nameRole;

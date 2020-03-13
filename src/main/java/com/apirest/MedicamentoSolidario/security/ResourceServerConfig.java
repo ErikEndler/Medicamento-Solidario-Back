@@ -21,15 +21,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
     private String[] publicEndPoints() {
         return new String[] {  
-            "/h2-console/**",
-            "/resources/**",
-            "/v2/api-docs",
-            "/swagger-resources/configuration", 
-            "/swagger-resources", 
-            "/**.html",
-            "/webjars/**", 
-            "/login", 
-            "/csrf", 
-            "/" };
+        		 "/error/**",
+        "/h2-console/**", "/resources/**", "/v2/rest-docs", "/v2/api-docs",
+        "/swagger-resources/configuration", "/swagger-resources", "/**.html",
+        "/webjars/**", "/login", "/csrf", "/" };
       }
 }
