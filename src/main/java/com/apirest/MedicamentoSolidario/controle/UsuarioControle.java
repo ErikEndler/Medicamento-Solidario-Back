@@ -52,9 +52,10 @@ public class UsuarioControle {
 	}
 	//função que busca no banco a role recebida no formulario
 	private Role findRole(String pRole) {
-		if (pRole.equals("ADMIN")) {
+		pRole.toUpperCase();
+		if (pRole.contains("ADMIN")) {
 			return roleRepository.findByNameRole("ROLE_" + pRole);
-		} else if (pRole.equals("INTERMEDIADOR")) {
+		} else if (pRole.contains("INTERMEDIADOR")) {
 			return roleRepository.findByNameRole("ROLE_" + pRole);
 		} else
 			return roleRepository.findByNameRole("ROLE_USER");
