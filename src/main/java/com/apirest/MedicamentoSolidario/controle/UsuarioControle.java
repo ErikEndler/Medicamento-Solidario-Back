@@ -36,8 +36,7 @@ public class UsuarioControle {
 	}
 
 	public Usuario salvar2(UsuarioDTO userDTO) {
-		//verifica se o cpf passado ja existe
-		
+		//verifica se o cpf passado ja existe		
 		verificaCPF(userDTO.getCpf());
 		//verifica se a role esta vazia
 		if (userDTO.getRole().isEmpty()) {
