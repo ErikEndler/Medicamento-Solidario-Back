@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.SequenceGenerators;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -16,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 @Table(name="TB_PONTO_DE_COLETA")
 public class PontoColeta {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	//@SequenceGenerators(value = { @SequenceGenerator(name = "id") })
 	private long id;
 	private String nome;
 	private String cnpj;

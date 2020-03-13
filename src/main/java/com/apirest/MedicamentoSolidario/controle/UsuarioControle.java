@@ -25,6 +25,7 @@ public class UsuarioControle {
 	RoleRepository roleRepository;
 
 	public Usuario salvar(Usuario usuario) {
+		verificaCPF(usuario.getCpf());
 		Optional<Usuario> ret = verifySave(usuario.getId());
 		if (ret.isPresent()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + usuario.getId());
@@ -34,6 +35,9 @@ public class UsuarioControle {
 	}
 
 	public Usuario salvar2(UsuarioDTO userDTO) {
+		//verifica se o cpf passado ja existe
+		
+		verificaCPF(userDTO.getCpf());
 		//verifica se a role esta vazia
 		if (userDTO.getRole().isEmpty()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Campo role esta vazio! ");
@@ -103,7 +107,15 @@ public class UsuarioControle {
 		Optional<Usuario> retorno = usuarioRepository.findById(id);
 		retorno.orElseThrow(() -> new ResourceNotFoundException(msg + " nao encontrado para o ID: " + id));
 	}
-
+	
+	private void verificaCPF(String cpf) {
+		Usuario user = usuarioRepository.findByCpf(cpf);
+		if(user != null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  CPF: " + user.getCpf());
+		}
+		
+		
+	}
 	private Optional<Usuario> verifySave(long id) {
 		Optional<Usuario> retorno = usuarioRepository.findById(id);
 		return retorno;

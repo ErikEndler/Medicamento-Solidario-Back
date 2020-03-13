@@ -7,17 +7,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.SequenceGenerators;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-@SuppressWarnings("serial")
+
 @Entity
 @Table(name="TB_ROLE")
 public class Role implements GrantedAuthority {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerators(value = { @SequenceGenerator(name = "id") })
 	private long id;
 	
 	private String nameRole;
