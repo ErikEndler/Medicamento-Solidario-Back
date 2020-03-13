@@ -64,8 +64,11 @@ public class UsuarioControle {
 			return roleRepository.findByNameRole("ROLE_" + pRole);
 		} else if (pRole.contains("INTERMEDIADOR")) {
 			return roleRepository.findByNameRole("ROLE_" + pRole);
-		} else
+		} else if(pRole.contains("USER")) {
 			return roleRepository.findByNameRole("ROLE_USER");
+		}
+			else
+				throw new ResourceNotFoundException(MenssagemErro() + " ROLE INVALIDA PARA CADASTRO! ");
 	}
 
 	public Iterable<UsuarioRespostaDTO> listarTodosNormal() {
