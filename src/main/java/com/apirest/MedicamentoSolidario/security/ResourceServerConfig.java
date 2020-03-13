@@ -12,10 +12,24 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+    	http.csrf().disable();
         http.authorizeRequests()
+        		.antMatchers(publicEndPoints()).permitAll() 
                 .antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/usuario").permitAll()
-                .antMatchers("*.css","*.js","/swagger**").permitAll()                
+                .antMatchers(HttpMethod.GET, "/api/usuario").permitAll()                               
                 .anyRequest().authenticated();
     }
+    private String[] publicEndPoints() {
+        return new String[] {  
+            "/h2-console/**",
+            "/resources/**",
+            "/v2/api-docs",
+            "/swagger-resources/configuration", 
+            "/swagger-resources", 
+            "/**.html",
+            "/webjars/**", 
+            "/login", 
+            "/csrf", 
+            "/" };
+      }
 }
