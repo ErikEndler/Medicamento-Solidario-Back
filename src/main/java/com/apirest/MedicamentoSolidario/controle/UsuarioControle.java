@@ -50,7 +50,12 @@ public class UsuarioControle {
 			String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
 			userDTO.setSenha(senha);
 			//busca o objeto role atraves do nome da role recebido da reqisiçao
-			userDTO.setFullRole(findRole(userDTO.getRole()));
+			Role role =findRole(userDTO.getRole());
+			if(role ==null) {
+				throw new ResourceNotFoundException(MenssagemErro() + " NÂO È POSSIVEL CADASTRAR SEM ROLE ");
+			}else {
+				userDTO.setFullRole(role);
+			}			
 			Usuario user = userDTO.trsnformaParaObjSalvar();
 			return usuarioRepository.save(user);
 		}
