@@ -36,8 +36,7 @@ public class Usuario implements UserDetails {
 	private LocalDate nascimento;
 	@NotBlank
 	private String senha;
-	private String sexo;
-	
+	private String sexo;	
 	@ManyToOne
 	private Role role;
 	
@@ -53,8 +52,6 @@ public class Usuario implements UserDetails {
 	@OneToMany(mappedBy = "usuario")
 	private List<Pedido> pedidos;
 	
-	
-	
 	public Usuario() {
 		super();
 	}
@@ -67,8 +64,7 @@ public class Usuario implements UserDetails {
 		this.nascimento=nascimento2;		
 		this.senha=senha;
 		this.sexo=sexo;
-		this.role=role;
-		
+		this.role=role;		
 	}
 	
 	public Usuario(long id, String nome, String cpf, String email, String telefone, LocalDate nascimento,
@@ -164,43 +160,36 @@ public class Usuario implements UserDetails {
 //------------------------USERDETAILS METODOS-----------------
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.senha;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.cpf;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	

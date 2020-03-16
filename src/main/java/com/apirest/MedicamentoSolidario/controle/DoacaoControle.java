@@ -1,5 +1,7 @@
 package com.apirest.MedicamentoSolidario.controle;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public class DoacaoControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + doacao.getId());
 
 		} else
+			//doacao.setData(LocalDate.now());
 			return repository.save(doacao);		
 	}
 	public Iterable<DoacaoRespostaDTO> listarTodosNormal() {

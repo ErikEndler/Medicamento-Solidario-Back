@@ -160,8 +160,6 @@ public class PontoColeta {
 		this.doacao_out = doacao_out;
 	}
 	
-	
-
 	public PontoColeta() {
 		super();
 	}
@@ -184,8 +182,7 @@ public class PontoColeta {
 	}
 
 	public PontoColeta(String nome, String cnpj, String cidade, String estado, String rua, String bairro, String numero,
-			String complemento, String cep, String atividadePrincipal, Date dataCadastro) {
-		
+			String complemento, String cep, String atividadePrincipal, Date dataCadastro) {		
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.cidade = cidade;

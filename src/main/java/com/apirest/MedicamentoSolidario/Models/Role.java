@@ -18,7 +18,6 @@ public class Role implements GrantedAuthority {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@SequenceGenerators(value = { @SequenceGenerator(name = "id") })
 	private long id;
 	
 	private String nameRole;
@@ -44,7 +43,6 @@ public class Role implements GrantedAuthority {
 	
 	@Override
 	public String getAuthority() {
-		// TODO Auto-generated method stub
 		return this.nameRole;
 	}
 	

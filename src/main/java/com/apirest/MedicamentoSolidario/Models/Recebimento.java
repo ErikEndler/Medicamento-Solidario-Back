@@ -19,8 +19,7 @@ public class Recebimento {
 	//MEDICAMENTO_OUT
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
+	private long id;	
 	private Date data;
 	private String obs;
 	

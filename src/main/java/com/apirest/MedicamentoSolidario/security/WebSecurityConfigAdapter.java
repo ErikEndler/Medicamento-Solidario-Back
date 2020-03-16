@@ -1,9 +1,6 @@
 package com.apirest.MedicamentoSolidario.security;
 
 
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

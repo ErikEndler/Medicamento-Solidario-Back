@@ -11,10 +11,4 @@ public class MedicamentoSolidarioApplication //extends SpringBootServletInitiali
 		SpringApplication.run(MedicamentoSolidarioApplication.class, args);
 		//System.out.print(new BCryptPasswordEncoder().encode("admin"));
 	}
-	
-	/*
-	 * @Override protected SpringApplicationBuilder
-	 * configure(SpringApplicationBuilder application) { return
-	 * application.sources(MedicamentoSolidarioApplication.class); }
-	 */
 }

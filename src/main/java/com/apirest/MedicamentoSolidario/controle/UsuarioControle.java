@@ -98,7 +98,9 @@ public class UsuarioControle {
 
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------
 	private void verificaData(UsuarioDTO userDTO) {
-		isDateValid(userDTO.getDataNascimento());
+		if(userDTO.getDataNascimento() != null) {
+			isDateValid(userDTO.getDataNascimento());
+		}		
 	}
 
 	public void isDateValid(String dataString) {
