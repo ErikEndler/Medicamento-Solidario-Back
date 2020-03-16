@@ -1,6 +1,9 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 
 
@@ -10,6 +13,7 @@ public class UsuarioRespostaDTO {
 	private String cpf;
 	private String email;
 	private String telefone;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date nascimento;
 	private String sexo;	
 	private String role;

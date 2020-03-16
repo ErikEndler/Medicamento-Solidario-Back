@@ -2,19 +2,30 @@ package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UsuarioDTO {
 	private long id;
 	private String nome;
+	@NotBlank
 	private String cpf;
+	@Email
 	private String email;
 	private String telefone;
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
 	private Date nascimento;
+	@NotBlank
 	private String senha;
 	private String sexo;
+	@NotBlank
 	private String role;
 	@JsonIgnore
 	private Role fullRole;
