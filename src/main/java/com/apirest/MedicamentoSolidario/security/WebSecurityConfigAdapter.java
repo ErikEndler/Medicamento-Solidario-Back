@@ -45,22 +45,17 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         usuario.setSenha(passwordEncoder().encode("admin"));
         usuario.setRole(rolerepository.findByNameRole("ROLE_ADMIN"));
         usuarioRepository.save(usuario);
-       // System.out.println("USUARO CRIADO");
-       // System.out.println(usuario.getCpf()+usuario.getSenha()+usuario.getRole().getNameRole());
     }
     private void cadastrarRoles() {
 		Role role = new Role();
     	role.setNameRole("ROLE_ADMIN");
     	rolerepository.save(role);
-    	//System.out.println("ROLE CADASTRADA : "+role.getId()+role.getNameRole());
     	Role role1 = new Role();
     	role1.setNameRole("ROLE_USER");
     	rolerepository.save(role1);
-    	//System.out.println("ROLE CADASTRADA : "+role1.getId()+role1.getNameRole());
     	Role role2 = new Role();
     	role2.setNameRole("ROLE_INTERMEDIADOR");
-    	rolerepository.save(role2);
-    	//System.out.println("ROLE CADASTRADA : "+role2.getId()+role2.getNameRole());    	
+    	rolerepository.save(role2);    	   	
     }
 
     @Bean
