@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,40 +31,40 @@ import io.swagger.annotations.ApiOperation;
 public class DoacaoResources {
 	@Autowired
 	DoacaoControle controle;
-	
-	@ApiOperation(value="Retorna uma lista de Doações")
+
+	@ApiOperation(value = "Retorna uma lista de Doações")
 	@GetMapping("")
-	public Iterable<DoacaoRespostaDTO> listarTodos() {
-		return controle.listarTodosNormal();
-	}
-	
-	@ApiOperation(value = "Retorna uma Doação unica")
-	@GetMapping("/{id}")
-	public DoacaoRespostaDTO listar(@PathVariable(value="id")long id) {	
-		Optional<Doacao> user = controle.listar(id);
-		return DoacaoRespostaDTO.transformaEmDTO(user.get());
-	}	
-	
-	@ApiOperation(value = "Salva uma Doação")
-	@PostMapping("")
-	public DoacaoRespostaDTO salvar(@RequestBody @Valid DoacaoDTO doacaoDTO) {
-		//Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
-		Doacao doacao = controle.salvar(doacaoDTO.transformarParaObjSalvar());
-		return DoacaoRespostaDTO.transformaEmDTO(doacao);
-	}
-	
-	@ApiOperation(value = "Atualiza uma Doação")
-	@PutMapping("")
-	public DoacaoRespostaDTO atualizar(@RequestBody @Valid DoacaoDTO dto) {
-		Doacao user = controle.atualizar(dto.transformarParaObjEditar());
-		return DoacaoRespostaDTO.transformaEmDTO(user);
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Retorna uma Doação unica")
+	@GetMapping("/{id}")
+	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
+		Optional<Doacao> user = controle.listar(id);
+		return new ResponseEntity<>(DoacaoRespostaDTO.transformaEmDTO(user.get()), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Salva uma Doação")
+	@PostMapping("")
+	public ResponseEntity<?> salvar(@RequestBody @Valid DoacaoDTO doacaoDTO) {
+		// Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
+		Doacao doacao = controle.salvar(doacaoDTO.transformarParaObjSalvar());
+		return new ResponseEntity<>(DoacaoRespostaDTO.transformaEmDTO(doacao), HttpStatus.CREATED);
+	}
+
+	@ApiOperation(value = "Atualiza uma Doação")
+	@PutMapping("")
+	public ResponseEntity<?> atualizar(@RequestBody @Valid DoacaoDTO dto) {
+		Doacao user = controle.atualizar(dto.transformarParaObjEditar());
+		return new ResponseEntity<>(DoacaoRespostaDTO.transformaEmDTO(user), HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Deleta uma Doação por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso !",HttpStatus.OK);
 	}
 
 }

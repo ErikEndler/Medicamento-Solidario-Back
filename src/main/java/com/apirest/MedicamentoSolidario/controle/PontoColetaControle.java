@@ -49,9 +49,7 @@ public class PontoColetaControle {
 	public PontoColeta atualizar(PontoColeta pontoColeta) {
 		verifyIfObjectExists(pontoColeta.getId());
 		return repository.save(pontoColeta);
-	}
-	
-	
+	}	
 	
 //---------------------------------------------------------------------//
 	private void verifyIfObjectExists(long id) {
@@ -63,11 +61,10 @@ public class PontoColetaControle {
 	private Optional<PontoColeta> verifySave(long id) {
 		Optional<PontoColeta> retorno = repository.findById(id);
 		return retorno;
-
 	}
 
 	protected String MenssagemErro() {
-		String msg = "Medicamento";
+		String msg = "Ponto de COleta";
 		return msg;
 	}
 

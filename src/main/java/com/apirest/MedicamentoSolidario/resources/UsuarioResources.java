@@ -42,38 +42,39 @@ public class UsuarioResources {
 
 	@ApiOperation(value = "Retorna uma lista de Usuarios")
 	@GetMapping("")
-	public Iterable<UsuarioRespostaDTO> listarTodos() {
-		return usuarioControle.listarTodosNormal();
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<> (usuarioControle.listarTodosNormal(),HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Retorna um Usuario unico")
 	@GetMapping("/{id}")
-	public UsuarioRespostaDTO listar(@PathVariable(value = "id") long id) {
-
+	public ResponseEntity<?>  listar(@PathVariable(value = "id") long id) {
 		Optional<Usuario> user = usuarioControle.listar(id);
 		if (user == null) {
 			throw new ResourceNotFoundException("Usuario n encontrado para ID : "+id);
 		}
-		return UsuarioRespostaDTO.transformaEmDTO(user.get());
+		return new ResponseEntity<>(UsuarioRespostaDTO.transformaEmDTO(user.get()),HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Salva um Usuario")
 	@PostMapping("")
-	public ResponseEntity<UsuarioRespostaDTO> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {		
+	public ResponseEntity<?> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {		
 		Usuario user = usuarioControle.salvar2(usuarioDTO);
-		return new ResponseEntity<UsuarioRespostaDTO>(UsuarioRespostaDTO.transformaEmDTO(user), HttpStatus.CREATED) ;
+		return new ResponseEntity<>(UsuarioRespostaDTO.transformaEmDTO(user), HttpStatus.CREATED) ;
 	}
 
 	@ApiOperation(value = "Atualiza um Usuario")
 	@PutMapping("")
-	public UsuarioRespostaDTO atualizar(@RequestBody @Valid UsuarioDTO dto) {
+	public ResponseEntity<?> atualizar(@RequestBody @Valid UsuarioDTO dto) {
 		Usuario user = usuarioControle.atualizar(dto.trsnformaParaObjEditar());
-		return UsuarioRespostaDTO.transformaEmDTO(user);
+		return new ResponseEntity<> (UsuarioRespostaDTO.transformaEmDTO(user),HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Deleta um Usuario por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value = "id") long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		usuarioControle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso",HttpStatus.OK);
+		
 	}
 }

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="TB_MEDICAMENTO")
@@ -18,22 +19,25 @@ public class Medicamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String principio;
 	private String tipoReceita;
+	@NotBlank
 	private Date data;
+	@NotBlank
 	private Date dataVencimento;
 	private String tarja;
+	@NotBlank
 	private String tipoArmazenamento;
+	@NotBlank
 	private int quantidade;
-	private boolean status;
-	
+	private boolean status;	
 	@ManyToOne
-	private Doacao doacao_in;
-	
+	private Doacao doacao_in;	
 	@ManyToOne
 	private Recebimento doacao_out;	
-	
 	@ManyToMany(mappedBy = "medicamentos")
 	private List<Pedido> pedidos;	
 

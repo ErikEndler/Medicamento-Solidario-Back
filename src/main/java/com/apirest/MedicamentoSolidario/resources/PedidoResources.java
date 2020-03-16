@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,39 +32,40 @@ import io.swagger.annotations.ApiOperation;
 public class PedidoResources {
 	@Autowired
 	PedidoControle controle;
-	
-	@ApiOperation(value="Retorna uma lista de Pedidos")
+
+	@ApiOperation(value = "Retorna uma lista de Pedidos")
 	@GetMapping("")
-	public Iterable<PedidoRespostaDTO> listarTodos() {
-		return controle.listarTodosNormal();
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<> (controle.listarTodosNormal(),HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Retorna um Pedido unico")
 	@GetMapping("/{id}")
-	public PedidoRespostaDTO listar(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<Pedido> pedido = controle.listar(id);
-		return PedidoRespostaDTO.transformaEmDTO(pedido.get());
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido.get()), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
-	public PedidoRespostaDTO salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
+	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
 		Pedido pedido = controle.salvar(pedidoDTO.transformarParaObjSalvar());
-		return PedidoRespostaDTO.transformaEmDTO(pedido);
-		
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido), HttpStatus.CREATED);
+
 	}
-	
+
 	@ApiOperation(value = "Atualiza um Pedido")
 	@PutMapping("")
-	public PedidoRespostaDTO atualizar(@RequestBody @Valid PedidoDTO dto) {
+	public ResponseEntity<?> atualizar(@RequestBody @Valid PedidoDTO dto) {
 		Pedido resposta = controle.atualizar(dto.transformarParaObjEditar());
-		return PedidoRespostaDTO.transformaEmDTO(resposta);
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(resposta),HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Deleta um Pedido por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso !",HttpStatus.OK);
 	}
 
 }

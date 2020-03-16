@@ -26,10 +26,10 @@ public class UsuarioControle {
 	@Autowired
 	RoleRepository roleRepository;
 
-	public Usuario salvar2(UsuarioDTO userDTO)  {
+	public Usuario salvar2(UsuarioDTO userDTO) {
 		verificaData(userDTO);
 		verificaCPF(userDTO.getCpf());
-		validaRole(userDTO);		
+		validaRole(userDTO);
 		// criptografa a senha
 		String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
 		userDTO.setSenha(senha);
@@ -97,24 +97,26 @@ public class UsuarioControle {
 	}
 
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------
-	private void verificaData(UsuarioDTO userDTO){
-		isDateValid(userDTO.getDataNascimento());		
+	private void verificaData(UsuarioDTO userDTO) {
+		isDateValid(userDTO.getDataNascimento());
 	}
+
 	public void isDateValid(String dataString) {
-		SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd");
-		sdf.setLenient (false); // aqui o pulo do gato
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(false); // aqui o pulo do gato
 		try {
-			sdf.parse (dataString);
-		    // data válida
+			sdf.parse(dataString);
+			// data válida
 		} catch (ParseException ex) {
-			throw new ResourceNotFoundException("Data é invalida : "+"'" +dataString+"'"+" Formato valido 'yyyy-MM-dd'");
+			throw new ResourceNotFoundException(
+					"Data é invalida : " + "'" + dataString + "'" + " Formato valido 'yyyy-MM-dd'");
 		}
 	}
-		private void validaRole(UsuarioDTO userDTO) {
+
+	private void validaRole(UsuarioDTO userDTO) {
 		if (userDTO.getRole().isEmpty()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Campo role esta vazio! ");
 		}
-
 	}
 
 	private void verifyIfObjectExists(long id) {
@@ -128,7 +130,6 @@ public class UsuarioControle {
 		if (user != null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  CPF: " + user.getCpf());
 		}
-
 	}
 
 	private Optional<Usuario> verifySave(long id) {
@@ -138,7 +139,7 @@ public class UsuarioControle {
 	}
 
 	protected String MenssagemErro() {
-		String msg = "Objeto";
+		String msg = "Usuario";
 		return msg;
 	}
 

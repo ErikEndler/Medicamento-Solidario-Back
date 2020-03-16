@@ -35,8 +35,7 @@ public class PedidoDTO {
 	
 	@JsonIgnore
 	private Recebimento recebimento;
-	private int idRecebimento;
-	
+	private int idRecebimento;	
 	
 	public Pedido transformarParaObjSalvar() {
 		this.usuario=controleUsuario.listar(id).get();

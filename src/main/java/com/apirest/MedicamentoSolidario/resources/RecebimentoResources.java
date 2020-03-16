@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,39 +32,39 @@ import io.swagger.annotations.ApiOperation;
 public class RecebimentoResources {
 	@Autowired
 	RecebimentoControle controle;
-	
-	@ApiOperation(value="Retorna uma lista de Recebimentos")
+
+	@ApiOperation(value = "Retorna uma lista de Recebimentos")
 	@GetMapping("")
-	public Iterable<RecebimentoRespostaDTO> listarTodos() {
-		return controle.listarTodosNormal();
-	}
-	
-	@ApiOperation(value = "Retorna um Recebimento unico")
-	@GetMapping("/{id}")
-	public RecebimentoRespostaDTO listar(@PathVariable(value="id")long id) {	
-		Optional<Recebimento> user = controle.listar(id);
-		return RecebimentoRespostaDTO.transformaEmDTO(user.get());
-	}	
-	
-	@ApiOperation(value = "Salva um Recebimento")
-	@PostMapping("")
-	public RecebimentoRespostaDTO salvar(@RequestBody @Valid RecebimentoDTO recebimentoDTO) {
-		Recebimento recebimento = controle.salvar(recebimentoDTO.transformarParaObjSalvar());
-		return RecebimentoRespostaDTO.transformaEmDTO(recebimento);
-	}
-	
-	@ApiOperation(value = "Atualiza um Recebimento")
-	@PutMapping("")
-	public RecebimentoRespostaDTO atualizar(@RequestBody @Valid RecebimentoDTO dto) {
-		Recebimento recebimento = controle.atualizar(dto.transformarParaObjEditar());
-		return RecebimentoRespostaDTO.transformaEmDTO(recebimento);
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Retorna um Recebimento unico")
+	@GetMapping("/{id}")
+	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
+		Optional<Recebimento> user = controle.listar(id);
+		return new ResponseEntity<>(RecebimentoRespostaDTO.transformaEmDTO(user.get()), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Salva um Recebimento")
+	@PostMapping("")
+	public ResponseEntity<?> salvar(@RequestBody @Valid RecebimentoDTO recebimentoDTO) {
+		Recebimento recebimento = controle.salvar(recebimentoDTO.transformarParaObjSalvar());
+		return new ResponseEntity<>(RecebimentoRespostaDTO.transformaEmDTO(recebimento), HttpStatus.CREATED);
+	}
+
+	@ApiOperation(value = "Atualiza um Recebimento")
+	@PutMapping("")
+	public ResponseEntity<?> atualizar(@RequestBody @Valid RecebimentoDTO dto) {
+		Recebimento recebimento = controle.atualizar(dto.transformarParaObjEditar());
+		return new ResponseEntity<>(RecebimentoRespostaDTO.transformaEmDTO(recebimento), HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Deleta um Recebimento por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 	}
 
 }

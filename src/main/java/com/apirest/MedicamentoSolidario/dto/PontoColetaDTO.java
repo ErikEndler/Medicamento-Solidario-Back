@@ -2,19 +2,31 @@ package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotBlank;
+
 import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 
 public class PontoColetaDTO {
 	private long id;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String cnpj;
+	@NotBlank
 	private String cidade;
+	@NotBlank
 	private String estado;
+	@NotBlank
 	private String rua;
+	@NotBlank
 	private String bairro;
+	@NotBlank
 	private String numero;
+	@NotBlank
 	private String complemento;
+	@NotBlank
 	private String cep;
+	@NotBlank
 	private String atividadePrincipal;
 	private Date dataCadastro;
 	

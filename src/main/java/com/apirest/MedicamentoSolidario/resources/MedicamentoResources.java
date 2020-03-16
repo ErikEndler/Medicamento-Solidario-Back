@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,42 +30,42 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "API REST medicamento")
 @CrossOrigin(origins = "*")
 public class MedicamentoResources {
-	
+
 	@Autowired
 	MedicamentoControle controle;
-	
-	@ApiOperation(value="Retorna uma lista de Medicamentos")
+
+	@ApiOperation(value = "Retorna uma lista de Medicamentos")
 	@GetMapping("")
-	public Iterable<MedicamentoRespostaDTO> listarTodos() {
-		return controle.listarTodosNormal();
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Retorna um Medicamento unico")
 	@GetMapping("/{id}")
-	public MedicamentoRespostaDTO listar(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<Medicamento> med = controle.listar(id);
-		return MedicamentoRespostaDTO.transformaEmDTOList(med.get());
+		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTOList(med.get()), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Salva um Medicamento")
 	@PostMapping("")
-	public MedicamentoRespostaDTO salvar(@RequestBody @Valid MedicamentoDTO medicamentoDTO) {
+	public ResponseEntity<?> salvar(@RequestBody @Valid MedicamentoDTO medicamentoDTO) {
 		Medicamento med = controle.salvar(medicamentoDTO.transformarParaObjSalvar());
-		return MedicamentoRespostaDTO.transformaEmDTO(med);
-		
+		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(med), HttpStatus.CREATED);
 	}
-	
+
 	@ApiOperation(value = "Atualiza um Medicamento")
 	@PutMapping("")
-	public MedicamentoRespostaDTO atualizar(@RequestBody @Valid MedicamentoDTO dto) {
+	public ResponseEntity<?> atualizar(@RequestBody @Valid MedicamentoDTO dto) {
 		Medicamento resposta = controle.atualizar(dto.TransformarParaObjEditar());
-		return MedicamentoRespostaDTO.transformaEmDTO(resposta);
+		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(resposta), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Deleta um Medicamento por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso !", HttpStatus.OK);
 	}
 
 }

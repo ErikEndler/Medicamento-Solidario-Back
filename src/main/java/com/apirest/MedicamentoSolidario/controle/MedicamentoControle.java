@@ -24,6 +24,7 @@ public class MedicamentoControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + medicamento.getId());
 
 		} else
+			verificadoacaoExiste(medicamento);
 			//medicamento.setDoacao_in(null);
 			medicamento.setDoacao_out(null);
 			medicamento.setStatus(false);
@@ -73,6 +74,11 @@ public class MedicamentoControle {
 	protected String MenssagemErro() {
 		String msg = "Medicamento";
 		return msg;
+	}
+	//verifica se a doação aq ual medicamento esta atrelado existe
+	private void verificadoacaoExiste(Medicamento med) {
+		
+		med.getDoacao_in();	
 	}
 
 }

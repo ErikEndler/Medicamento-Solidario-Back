@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,39 +32,39 @@ import io.swagger.annotations.ApiOperation;
 public class PontoColetaResources {
 	@Autowired
 	PontoColetaControle controle;
-	
-	@ApiOperation(value="Retorna uma lista de Pontos de Coleta")
+
+	@ApiOperation(value = "Retorna uma lista de Pontos de Coleta")
 	@GetMapping("")
-	public Iterable<PontoColetaRespostaDTO> listarTodos() {
-		return controle.listarTodosNormal();
+	public ResponseEntity<?> listarTodos() {
+		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Retorna um Ponto de Coleta unico")
 	@GetMapping("/{id}")
-	public PontoColetaRespostaDTO listar(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<PontoColeta> med = controle.listar(id);
-		return PontoColetaRespostaDTO.transformaEmDTO(med.get());
+		return new ResponseEntity<>(PontoColetaRespostaDTO.transformaEmDTO(med.get()), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Salva um Ponto de Coleta")
 	@PostMapping("")
-	public PontoColetaRespostaDTO salvar(@RequestBody @Valid PontoColetaDTO pontoCOletaDTO) {
+	public ResponseEntity<?> salvar(@RequestBody @Valid PontoColetaDTO pontoCOletaDTO) {
 		PontoColeta med = controle.salvar(pontoCOletaDTO.transformarParaObjSalvar());
-		return PontoColetaRespostaDTO.transformaEmDTO(med);
-		
+		return new ResponseEntity<>(PontoColetaRespostaDTO.transformaEmDTO(med), HttpStatus.CREATED);
 	}
-	
+
 	@ApiOperation(value = "Atualiza um Ponto de Coleta")
 	@PutMapping("")
-	public PontoColetaRespostaDTO atualizar(@RequestBody @Valid PontoColetaDTO pontoColetaDTO) {
+	public ResponseEntity<?> atualizar(@RequestBody @Valid PontoColetaDTO pontoColetaDTO) {
 		PontoColeta resposta = controle.atualizar(pontoColetaDTO.transformarParaObjEditar());
-		return PontoColetaRespostaDTO.transformaEmDTO(resposta);
+		return new ResponseEntity<>(PontoColetaRespostaDTO.transformaEmDTO(resposta), HttpStatus.OK);
 	}
-	
+
 	@ApiOperation(value = "Deleta um Ponto de Coleta por Id")
 	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable(value="id")long id) {
+	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
+		return new ResponseEntity<>("Deletado com sucesso!", HttpStatus.OK);
 	}
 
 }

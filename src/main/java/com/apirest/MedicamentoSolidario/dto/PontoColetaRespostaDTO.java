@@ -47,8 +47,7 @@ public class PontoColetaRespostaDTO {
 				pontoColeta.getComplemento(),
 				pontoColeta.getCep(),
 				pontoColeta.getAtividadePrincipal(), 
-				pontoColeta.getDataCadastro());
-		
+				pontoColeta.getDataCadastro());		
 	}
 
 	public long getId() {
