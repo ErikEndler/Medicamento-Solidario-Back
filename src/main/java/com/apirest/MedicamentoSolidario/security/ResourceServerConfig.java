@@ -16,7 +16,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     	http.csrf().disable();
     	http.cors();
     	http.formLogin().permitAll();
-    	http.oauth2Login().authorizationEndpoint();
         http.authorizeRequests()
         		.antMatchers(publicEndPoints()).permitAll() 
                 .antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
