@@ -59,8 +59,7 @@ public class UsuarioResources {
 
 	@ApiOperation(value = "Salva um Usuario")
 	@PostMapping("")
-	public ResponseEntity<UsuarioRespostaDTO> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO, BindingResult result) {
-		
+	public ResponseEntity<UsuarioRespostaDTO> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {		
 		Usuario user = usuarioControle.salvar2(usuarioDTO);
 		return new ResponseEntity<UsuarioRespostaDTO>(UsuarioRespostaDTO.transformaEmDTO(user), HttpStatus.CREATED) ;
 	}

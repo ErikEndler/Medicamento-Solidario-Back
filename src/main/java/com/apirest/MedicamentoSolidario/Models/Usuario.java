@@ -1,6 +1,5 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -16,11 +15,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,8 +32,7 @@ public class Usuario implements UserDetails {
 	private String cpf;
 	@Email
 	private String email;
-	private String telefone;
-	
+	private String telefone;	
 	private LocalDate nascimento;
 	@NotBlank
 	private String senha;
@@ -76,7 +71,6 @@ public class Usuario implements UserDetails {
 		
 	}
 	
-
 	public Usuario(long id, String nome, String cpf, String email, String telefone, LocalDate nascimento,
 			String senha, String sexo, Role role) {
 		this.id=id;
@@ -88,8 +82,7 @@ public class Usuario implements UserDetails {
 		this.senha=senha;
 		this.sexo= sexo;
 		this.role= role;
-	}
-	
+	}	
 
 	public Role getRole() {
 		return role;
@@ -98,7 +91,6 @@ public class Usuario implements UserDetails {
 	public void setRole(Role roles) {
 		this.role = roles;
 	}
-
 	public List<Doacao> getMedicamentoDoado() {
 		return medicamentoDoado;
 	}
