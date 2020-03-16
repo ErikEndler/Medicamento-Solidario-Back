@@ -1,15 +1,13 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UsuarioDTO {
@@ -20,8 +18,9 @@ public class UsuarioDTO {
 	@Email
 	private String email;
 	private String telefone;
-	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
-	private Date nascimento;
+	private String dataNascimento;
+	@JsonIgnore
+	private LocalDate nascimento;
 	@NotBlank
 	private String senha;
 	private String sexo;
@@ -30,13 +29,19 @@ public class UsuarioDTO {
 	@JsonIgnore
 	private Role fullRole;
 	
+	//transforma a senha string recebida pelo jason em formato LocalDate
+	private LocalDate converterData() {
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		this.nascimento = LocalDate.parse(this.dataNascimento, formato); 
+		return this.nascimento ;
+	}
 
 	public Usuario trsnformaParaObjSalvar() {
-		return new Usuario(nome, cpf, email, telefone, nascimento, senha, sexo, fullRole);
+		return new Usuario(nome, cpf, email, telefone, converterData(), senha, sexo, fullRole);
 	}
 
 	public Usuario trsnformaParaObjEditar() {
-		return new Usuario(id, nome, cpf, email, telefone, nascimento, senha, sexo, fullRole);
+		return new Usuario(id, nome, cpf, email, telefone, converterData(), senha, sexo, fullRole);
 	}
 
 	public String getNome() {
@@ -71,11 +76,11 @@ public class UsuarioDTO {
 		this.telefone = telefone;
 	}
 
-	public Date getNascimento() {
+	public LocalDate getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
 	}
 
@@ -117,6 +122,14 @@ public class UsuarioDTO {
 
 	public void setFullRole(Role fullRole) {
 		this.fullRole = fullRole;
+	}
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 }

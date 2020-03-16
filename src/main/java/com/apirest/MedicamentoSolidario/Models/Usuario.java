@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.Models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,8 +37,8 @@ public class Usuario implements UserDetails {
 	@Email
 	private String email;
 	private String telefone;
-	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
-	private Date nascimento;
+	
+	private LocalDate nascimento;
 	@NotBlank
 	private String senha;
 	private String sexo;
@@ -63,12 +64,12 @@ public class Usuario implements UserDetails {
 		super();
 	}
 
-	public Usuario(String nome, String cpf, String email, String telefone, Date nascimento,String senha, String sexo, Role role) {
+	public Usuario(String nome, String cpf, String email, String telefone, LocalDate nascimento2,String senha, String sexo, Role role) {
 		this.nome=nome;
 		this.cpf=cpf;
 		this.email=email;
 		this.telefone=telefone;
-		this.nascimento=nascimento;		
+		this.nascimento=nascimento2;		
 		this.senha=senha;
 		this.sexo=sexo;
 		this.role=role;
@@ -76,7 +77,7 @@ public class Usuario implements UserDetails {
 	}
 	
 
-	public Usuario(long id, String nome, String cpf, String email, String telefone, Date nascimento,
+	public Usuario(long id, String nome, String cpf, String email, String telefone, LocalDate nascimento,
 			String senha, String sexo, Role role) {
 		this.id=id;
 		this.nome=nome;
@@ -147,10 +148,10 @@ public class Usuario implements UserDetails {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public Date getNascimento() {
+	public LocalDate getNascimento() {
 		return nascimento;
 	}
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
 	}
 	public String getSenha() {

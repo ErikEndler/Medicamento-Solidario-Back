@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .anyRequest().authenticated();
     }
     private String[] publicEndPoints() {
-        return new String[] {  
+        return new String[] {  "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**",
         		 "/error/**",
         "/h2-console/**", "/resources/**", "/v2/rest-docs", "/v2/api-docs",
         "/swagger-resources/configuration", "/swagger-resources", "/**.html",

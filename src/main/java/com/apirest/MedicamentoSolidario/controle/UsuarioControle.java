@@ -1,10 +1,8 @@
 package com.apirest.MedicamentoSolidario.controle;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +20,16 @@ import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
 @Service
 public class UsuarioControle {
-	final static String DATE_FORMAT = "dd/MM/yyyy";
 
-	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	RoleRepository roleRepository;
 
 	public Usuario salvar2(UsuarioDTO userDTO)  {
-		verificaCPF(userDTO.getCpf());
-		validaRole(userDTO);
 		verificaData(userDTO);
+		verificaCPF(userDTO.getCpf());
+		validaRole(userDTO);		
 		// criptografa a senha
 		String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
 		userDTO.setSenha(senha);
@@ -102,24 +98,18 @@ public class UsuarioControle {
 
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------
 	private void verificaData(UsuarioDTO userDTO){
-		if (userDTO.getNascimento() == null) {
-			throw new ResourceNotFoundException(MenssagemErro() + " Data Vazia! ");
-		}
-		isDateValid(userDTO.getNascimento());
+		isDateValid(userDTO.getDataNascimento());		
 	}
-
-	public void isDateValid(Date date) {
-		DateFormat df = new SimpleDateFormat ("yyyy/MM/dd");
-		String strData =df.format(date);
-		df.setLenient (false); // aqui o pulo do gato
+	public void isDateValid(String dataString) {
+		SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd");
+		sdf.setLenient (false); // aqui o pulo do gato
 		try {
-		    df.parse (strData);
+			sdf.parse (dataString);
 		    // data válida
 		} catch (ParseException ex) {
-			throw new ResourceNotFoundException(" Esta data é invalida : "+"' " +date+" '");
+			throw new ResourceNotFoundException("Data é invalida : "+"'" +dataString+"'"+" Formato valido 'yyyy-MM-dd'");
 		}
 	}
-
 		private void validaRole(UsuarioDTO userDTO) {
 		if (userDTO.getRole().isEmpty()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Campo role esta vazio! ");

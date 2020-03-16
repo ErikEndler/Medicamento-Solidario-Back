@@ -1,8 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 
@@ -12,20 +10,19 @@ public class UsuarioRespostaDTO {
 	private String nome;
 	private String cpf;
 	private String email;
-	private String telefone;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date nascimento;
+	private String telefone;	
+	private LocalDate nascimento;
 	private String sexo;	
 	private String role;
 
-	 private UsuarioRespostaDTO(long id, String nome, String cpf, String email, String telefone, Date nascimento, String sexo, String role) {
+	 private UsuarioRespostaDTO(long id, String nome, String cpf, String email, String telefone, LocalDate date, String sexo, String role) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.telefone = telefone;
-		this.nascimento = nascimento;
+		this.nascimento = date;
 		this.sexo = sexo;
 		this.role = role;
 	}
@@ -84,12 +81,12 @@ public class UsuarioRespostaDTO {
 	}
 
 
-	public Date getNascimento() {
+	public LocalDate getNascimento() {
 		return nascimento;
 	}
 
 
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
 	}
 
