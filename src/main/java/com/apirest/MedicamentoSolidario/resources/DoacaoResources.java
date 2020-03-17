@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/api/doacao")
 @Api(value = "API REST doacao")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class DoacaoResources {
 	@Autowired
 	DoacaoControle controle;
