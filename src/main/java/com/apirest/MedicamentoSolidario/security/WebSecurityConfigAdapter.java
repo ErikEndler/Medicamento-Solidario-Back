@@ -65,22 +65,4 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	public void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-		// http.formLogin().permitAll();
-		http.authorizeRequests().antMatchers(publicEndPoints()).permitAll().antMatchers(HttpMethod.POST, "/api/usuario")
-				.permitAll().antMatchers(HttpMethod.GET, "/api/usuario").permitAll().anyRequest().authenticated();
-//        http.sessionManagement()
-//        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-	}
-	private String[] publicEndPoints() {
-        return new String[] {  "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**",
-        		 "/error/**",
-        "/h2-console/**", "/resources/**", "/v2/rest-docs", "/v2/api-docs",
-        "/swagger-resources/configuration", "/swagger-resources", "/**.html",
-        "/webjars/**", "/login", "/csrf", "/" };
-      }
-
 }
