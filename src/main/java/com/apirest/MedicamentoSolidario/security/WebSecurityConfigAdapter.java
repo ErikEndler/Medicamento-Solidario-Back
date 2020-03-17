@@ -55,7 +55,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     	rolerepository.save(role1);
     	Role role2 = new Role();
     	role2.setNameRole("ROLE_INTERMEDIADOR");
-    	rolerepository.save(role2);    	   	
+    	rolerepository.save(role2);	   	
     }
 
     @Bean
