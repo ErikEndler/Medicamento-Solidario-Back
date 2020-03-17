@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/api/medicamento")
 @Api(value = "API REST medicamento")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class MedicamentoResources {
 
 	@Autowired

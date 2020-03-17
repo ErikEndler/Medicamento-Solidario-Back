@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/api/pontoColeta")
 @Api(value = "API REST PontoCOleta")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class PontoColetaResources {
 	@Autowired
 	PontoColetaControle controle;

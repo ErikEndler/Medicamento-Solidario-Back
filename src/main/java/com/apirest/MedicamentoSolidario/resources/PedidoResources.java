@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/api/pedido")
 @Api(value = "API REST pedido")
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class PedidoResources {
 	@Autowired
 	PedidoControle controle;
