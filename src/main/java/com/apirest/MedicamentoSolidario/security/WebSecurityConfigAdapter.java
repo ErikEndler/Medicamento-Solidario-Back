@@ -19,7 +19,6 @@ import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
 @Configuration
 @EnableWebSecurity
-
 public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private RoleRepository rolerepository;
