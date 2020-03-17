@@ -15,7 +15,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
     	http.csrf().disable();
     	http.cors();
-    	http.formLogin().permitAll();
+    	//http.formLogin().permitAll();
         http.authorizeRequests()
         		.antMatchers(publicEndPoints()).permitAll() 
                 .antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
