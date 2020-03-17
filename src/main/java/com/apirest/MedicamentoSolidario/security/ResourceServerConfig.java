@@ -21,8 +21,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
                 .antMatchers(HttpMethod.GET,  "/api/usuario").permitAll()                               
                 .anyRequest().authenticated();
-        http.sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.sessionManagement()
+//        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
     }
     private String[] publicEndPoints() {
