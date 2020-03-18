@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.Models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,8 +38,15 @@ public class Usuario implements UserDetails {
 	@NotBlank
 	private String senha;
 	private String sexo;	
+	
 	@ManyToOne
 	private Role role;
+//	@ManyToMany
+//	@JoinTable(name = "usuario_role",
+//	joinColumns = @JoinColumn(name="usuario_id", referencedColumnName = "id"),
+//	inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "id")
+//			)
+//    private List<Role> roles;
 	
 	@OneToMany(mappedBy = "doador")
 	private List<Doacao> medicamentoDoado;
@@ -160,9 +168,11 @@ public class Usuario implements UserDetails {
 //------------------------USERDETAILS METODOS-----------------
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		Collection<Role> RRoles = new ArrayList<Role>();
+		RRoles.add(role);
+		return  RRoles;
 	}
-
+		
 	@Override
 	public String getPassword() {
 		return this.senha;
@@ -191,7 +201,5 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-	
-	
+	}	
 }

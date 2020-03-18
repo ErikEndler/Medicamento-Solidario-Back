@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -16,13 +16,18 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name="TB_ROLE")
 public class Role implements GrantedAuthority {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	private String nameRole;
 	
-	@OneToMany(mappedBy = "role")
+	@ManyToMany(mappedBy = "role")
 	private List<Usuario> usuarios;
 
 	public String getNameRole() {
