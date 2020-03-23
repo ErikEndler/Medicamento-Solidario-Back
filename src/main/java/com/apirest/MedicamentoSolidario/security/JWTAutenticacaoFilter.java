@@ -7,7 +7,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static  com.apirest.MedicamentoSolidario.config.SecurityConstants.*;
+import static com.apirest.MedicamentoSolidario.config.SecurityConstants.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,17 +18,16 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.apirest.MedicamentoSolidario.Models.Usuario;
+import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 public class JWTAutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
 	public JWTAutenticacaoFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}
@@ -44,21 +43,18 @@ public class JWTAutenticacaoFilter extends UsernamePasswordAuthenticationFilter 
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
-		String userName = ((User)authResult.getPrincipal()).getUsername();
-		String token = Jwts.builder()
-				.setSubject(userName)
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME ))
-				.signWith(SignatureAlgorithm.HS512, SECRET)
-				.compact();
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
+		String userName = ((User) authResult.getPrincipal()).getUsername();
+		String token = Jwts.builder().setSubject(userName)		
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
+		String bearerToken = TOKEN_PREFIX + token;		
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-						
-		
+		// response.getWriter().write("{"+"\"Authorization\": \""+bearerToken+ "\"}");
+		response.getWriter().append("{" + "\"Authorization\": \"" + bearerToken + "\"}");
 	}
 
 }
