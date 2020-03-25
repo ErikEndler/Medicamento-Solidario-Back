@@ -1,5 +1,7 @@
 package com.apirest.MedicamentoSolidario.resources;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -15,9 +17,5 @@ import io.swagger.annotations.Api;
 @Api(value = "API REST doacao")
 public class EndPointsAplicacao {
 	
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestHeader Value id){
-		
-		return null;		
-	}
+	
 }
