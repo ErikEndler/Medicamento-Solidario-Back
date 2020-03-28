@@ -3,13 +3,13 @@ package com.apirest.MedicamentoSolidario.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
@@ -17,6 +17,7 @@ import com.apirest.MedicamentoSolidario.repository.RoleRepository;
 import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
 @Component
+
 public class MyUserDetailsService implements UserDetailsService {
 
 	@Autowired
@@ -41,7 +42,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		return new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, usuario.getAuthorities());
 	}
 
-	private void cadastraUsuario(UsuarioRepository usuarioRepository) {
+	public void cadastraUsuario(UsuarioRepository usuarioRepository) {
 		Usuario usuario = new Usuario();
 		usuario.setCpf("admin");
 		usuario.setSenha(passwordEncoder().encode("admin"));
@@ -49,7 +50,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		usuarioRepository.save(usuario);
 	}
 
-	private void cadastrarRoles() {
+	public void cadastrarRoles() {
 		Role role = new Role();
 		role.setNameRole("ROLE_ADMIN");
 		rolerepository.save(role);

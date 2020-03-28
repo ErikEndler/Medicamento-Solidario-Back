@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,15 +10,30 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.apirest.MedicamentoSolidario.Models.Role;
+import com.apirest.MedicamentoSolidario.Models.Usuario;
+import com.apirest.MedicamentoSolidario.repository.RoleRepository;
+import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
+
 //@Configuration
 @EnableWebSecurity
 public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private RoleRepository rolerepository;
+	@Autowired
 	private MyUserDetailsService myUserDetailService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		if (this.usuarioRepository.count() == 0) {
+			if (rolerepository.count() == 0) {
+				cadastrarRoles();
+			}
+			cadastraUsuario(usuarioRepository);
+		}
 		http.cors().disable();
 		http.csrf().disable();
 		http.authorizeRequests()
@@ -50,6 +66,29 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 		return new String[] { "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**", "/error/**",
 				"/h2-console/**", "/resources/**", "/v2/rest-docs", "/v2/api-docs", "/swagger-resources/configuration",
 				"/swagger-resources", "/**.html", "/webjars/**", "/login", "/csrf", "/" };
+	}
+	public void cadastraUsuario(UsuarioRepository usuarioRepository) {
+		Usuario usuario = new Usuario();
+		usuario.setCpf("admin");
+		usuario.setSenha(passwordEncoder().encode("admin"));
+		usuario.setRole(rolerepository.findByNameRole("ROLE_ADMIN"));
+		usuarioRepository.save(usuario);
+	}
+
+	public void cadastrarRoles() {
+		Role role = new Role();
+		role.setNameRole("ROLE_ADMIN");
+		rolerepository.save(role);
+		Role role1 = new Role();
+		role1.setNameRole("ROLE_USER");
+		rolerepository.save(role1);
+		Role role2 = new Role();
+		role2.setNameRole("ROLE_INTERMEDIADOR");
+		rolerepository.save(role2);
+	}
+	
+	public static BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }
