@@ -18,6 +18,7 @@ public class UsuarioDTO {
 	@Email
 	private String email;
 	private String telefone;
+	@NotBlank
 	private String dataNascimento;
 	@JsonIgnore
 	private LocalDate nascimento;

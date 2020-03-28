@@ -43,7 +43,6 @@ public class UsuarioControle {
 		}
 		Usuario user = userDTO.trsnformaParaObjSalvar();
 		return usuarioRepository.save(user);
-
 	}
 
 	// função que busca no banco a role recebida no formulario

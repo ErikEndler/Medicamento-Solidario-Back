@@ -27,11 +27,12 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,  "/api/usuario**").permitAll()
 		.antMatchers(HttpMethod.GET,  "/api/pontoColeta**").permitAll()
 		.antMatchers(HttpMethod.GET).permitAll()
-		.antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-		.antMatchers(HttpMethod.PUT).hasRole("ADMIN")
-		.antMatchers("/*/protected/**").hasRole("USER")
-		.antMatchers("/*/admin/**")
-				.hasRole("ADMIN")
+		.anyRequest().permitAll()
+		//.antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+		//.antMatchers(HttpMethod.PUT).hasRole("ADMIN")
+		//.antMatchers("/*/protected/**").hasRole("USER")
+		//.antMatchers("/*/admin/**")
+		//		.hasRole("ADMIN")
 				;
 		http.addFilter(new JWTAutenticacaoFilter(authenticationManager()));
 		http.addFilter(new JWTAutorizacaoFilter(authenticationManager(),myUserDetailService));
