@@ -60,8 +60,8 @@ public class UsuarioResources {
 
 	@ApiOperation(value = "Atualiza um Usuario")
 	@PutMapping("")
-	public ResponseEntity<?> atualizar(@RequestBody @Valid UsuarioDTO dto) {
-		Usuario user = usuarioControle.atualizar(dto.trsnformaParaObjEditar());
+	public ResponseEntity<?> atualizar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
+		Usuario user = usuarioControle.atualizar(usuarioDTO);
 		return new ResponseEntity<> (UsuarioRespostaDTO.transformaEmDTO(user),HttpStatus.OK);
 	}
 

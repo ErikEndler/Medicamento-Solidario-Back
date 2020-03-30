@@ -45,6 +45,30 @@ public class UsuarioControle {
 		return usuarioRepository.save(user);
 	}
 
+	public Usuario atualizar(UsuarioDTO usuarioDTO) {
+		verifyIfObjectExists(usuarioDTO.getId());
+		usuarioDTO = validacoesSalvar(usuarioDTO);
+		return usuarioRepository.save(usuarioDTO.trsnformaParaObjEditar());
+	}
+
+	private UsuarioDTO validacoesSalvar(UsuarioDTO userDTO) {
+		verificaData(userDTO);
+		verificaCPF(userDTO.getCpf());
+		validaRole(userDTO);
+		// criptografa a senha
+		String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
+		userDTO.setSenha(senha);
+		// busca o objeto role atraves do nome da role recebido da reqisiçao
+		Role role = findRole(userDTO.getRole());
+		// valida a role
+		if (role == null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " NÂO È POSSIVEL CADASTRAR SEM ROLE ");
+		} else {
+			userDTO.setFullRole(role);
+		}
+		return userDTO;
+	}
+
 	// função que busca no banco a role recebida no formulario
 	private Role findRole(String pRole) {
 		pRole.toUpperCase();
@@ -90,16 +114,11 @@ public class UsuarioControle {
 		usuarioRepository.delete(usuario);
 	}
 
-	public Usuario atualizar(Usuario usuario) {
-		verifyIfObjectExists(usuario.getId());
-		return usuarioRepository.save(usuario);
-	}
-
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------
 	private void verificaData(UsuarioDTO userDTO) {
-		if(userDTO.getDataNascimento() != null) {
+		if (userDTO.getDataNascimento() != null) {
 			isDateValid(userDTO.getDataNascimento());
-		}		
+		}
 	}
 
 	public void isDateValid(String dataString) {
