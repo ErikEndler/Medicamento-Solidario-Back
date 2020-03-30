@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
@@ -34,7 +35,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 			}
 			cadastraUsuario(usuarioRepository);
 		}
-		http.cors().disable();
+		http.cors().configurationSource(request -> new  CorsConfiguration().applyPermitDefaultValues());
 		http.csrf().disable();
 		http.authorizeRequests()
 		.antMatchers(publicEndPoints()).permitAll()
