@@ -53,7 +53,6 @@ public class UsuarioControle {
 
 	private UsuarioDTO validacoesSalvar(UsuarioDTO userDTO) {
 		verificaData(userDTO);
-		verificaCPF(userDTO.getCpf());
 		validaRole(userDTO);
 		// criptografa a senha
 		String senha = new BCryptPasswordEncoder().encode(userDTO.getSenha());
