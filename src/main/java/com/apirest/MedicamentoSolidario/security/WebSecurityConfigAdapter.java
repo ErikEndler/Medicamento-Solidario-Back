@@ -1,5 +1,7 @@
 package com.apirest.MedicamentoSolidario.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
@@ -35,7 +39,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 			}
 			cadastraUsuario(usuarioRepository);
 		}
-		http.cors().configurationSource(request -> new  CorsConfiguration().applyPermitDefaultValues());
+		http.cors();//.configurationSource(request -> new  CorsConfiguration().applyPermitDefaultValues());
 		http.csrf().disable();
 		http.authorizeRequests()
 		.antMatchers(publicEndPoints()).permitAll()
@@ -91,5 +95,14 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://medicamento-solidario.herokuapp.com","*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE", "OPTIONS"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+   }
 
 }
