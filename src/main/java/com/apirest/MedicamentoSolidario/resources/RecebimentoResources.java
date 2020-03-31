@@ -64,7 +64,7 @@ public class RecebimentoResources {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		controle.deletarById(id);
-		return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

@@ -22,7 +22,7 @@ public class PontoColetaDTO {
 	private String bairro;
 	@NotBlank
 	private String numero;
-	@NotBlank
+	
 	private String complemento;
 	@NotBlank
 	private String cep;
