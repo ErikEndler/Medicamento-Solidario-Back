@@ -69,7 +69,7 @@ public class UsuarioResources {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
 		usuarioControle.deletarById(id);
-		return new ResponseEntity<>("Deletado com sucesso",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 }
