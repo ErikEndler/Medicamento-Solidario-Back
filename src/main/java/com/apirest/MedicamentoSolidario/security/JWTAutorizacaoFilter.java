@@ -17,10 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.apirest.MedicamentoSolidario.repository.RoleRepository;
-import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
-
 import io.jsonwebtoken.Jwts;
+
 
 public class JWTAutorizacaoFilter extends BasicAuthenticationFilter {
 	
