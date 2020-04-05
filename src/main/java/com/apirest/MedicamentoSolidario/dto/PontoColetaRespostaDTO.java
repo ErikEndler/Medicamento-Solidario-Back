@@ -16,8 +16,7 @@ public class PontoColetaRespostaDTO {
 	private String complemento;
 	private String cep;
 	private String atividadePrincipal;
-	private Date dataCadastro;
-	
+	private Date dataCadastro;	
 	
 	public PontoColetaRespostaDTO(long id, String nome, String cnpj, String cidade, String estado, String rua,
 			String bairro, String numero, String complemento, String cep, String atividadePrincipal,

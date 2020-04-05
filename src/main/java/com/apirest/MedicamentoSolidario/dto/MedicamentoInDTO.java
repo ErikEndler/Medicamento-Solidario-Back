@@ -3,20 +3,28 @@ package com.apirest.MedicamentoSolidario.dto;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class MedicamentoInDTO {
+	@JsonIgnore
 	private long id;
+	@NotBlank
 	private String nome;
-	private String principio;
+	@NotBlank(message="Informe o Principio Ativo")
+	private String principio;	
 	private String tipoReceita;
 	private LocalDate data;
-	private Date dataVencimento;
+	@NotBlank(message="Data de validade Obrigatória")
+	private Date dataValidade;
 	private String tarja;
+	@NotBlank(message="")
 	private String tipoArmazenamento;
+	@NotBlank(message="Informe a Quantidade")
 	private int quantidade;
 	@JsonIgnore
 	private long idDoacaoIn;
@@ -27,7 +35,7 @@ public class MedicamentoInDTO {
 
 //salvar medicamento sem interagir com as doaçoes
 	public Medicamento transformarParaObjSalvar() {
-		return new Medicamento( nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento,
+		return new Medicamento( nome, principio, tipoReceita, data, dataValidade, tarja, tipoArmazenamento,
 				quantidade, fullDoacaoIn);
 	}
 
@@ -72,11 +80,11 @@ public class MedicamentoInDTO {
 	}
 
 	public Date getDataVencimento() {
-		return dataVencimento;
+		return dataValidade;
 	}
 
 	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
+		this.dataValidade = dataVencimento;
 	}
 
 	public String getTarja() {

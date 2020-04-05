@@ -15,7 +15,7 @@ public class MedicamentoDTO {
 	private String principio;
 	private String tipoReceita;
 	private LocalDate data;
-	private Date dataVencimento;
+	private Date dataValidade;
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;	
@@ -28,7 +28,7 @@ public class MedicamentoDTO {
 	
 	//edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
-		return new Medicamento(id,nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
+		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidade, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
 	}
 
 	public long getId() {
@@ -72,11 +72,11 @@ public class MedicamentoDTO {
 	}
 
 	public Date getDataVencimento() {
-		return dataVencimento;
+		return dataValidade;
 	}
 
 	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
+		this.dataValidade = dataVencimento;
 	}
 
 	public String getTarja() {

@@ -74,6 +74,7 @@ public class JWTAutenticacaoFilter extends UsernamePasswordAuthenticationFilter 
 		// response.getWriter().write("{"+"\"Authorization\": \""+bearerToken+ "\"}");
 		response.getWriter().append("{" + "\"Authorization\": \"" + bearerToken + "\","
 				+ "\n\"Role\": \""+User.getRole().getNameRole()+"\","
+				+ "\n\"Id\": \""+User.getId()+"\","
 				+ "\n\"Nome\": \""+User.getNome()+"\"}"
 				);
 	}

@@ -28,7 +28,7 @@ public class Medicamento {
 	@NotBlank
 	private LocalDate data;
 	@NotBlank
-	private Date dataVencimento;
+	private Date dataValidade;
 	private String tarja;
 	@NotBlank
 	private String tipoArmazenamento;
@@ -53,7 +53,7 @@ public class Medicamento {
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
 		this.data = data;
-		this.dataVencimento = dataVencimento;
+		this.dataValidade = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
@@ -66,7 +66,7 @@ public class Medicamento {
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
 		this.data = data;
-		this.dataVencimento = dataVencimento;
+		this.dataValidade = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
@@ -111,10 +111,10 @@ public class Medicamento {
 		this.data = data;
 	}
 	public Date getDataVencimento() {
-		return dataVencimento;
+		return dataValidade;
 	}
 	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
+		this.dataValidade = dataVencimento;
 	}
 	public String getTarja() {
 		return tarja;

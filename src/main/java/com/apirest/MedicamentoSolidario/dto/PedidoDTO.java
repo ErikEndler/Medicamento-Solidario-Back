@@ -15,34 +15,36 @@ import com.apirest.MedicamentoSolidario.controle.UsuarioControle;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class PedidoDTO {
-	
+
 	@Autowired
 	UsuarioControle controleUsuario;
 	@Autowired
 	MedicamentoControle controleMedicamento;
-	
+
 	private long id;
 	private String justificativa;
 	private LocalDate data;
-	
+
 	@JsonIgnore
 	private Usuario usuario;
 	private int idUsauruaio;
-	
+
 	@JsonIgnore
 	private List<Medicamento> medicamentos;
 	private int idsMedicamentos[];
-	
+
 	@JsonIgnore
 	private Recebimento recebimento;
-	private int idRecebimento;	
-	
+	private int idRecebimento;
+
 	public Pedido transformarParaObjSalvar() {
-		this.usuario=controleUsuario.listar(id).get();
+		this.usuario = controleUsuario.listar(id).get();
 		this.medicamentos = listarMeds(this.idsMedicamentos);
-		return new Pedido(id,justificativa,data,usuario,medicamentos);
+		return new Pedido(justificativa, data, usuario, medicamentos);
 	}
-	//metodo para preencher a lista de medicamentos com os ids recebidos pelo endpoint
+
+	// metodo para preencher a lista de medicamentos com os ids recebidos pelo
+	// endpoint
 	private List<Medicamento> listarMeds(int[] idMedicamentos2) {
 		List<Medicamento> listaM = new ArrayList<Medicamento>();
 		for (int i : idMedicamentos2) {
@@ -50,34 +52,42 @@ public class PedidoDTO {
 		}
 		return listaM;
 	}
+
 	public Pedido transformarParaObjEditar() {
-		this.usuario=controleUsuario.listar(id).get();
-		//this.medicamentos=controleMedicamento.listar(id).get();
+		this.usuario = controleUsuario.listar(id).get();
+		// this.medicamentos=controleMedicamento.listar(id).get();
 		this.medicamentos = listarMeds(this.idsMedicamentos);
-		return new Pedido(justificativa,data,usuario,medicamentos);
+		return new Pedido(id, justificativa, data, usuario, medicamentos);
 	}
-	
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getJustificativa() {
 		return justificativa;
 	}
+
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
+
 	public LocalDate getData() {
 		return data;
 	}
+
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
@@ -90,6 +100,7 @@ public class PedidoDTO {
 	public Recebimento getRecebimento() {
 		return recebimento;
 	}
+
 	public void setRecebimento(Recebimento recebimento) {
 		this.recebimento = recebimento;
 	}
@@ -109,9 +120,11 @@ public class PedidoDTO {
 	public void setIdsMedicamentos(int[] idMedicamento) {
 		this.idsMedicamentos = idMedicamento;
 	}
+
 	public int getRecebimentoID() {
 		return idRecebimento;
 	}
+
 	public void setRecebimentoID(int recebimentoID) {
 		this.idRecebimento = recebimentoID;
 	}

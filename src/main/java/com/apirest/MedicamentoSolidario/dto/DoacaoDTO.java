@@ -27,11 +27,11 @@ public class DoacaoDTO {
 	private long id;
 	private LocalDate data;
 	private String obs;
-	@NotBlank
+	@NotBlank(message="Falya referencia do doador 'ID'")
 	private long idDoador;
-	@NotBlank
+	@NotBlank(message="Falya referencia do Responsavel 'ID'")
 	private long idVoluntario;
-	@NotBlank
+	@NotBlank(message="Falya referencia do Ponto de Coleta 'ID'")
 	private long idPonto;
 	@JsonIgnore
 	private PontoColeta ponto;
@@ -39,21 +39,21 @@ public class DoacaoDTO {
 	private Usuario doador;
 	@JsonIgnore
 	private Usuario voluntario;
-
+	@NotBlank(message="Deve haver medicamentos na Doação")
 	private List<MedicamentoInDTO> medicamentos;
 
 	public Doacao transformarParaObjSalvar() {
 		this.doador = controleUsuario.listar(id).get();
 		this.voluntario = controleUsuario.listar(id).get();
 		this.ponto = controlePonto.listar(id).get();
-		return new Doacao(id, data, obs, doador, voluntario, ponto);
+		return new Doacao(data, obs, doador, voluntario, ponto);
 	}
 
 	public Doacao transformarParaObjEditar() {
 		this.doador = controleUsuario.listar(id).get();
 		this.voluntario = controleUsuario.listar(id).get();
 		this.ponto = controlePonto.listar(id).get();
-		return new Doacao(data, obs, doador, voluntario, ponto);
+		return new Doacao(id, data, obs, doador, voluntario, ponto);
 	}
 
 	public long getId() {
