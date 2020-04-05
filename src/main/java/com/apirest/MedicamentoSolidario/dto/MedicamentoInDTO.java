@@ -8,8 +8,7 @@ import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class MedicamentoDTO {
-	
+public class MedicamentoInDTO {
 	private long id;
 	private String nome;
 	private String principio;
@@ -18,17 +17,18 @@ public class MedicamentoDTO {
 	private Date dataVencimento;
 	private String tarja;
 	private String tipoArmazenamento;
-	private int quantidade;	
-	private long idDoacaoIn;	
-	private long idDoacaoOut;
+	private int quantidade;
+	@JsonIgnore
+	private long idDoacaoIn;
 	@JsonIgnore
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
 	private Recebimento fullDoacaoOut;
-	
-	//edita sem interagir com as doaçoes
-	public Medicamento TransformarParaObjEditar() {
-		return new Medicamento(id,nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
+
+//salvar medicamento sem interagir com as doaçoes
+	public Medicamento transformarParaObjSalvar() {
+		return new Medicamento( nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento,
+				quantidade, fullDoacaoIn);
 	}
 
 	public long getId() {
@@ -127,12 +127,4 @@ public class MedicamentoDTO {
 		this.idDoacaoIn = idDoacaoIn;
 	}
 
-	public long getIdDoacaoOut() {
-		return idDoacaoOut;
-	}
-
-	public void setIdDoacaoOut(int idDoacaoOut) {
-		this.idDoacaoOut = idDoacaoOut;
-	}
-	
 }

@@ -1,18 +1,19 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 
 public class RecebimentoRespostaDTO {
 	private long id;
-	private Date data;
+	private LocalDate data;
 	private String obs;
 	private long idPonto;
 	private long idVoluntario;
 	private long idPedido;
 	
-	public RecebimentoRespostaDTO(long id, Date data, String obs, long idVoluntario, long idPonto,long idPedido) {
+	public RecebimentoRespostaDTO(long id, LocalDate data, String obs, long idVoluntario, long idPonto,long idPedido) {
 		super();
 		this.setId(id);
 		this.setData(data);
@@ -36,10 +37,10 @@ public class RecebimentoRespostaDTO {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getObs() {

@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ public class Doacao {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@NotBlank
-	private Date data;
+	private LocalDate data;
 	private String obs;
 	
 	@ManyToOne
@@ -36,7 +36,7 @@ public class Doacao {
 	@OneToMany(mappedBy = "doacao_in")
 	private List<Medicamento> medicamento;
 
-	public Doacao(long id2, Date data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
+	public Doacao(long id2, LocalDate data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
 		this.id=id2;
 		this.data=data2;
 		this.obs=obs2;
@@ -45,7 +45,7 @@ public class Doacao {
 		this.ponto=ponto2;
 	}
 
-	public Doacao(Date data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
+	public Doacao(LocalDate data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
 		this.data=data2;
 		this.obs=obs2;
 		this.doador=doador2;
@@ -61,11 +61,11 @@ public class Doacao {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

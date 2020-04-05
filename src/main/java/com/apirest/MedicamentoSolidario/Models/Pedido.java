@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String justificativa;
-	private Date data;
+	private LocalDate data;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -36,7 +36,7 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Recebimento recebimento;
 
-	public Pedido(long id2, String justificativa2, Date data2,Usuario usuario,List<Medicamento> medicamentos2) {
+	public Pedido(long id2, String justificativa2, LocalDate data2,Usuario usuario,List<Medicamento> medicamentos2) {
 		this.id=id2;
 		this.justificativa=justificativa2;
 		this.data=data2;
@@ -45,7 +45,7 @@ public class Pedido {
 		
 	}
 
-	public Pedido(String justificativa2, Date data2, Usuario usuario2, List<Medicamento> medicamentos2) {
+	public Pedido(String justificativa2, LocalDate data2, Usuario usuario2, List<Medicamento> medicamentos2) {
 		this.justificativa=justificativa2;
 		this.data=data2;
 		this.usuario=usuario2;
@@ -76,11 +76,11 @@ public class Pedido {
 		this.justificativa = justificativa;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

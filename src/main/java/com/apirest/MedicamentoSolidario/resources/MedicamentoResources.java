@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,17 +46,17 @@ public class MedicamentoResources {
 		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTOList(med.get()), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Salva um Medicamento")
-	@PostMapping("")
-	public ResponseEntity<?> salvar(@RequestBody @Valid MedicamentoDTO medicamentoDTO) {
-		Medicamento med = controle.salvar(medicamentoDTO.transformarParaObjSalvar());
-		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(med), HttpStatus.CREATED);
-	}
+//	@ApiOperation(value = "Salva um Medicamento")
+//	@PostMapping("")
+//	public ResponseEntity<?> salvar(@RequestBody @Valid MedicamentoDTO medicamentoDTO) {
+//		Medicamento med = controle.salvar(medicamentoDTO.transformarParaObjSalvar());
+//		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(med), HttpStatus.CREATED);
+//	}
 
 	@ApiOperation(value = "Atualiza um Medicamento")
 	@PutMapping("")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid MedicamentoDTO dto) {
-		Medicamento resposta = controle.atualizar(dto.TransformarParaObjEditar());
+		Medicamento resposta = controle.atualizar(dto);
 		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(resposta), HttpStatus.OK);
 	}
 

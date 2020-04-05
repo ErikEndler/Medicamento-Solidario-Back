@@ -49,7 +49,7 @@ public class DoacaoResources {
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid DoacaoDTO doacaoDTO) {
 		// Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
-		Doacao doacao = controle.salvar(doacaoDTO.transformarParaObjSalvar());
+		Doacao doacao = controle.salvar(doacaoDTO);
 		return new ResponseEntity<>(DoacaoRespostaDTO.transformaEmDTO(doacao), HttpStatus.CREATED);
 	}
 

@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +10,12 @@ import com.apirest.MedicamentoSolidario.Models.Pedido;
 public class PedidoRespostaDTO {
 	private long id;
 	private String justificativa;
-	private Date data;
+	private LocalDate data;
 	private long usuarioID;
 	private List<Long> medicamentosID;
 	private long recebimento;
 	
-	public PedidoRespostaDTO(long id, String justificativa, Date data, long usuarioID, List<Medicamento> medicamentosID,
+	public PedidoRespostaDTO(long id, String justificativa, LocalDate data, long usuarioID, List<Medicamento> medicamentosID,
 			long recebimento) {
 		super();
 		this.setId(id);
@@ -62,11 +62,11 @@ public class PedidoRespostaDTO {
 		this.justificativa = justificativa;
 	}
 
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class PedidoDTO {
 	
 	private long id;
 	private String justificativa;
-	private Date data;
+	private LocalDate data;
 	
 	@JsonIgnore
 	private Usuario usuario;
@@ -69,10 +69,10 @@ public class PedidoDTO {
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public Usuario getUsuario() {

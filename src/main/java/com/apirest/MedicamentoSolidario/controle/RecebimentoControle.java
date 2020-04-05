@@ -12,6 +12,7 @@ import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 import com.apirest.MedicamentoSolidario.dto.RecebimentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
+import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.RecebimentoRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class RecebimentoControle {
 	RecebimentoRepository repository;
 	PedidoControle pedidocontrol;
 	MedicamentoControle medicamentoControl;
-
+	MedicamentoRepository medicamentoRepository;
 	
 	public Recebimento salvar(Recebimento recebimento) {
 		Optional<Recebimento> ret = verifySave(recebimento.getId());
@@ -39,7 +40,7 @@ public class RecebimentoControle {
 				//atribui o recebimento ao medicamento
 				medicamento.setDoacao_out(recebimento);
 				// altera o medicamento
-				medicamentoControl.atualizar(medicamento);
+				medicamentoRepository.save(medicamento);
 			}
 			return receb ;		
 		}

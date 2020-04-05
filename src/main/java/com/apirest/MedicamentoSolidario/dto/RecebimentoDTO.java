@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,17 +25,17 @@ public class RecebimentoDTO {
 	@Autowired
 	PedidoControle controlePedido;
 	private long id;
-	private Date data;
-	private String obs;
+	private LocalDate data;
+	private String obs;	
+	private long idVoluntario;	
+	private long idPonto;	
+	private long idPedido;
 	@JsonIgnore
 	private Usuario voluntario;
-	private long idVoluntario;
 	@JsonIgnore
 	private PontoColeta ponto;
-	private long idPonto;
 	@JsonIgnore
 	private Pedido pedido;
-	private long idPedido;
 	
 	public Recebimento transformarParaObjSalvar() {
 		this.voluntario = controleUsuario.listar(idVoluntario).get();
@@ -56,10 +57,10 @@ public class RecebimentoDTO {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getObs() {

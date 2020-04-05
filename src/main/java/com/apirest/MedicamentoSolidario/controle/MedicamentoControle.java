@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
+import com.apirest.MedicamentoSolidario.repository.DoacaoRepository;
 import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
 
 @Service
@@ -17,18 +19,20 @@ public class MedicamentoControle {
 
 	@Autowired
 	MedicamentoRepository repository;
+	@Autowired
+	DoacaoRepository doacaoRepositoy;
 
 	public Medicamento salvar(Medicamento medicamento) {
 		Optional<Medicamento> ret = verifySave(medicamento.getId());
 		if (ret.isPresent()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + medicamento.getId());
 
-		} else
+		} else {
 			verificadoacaoExiste(medicamento);
-			//medicamento.setDoacao_in(null);
 			medicamento.setDoacao_out(null);
 			medicamento.setStatus(false);
 			return repository.save(medicamento);
+		}
 	}
 
 	public Iterable<MedicamentoRespostaDTO> listarTodosNormal() {
@@ -39,25 +43,24 @@ public class MedicamentoControle {
 		}
 		return result;
 	}
-	
+
 	public Optional<Medicamento> listar(long id) {
 		verifyIfObjectExists(id);
 		Optional<Medicamento> findById = repository.findById(id);
 		return findById;
 	}
-	
+
 	public void deletarById(long id) {
 		verifyIfObjectExists(id);
 		repository.deleteById(id);
 	}
-	
-	public Medicamento atualizar(Medicamento medicamento) {
-		verifyIfObjectExists(medicamento.getId());
-		return repository.save(medicamento);
+
+	public Medicamento atualizar(MedicamentoDTO medicamentoDTO) {
+		verifyIfObjectExists(medicamentoDTO.getId());
+		medicamentoDTO = setDoacao(medicamentoDTO);
+		return repository.save(medicamentoDTO.TransformarParaObjEditar());
 	}
-	
-	
-	
+
 //---------------------------------------------------------------------//
 	private void verifyIfObjectExists(long id) {
 		String msg = MenssagemErro();
@@ -75,10 +78,16 @@ public class MedicamentoControle {
 		String msg = "Medicamento";
 		return msg;
 	}
-	//verifica se a doação aq ual medicamento esta atrelado existe
+
+	// verifica se a doação aq ual medicamento esta atrelado existe
 	private void verificadoacaoExiste(Medicamento med) {
-		
-		med.getDoacao_in();	
+		med.getDoacao_in();
+	}
+
+	// busca a doação pelo id recebido na requisisao e coloca no medicamentoDTO
+	private MedicamentoDTO setDoacao(MedicamentoDTO medicamentoDTO) {
+		medicamentoDTO.setFullDoacaoIn(doacaoRepositoy.findById(medicamentoDTO.getIdDoacaoIn()).get());
+		return null;
 	}
 
 }

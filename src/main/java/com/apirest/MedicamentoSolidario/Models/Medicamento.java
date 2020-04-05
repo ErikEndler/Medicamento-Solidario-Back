@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.Models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class Medicamento {
 	private String principio;
 	private String tipoReceita;
 	@NotBlank
-	private Date data;
+	private LocalDate data;
 	@NotBlank
 	private Date dataVencimento;
 	private String tarja;
@@ -45,8 +46,8 @@ public class Medicamento {
 		super();
 	}
 	
-	public Medicamento(long id, String nome, String principio, String tipoReceita, Date data, Date dataVencimento,
-			String tarja, String tipoArmazenamento, int quantidade,int idDoacaoin) {
+	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDate data, Date dataVencimento,
+			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
@@ -56,10 +57,11 @@ public class Medicamento {
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
+		this.doacao_in = fullDoacaoIn;
 	}
 	
-	public Medicamento( String nome, String principio, String tipoReceita, Date data, Date dataVencimento,
-			String tarja, String tipoArmazenamento, int quantidade) {
+	public Medicamento( String nome, String principio, String tipoReceita, LocalDate data, Date dataVencimento,
+			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
@@ -102,10 +104,10 @@ public class Medicamento {
 	public void setTipoReceita(String tipoReceita) {
 		this.tipoReceita = tipoReceita;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public Date getDataVencimento() {

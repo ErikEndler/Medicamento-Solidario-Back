@@ -1,18 +1,20 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 
 public class DoacaoRespostaDTO {
 	private long id;
-	private Date data;
+	private LocalDate data;
 	private String obs;
 	private long idDoador;
 	private long idVoluntario;
 	private long idPonto;	
+	private List<MedicamentoRespostaDTO> medicamentos;
 	
-	public DoacaoRespostaDTO(long id, Date data, String obs, long idDoador, long idVoluntario, long idPonto) {
+	public DoacaoRespostaDTO(long id, LocalDate data, String obs, long idDoador, long idVoluntario, long idPonto) {
 		super();
 		this.id = id;
 		this.data = data;
@@ -37,10 +39,10 @@ public class DoacaoRespostaDTO {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getObs() {
@@ -66,6 +68,12 @@ public class DoacaoRespostaDTO {
 	}
 	public void setIdVoluntario(long idVoluntario) {
 		this.idVoluntario = idVoluntario;
+	}
+	public List<MedicamentoRespostaDTO> getMedicamentos() {
+		return medicamentos;
+	}
+	public void setMedicamentos(List<MedicamentoRespostaDTO> medicamentos) {
+		this.medicamentos = medicamentos;
 	}
 
 }
