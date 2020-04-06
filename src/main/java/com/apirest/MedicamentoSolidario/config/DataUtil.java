@@ -1,14 +1,15 @@
 package com.apirest.MedicamentoSolidario.config;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
+import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 
+@Service
 public class DataUtil {
 	
 //	public void isDateValid(Date date) {
