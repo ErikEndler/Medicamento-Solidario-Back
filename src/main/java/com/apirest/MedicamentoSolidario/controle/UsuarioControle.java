@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
+import com.apirest.MedicamentoSolidario.config.DataUtil;
 import com.apirest.MedicamentoSolidario.dto.UsuarioDTO;
 import com.apirest.MedicamentoSolidario.dto.UsuarioRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
@@ -25,6 +26,8 @@ public class UsuarioControle {
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired
+	DataUtil dataUtil;
 
 	public Usuario salvar2(UsuarioDTO userDTO) {
 		verificaData(userDTO);
@@ -41,6 +44,9 @@ public class UsuarioControle {
 		} else {
 			userDTO.setFullRole(role);
 		}
+		String data = userDTO.getDataNascimento();
+		userDTO.setNascimento(dataUtil.converterData(data));
+
 		Usuario user = userDTO.trsnformaParaObjSalvar();
 		return usuarioRepository.save(user);
 	}
@@ -96,6 +102,14 @@ public class UsuarioControle {
 		return findById;
 	}
 
+	public Usuario buscaCpf(String cpf) {
+		Usuario user = usuarioRepository.findByCpf(cpf);
+		if (user != null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  CPF: " + user.getCpf());
+		}
+		return user;
+	}
+
 	public UsuarioRespostaDTO listarDTO(long id) {
 		verifyIfObjectExists(id);
 		Optional<Usuario> findById = usuarioRepository.findById(id);
@@ -116,21 +130,22 @@ public class UsuarioControle {
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------
 	private void verificaData(UsuarioDTO userDTO) {
 		if (userDTO.getDataNascimento() != null) {
-			isDateValid(userDTO.getDataNascimento());
+			// isDateValid(userDTO.getDataNascimento());
+			dataUtil.isDateValid(userDTO.getDataNascimento());
 		}
 	}
 
-	public void isDateValid(String dataString) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(false); // aqui o pulo do gato
-		try {
-			sdf.parse(dataString);
-			// data válida
-		} catch (ParseException ex) {
-			throw new ResourceNotFoundException(
-					"Data é invalida : " + "'" + dataString + "'" + " Formato valido 'yyyy-MM-dd'");
-		}
-	}
+//	public void isDateValid(String dataString) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		sdf.setLenient(false); // aqui o pulo do gato
+//		try {
+//			sdf.parse(dataString);
+//			// data válida
+//		} catch (ParseException ex) {
+//			throw new ResourceNotFoundException(
+//					"Data é invalida : " + "'" + dataString + "'" + " Formato valido 'yyyy-MM-dd'");
+//		}
+//	}
 
 	private void validaRole(UsuarioDTO userDTO) {
 		if (userDTO.getRole().isEmpty()) {
@@ -154,7 +169,6 @@ public class UsuarioControle {
 	private Optional<Usuario> verifySave(long id) {
 		Optional<Usuario> retorno = usuarioRepository.findById(id);
 		return retorno;
-
 	}
 
 	protected String MenssagemErro() {

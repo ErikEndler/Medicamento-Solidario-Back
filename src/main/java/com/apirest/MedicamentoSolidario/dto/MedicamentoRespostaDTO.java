@@ -12,7 +12,7 @@ public class MedicamentoRespostaDTO {
 	private String principio;
 	private String tipoReceita;
 	private LocalDate data;
-	private Date dataValidade;
+	private LocalDate dataValidade;
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;
@@ -20,7 +20,7 @@ public class MedicamentoRespostaDTO {
 	private long idDoacaoIn;	
 	
 	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDate data,
-			Date dataVencimento, String tarja, String tipoArmazenamento, int quantidade) {
+			LocalDate dataVencimento, String tarja, String tipoArmazenamento, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -34,7 +34,7 @@ public class MedicamentoRespostaDTO {
 	}
 	
 	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDate data,
-			Date dataVencimento, String tarja, String tipoArmazenamento, long idIn, long idOut, int quantidade) {
+			LocalDate dataVencimento, String tarja, String tipoArmazenamento, long idIn, long idOut, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -114,11 +114,11 @@ public class MedicamentoRespostaDTO {
 		this.data = data;
 	}
 
-	public Date getDataVencimento() {
+	public LocalDate getDataVencimento() {
 		return dataValidade;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
+	public void setDataVencimento(LocalDate dataVencimento) {
 		this.dataValidade = dataVencimento;
 	}
 

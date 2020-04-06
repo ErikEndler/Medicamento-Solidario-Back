@@ -13,14 +13,17 @@ public class MedicamentoDTO {
 	private long id;
 	private String nome;
 	private String principio;
-	private String tipoReceita;
-	private LocalDate data;
-	private Date dataValidade;
+	private String tipoReceita;	
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;	
 	private long idDoacaoIn;	
 	private long idDoacaoOut;
+	private String dataValidade;
+	@JsonIgnore
+	private LocalDate dataValidadeLocalDate;
+	@JsonIgnore
+	private LocalDate data;	
 	@JsonIgnore
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
@@ -28,7 +31,7 @@ public class MedicamentoDTO {
 	
 	//edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
-		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidade, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
+		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidadeLocalDate, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
 	}
 
 	public long getId() {
@@ -71,12 +74,12 @@ public class MedicamentoDTO {
 		this.data = data;
 	}
 
-	public Date getDataVencimento() {
-		return dataValidade;
+	public LocalDate getDataVencimentoLocalDate() {
+		return dataValidadeLocalDate;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataValidade = dataVencimento;
+	public void setDataVencimentoLocalDate(LocalDate dataVencimento) {
+		this.dataValidadeLocalDate = dataVencimento;
 	}
 
 	public String getTarja() {
@@ -133,6 +136,14 @@ public class MedicamentoDTO {
 
 	public void setIdDoacaoOut(int idDoacaoOut) {
 		this.idDoacaoOut = idDoacaoOut;
+	}
+
+	public String getDataValidade() {
+		return dataValidade;
+	}
+
+	public void setDataValidade(String dataValidade) {
+		this.dataValidade = dataValidade;
 	}
 	
 }

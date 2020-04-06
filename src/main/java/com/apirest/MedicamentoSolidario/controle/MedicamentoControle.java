@@ -1,5 +1,6 @@
 package com.apirest.MedicamentoSolidario.controle;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.config.DataUtil;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
@@ -21,6 +23,8 @@ public class MedicamentoControle {
 	MedicamentoRepository repository;
 	@Autowired
 	DoacaoRepository doacaoRepositoy;
+	@Autowired
+	DataUtil dataUtil;
 
 	public Medicamento salvar(Medicamento medicamento) {
 		Optional<Medicamento> ret = verifySave(medicamento.getId());
@@ -56,6 +60,10 @@ public class MedicamentoControle {
 	}
 
 	public Medicamento atualizar(MedicamentoDTO medicamentoDTO) {
+		//pega a data em string e converteem Localdate
+		LocalDate data =dataUtil.converterData(medicamentoDTO.getDataValidade());
+		//pega a data convertida e adiciona a variavel tipo localdate
+		medicamentoDTO.setDataVencimentoLocalDate(data);
 		verifyIfObjectExists(medicamentoDTO.getId());
 		medicamentoDTO = setDoacao(medicamentoDTO);
 		return repository.save(medicamentoDTO.TransformarParaObjEditar());

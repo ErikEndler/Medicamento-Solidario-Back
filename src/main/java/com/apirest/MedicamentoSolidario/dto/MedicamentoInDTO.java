@@ -18,14 +18,17 @@ public class MedicamentoInDTO {
 	@NotBlank(message="Informe o Principio Ativo")
 	private String principio;	
 	private String tipoReceita;
-	private LocalDate data;
-	@NotBlank(message="Data de validade Obrigatória")
-	private Date dataValidade;
+	private LocalDate data;	
 	private String tarja;
 	@NotBlank(message="")
 	private String tipoArmazenamento;
 	@NotBlank(message="Informe a Quantidade")
 	private int quantidade;
+	@NotBlank(message="Data de validade Obrigatória")
+	private String dataValidade;
+	
+	@JsonIgnore
+	private LocalDate dataValidadeLocalDate;
 	@JsonIgnore
 	private long idDoacaoIn;
 	@JsonIgnore
@@ -35,7 +38,7 @@ public class MedicamentoInDTO {
 
 //salvar medicamento sem interagir com as doaçoes
 	public Medicamento transformarParaObjSalvar() {
-		return new Medicamento( nome, principio, tipoReceita, data, dataValidade, tarja, tipoArmazenamento,
+		return new Medicamento( nome, principio, tipoReceita, data, dataValidadeLocalDate, tarja, tipoArmazenamento,
 				quantidade, fullDoacaoIn);
 	}
 
@@ -79,12 +82,12 @@ public class MedicamentoInDTO {
 		this.data = data;
 	}
 
-	public Date getDataVencimento() {
-		return dataValidade;
+	public LocalDate getDataVencimentoLocalDate() {
+		return dataValidadeLocalDate;
 	}
 
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataValidade = dataVencimento;
+	public void setDataVencimentoLocalDate(LocalDate dataVencimento) {
+		this.dataValidadeLocalDate = dataVencimento;
 	}
 
 	public String getTarja() {
@@ -133,6 +136,14 @@ public class MedicamentoInDTO {
 
 	public void setIdDoacaoIn(long idDoacaoIn) {
 		this.idDoacaoIn = idDoacaoIn;
+	}
+
+	public String getDataValidade() {
+		return dataValidade;
+	}
+
+	public void setDataValidade(String dataValidade) {
+		this.dataValidade = dataValidade;
 	}
 
 }

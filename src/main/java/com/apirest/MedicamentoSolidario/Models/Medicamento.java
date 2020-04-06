@@ -28,7 +28,7 @@ public class Medicamento {
 	@NotBlank
 	private LocalDate data;
 	@NotBlank
-	private Date dataValidade;
+	private LocalDate dataValidade;
 	private String tarja;
 	@NotBlank
 	private String tipoArmazenamento;
@@ -46,7 +46,7 @@ public class Medicamento {
 		super();
 	}
 	
-	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDate data, Date dataVencimento,
+	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
 			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
 		this.id = id;
 		this.nome = nome;
@@ -60,7 +60,7 @@ public class Medicamento {
 		this.doacao_in = fullDoacaoIn;
 	}
 	
-	public Medicamento( String nome, String principio, String tipoReceita, LocalDate data, Date dataVencimento,
+	public Medicamento( String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
 			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
 		this.nome = nome;
 		this.principio = principio;
@@ -110,10 +110,10 @@ public class Medicamento {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public Date getDataVencimento() {
+	public LocalDate getDataVencimento() {
 		return dataValidade;
 	}
-	public void setDataVencimento(Date dataVencimento) {
+	public void setDataVencimento(LocalDate dataVencimento) {
 		this.dataValidade = dataVencimento;
 	}
 	public String getTarja() {

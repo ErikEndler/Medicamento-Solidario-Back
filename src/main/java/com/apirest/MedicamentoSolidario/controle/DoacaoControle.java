@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.rmi.CORBA.UtilDelegate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
+import com.apirest.MedicamentoSolidario.config.DataUtil;
 import com.apirest.MedicamentoSolidario.dto.DoacaoDTO;
 import com.apirest.MedicamentoSolidario.dto.DoacaoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoInDTO;
@@ -21,14 +24,23 @@ import com.apirest.MedicamentoSolidario.repository.DoacaoRepository;
 public class DoacaoControle {
 	@Autowired
 	DoacaoRepository repository;
+	@Autowired
 	MedicamentoControle medicamentoControle;
+	@Autowired
+	DataUtil dataUtil;
 
 	public Doacao salvar(DoacaoDTO doacaoDTO) {
 		doacaoDTO.setData(LocalDate.now());
 		Doacao doacao = repository.save(doacaoDTO.transformarParaObjSalvar());
 		List<MedicamentoInDTO> medicamentoIn = doacaoDTO.getMedicamentos();
 		for (MedicamentoInDTO medicamento : medicamentoIn) {
-			addIdDoacao(medicamento, doacao.getId());
+			//valida o formato da data
+			dataUtil.isDateValid(medicamento.getDataValidade());
+			//COnverte adata de string para tipo Localdate
+			LocalDate data = dataUtil.converterData(medicamento.getDataValidade());
+			//seta a data convertida na variavel
+			medicamento.setDataVencimentoLocalDate(data);
+			addIdDoacao(medicamento, doacao.getId());			
 			medicamentoControle.salvar(medicamento.transformarParaObjSalvar());
 		}
 		return doacao;
