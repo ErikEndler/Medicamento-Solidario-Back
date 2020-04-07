@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.rmi.CORBA.UtilDelegate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +26,15 @@ public class DoacaoControle {
 	MedicamentoControle medicamentoControle;
 	@Autowired
 	DataUtil dataUtil;
+	@Autowired
+	UsuarioControle controleUsuario;
+	@Autowired
+	PontoColetaControle controlePonto;
 
 	public Doacao salvar(DoacaoDTO doacaoDTO) {
 		doacaoDTO.setData(LocalDate.now());
 		Doacao doacao = repository.save(doacaoDTO.transformarParaObjSalvar());
+		doacaoDTO=setIDS(doacaoDTO);
 		List<MedicamentoInDTO> medicamentoIn = doacaoDTO.getMedicamentos();
 		for (MedicamentoInDTO medicamento : medicamentoIn) {
 			//valida o formato da data
@@ -86,6 +89,12 @@ public class DoacaoControle {
 	protected String MenssagemErro() {
 		String msg = "Doação";
 		return msg;
+	}
+	public DoacaoDTO setIDS(DoacaoDTO doacaoDTO) {
+		doacaoDTO.setDoador(controleUsuario.listar(doacaoDTO.getIdDoador()).get());
+		doacaoDTO.setVoluntario(controleUsuario.listar(doacaoDTO.getIdVoluntario()).get());
+		doacaoDTO.setPonto(controlePonto.listar(doacaoDTO.getIdPonto()).get());
+		return doacaoDTO;
 	}
 
 	// ------------
