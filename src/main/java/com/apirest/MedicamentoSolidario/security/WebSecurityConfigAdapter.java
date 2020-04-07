@@ -1,6 +1,13 @@
 package com.apirest.MedicamentoSolidario.security;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,6 +18,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
@@ -21,7 +31,7 @@ import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
-
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	@Autowired
@@ -31,13 +41,15 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		if (this.usuarioRepository.count() == 0) {
 			if (rolerepository.count() == 0) {
 				cadastrarRoles();
 			}
 			cadastraUsuario(usuarioRepository);
 		}
-		http.cors().configurationSource(request -> new  CorsConfiguration().applyPermitDefaultValues());;
+		//http.cors().disable();
+		//http.cors().configurationSource(request -> new  CorsConfiguration().applyPermitDefaultValues());
 		http.csrf().disable();
 		http.authorizeRequests()
 		.antMatchers(publicEndPoints()).permitAll()
@@ -45,7 +57,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST).permitAll()
 		.antMatchers(HttpMethod.PUT).permitAll()
 		.antMatchers(HttpMethod.DELETE).permitAll()
-		.antMatchers(HttpMethod.OPTIONS).permitAll()
+		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		//.antMatchers(HttpMethod.GET,  "/api/usuario**").permitAll()
 		//.antMatchers(HttpMethod.GET,  "/api/pontoColeta**").permitAll()
 		.antMatchers(HttpMethod.GET).permitAll()
@@ -94,6 +106,20 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 	
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	public CorsFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		config.setMaxAge(3600L);
+		config.setAllowedOrigins(Arrays.asList("*"));
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("**", config);
+		
+		return new CorsFilter(source);
 	}
 //	@Bean
 //	  CorsConfigurationSource corsConfigurationSource() {

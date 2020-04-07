@@ -19,21 +19,28 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import io.jsonwebtoken.Jwts;
 
-
 public class JWTAutorizacaoFilter extends BasicAuthenticationFilter {
-	
-	private MyUserDetailsService myUserDetailsService;
-	//private UsuarioRepository ur;
 
-	public JWTAutorizacaoFilter(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService) {
+	private MyUserDetailsService myUserDetailsService;
+	// private UsuarioRepository ur;
+
+	public JWTAutorizacaoFilter(AuthenticationManager authenticationManager,
+			MyUserDetailsService myUserDetailsService) {
 		super(authenticationManager);
 		this.myUserDetailsService = myUserDetailsService;
-		
+
 	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String header = request.getHeader(HEADER_STRING);
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
 		if (header == null || !header.startsWith(TOKEN_PREFIX)) {
 			chain.doFilter(request, response);
 			return;
@@ -47,16 +54,14 @@ public class JWTAutorizacaoFilter extends BasicAuthenticationFilter {
 		String token = request.getHeader(HEADER_STRING);
 		if (token == null)
 			return null;
-		String username = Jwts.parser()
-				.setSigningKey(SECRET)
-				.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-				.getBody()
+		String username = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
 				.getSubject();
-		//Usuario user = ur .findByCpf(username);
-		//System.out.println("USERNAME : "+username);
-		//System.out.println("USERNAME : "+myUserDetailsService.loadUserByUsername(username));
+		// Usuario user = ur .findByCpf(username);
+		// System.out.println("USERNAME : "+username);
+		// System.out.println("USERNAME :
+		// "+myUserDetailsService.loadUserByUsername(username));
 		UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
-		//System.out.println("USERNAME : "+userDetails);
+		// System.out.println("USERNAME : "+userDetails);
 		return username != null
 				? new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
 				: null;
