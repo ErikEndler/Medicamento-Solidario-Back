@@ -20,19 +20,13 @@ public class Medicamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@NotBlank
-	private String nome;
-	@NotBlank
+	private String nome;	
 	private String principio;
 	private String tipoReceita;
-	@NotBlank
 	private LocalDate data;
-	@NotBlank
 	private LocalDate dataValidade;
 	private String tarja;
-	@NotBlank
 	private String tipoArmazenamento;
-	@NotBlank
 	private int quantidade;
 	private boolean status;	
 	@ManyToOne

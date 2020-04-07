@@ -18,15 +18,16 @@ public class MedicamentoInDTO {
 	@NotBlank(message="Informe o Principio Ativo")
 	private String principio;	
 	private String tipoReceita;
-	private LocalDate data;	
 	private String tarja;
-	@NotBlank(message="")
+	@NotBlank(message="Tipo armazenamento erro")
 	private String tipoArmazenamento;
 	@NotBlank(message="Informe a Quantidade")
 	private int quantidade;
 	@NotBlank(message="Data de validade Obrigatória")
 	private String dataValidade;
 	
+	@JsonIgnore
+	private LocalDate data;	
 	@JsonIgnore
 	private LocalDate dataValidadeLocalDate;
 	@JsonIgnore
