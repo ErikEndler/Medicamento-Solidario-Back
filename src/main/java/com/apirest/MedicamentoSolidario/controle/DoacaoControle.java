@@ -46,9 +46,9 @@ public class DoacaoControle {
 			// COnverte adata de string para tipo Localdate
 			LocalDate data = dataUtil.converterData(medicamento.getDataValidade());
 			// seta a data convertida na variavel
-			medicamento.setDataVencimentoLocalDate(data);
+			medicamento.setlocalDateDataValidade(data);
 			System.out.println("STRING :"+medicamento.getDataValidade());
-			System.out.println("LOCALDATE:"+medicamento.getDataVencimentoLocalDate());
+			System.out.println("LOCALDATE:"+medicamento.getlocalDateDataValidade());
 			medicamento.setData(LocalDate.now());
 			medicamento = addIdDoacao(medicamento, doacao.getId());
 			Medicamento med =medicamentoControle.salvar(medicamento.transformarParaObjSalvar());

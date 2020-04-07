@@ -29,10 +29,11 @@ public class PedidoDTO {
 	private Usuario usuario;
 	private int idUsauruaio;
 
-	@JsonIgnore
+	
 	private List<MedicamentoDTO> medicamentosDTO;
 	@JsonIgnore
 	private List<Medicamento> medicamentos;
+	@JsonIgnore
 	private int idsMedicamentos[];
 
 	@JsonIgnore
@@ -129,6 +130,4 @@ public class PedidoDTO {
 	public List<MedicamentoDTO> getMedicamentosDTO() {
 		return medicamentosDTO;
 	}
-	
-
 }

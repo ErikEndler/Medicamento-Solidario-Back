@@ -83,12 +83,12 @@ public class MedicamentoInDTO {
 		this.data = data;
 	}
 
-	public LocalDate getDataVencimentoLocalDate() {
+	public LocalDate getlocalDateDataValidade() {
 		return localDateDataValidade;
 	}
 
-	public void setDataVencimentoLocalDate(LocalDate dataVencimento) {
-		this.localDateDataValidade = dataVencimento;
+	public void setlocalDateDataValidade(LocalDate dataValidade) {
+		this.localDateDataValidade = dataValidade;
 	}
 
 	public String getTarja() {

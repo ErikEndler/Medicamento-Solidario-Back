@@ -74,11 +74,11 @@ public class MedicamentoDTO {
 		this.data = data;
 	}
 
-	public LocalDate getDataVencimentoLocalDate() {
+	public LocalDate getDataValidadeLocalDate() {
 		return dataValidadeLocalDate;
 	}
 
-	public void setDataVencimentoLocalDate(LocalDate dataVencimento) {
+	public void setDataValidadeLocalDate(LocalDate dataVencimento) {
 		this.dataValidadeLocalDate = dataVencimento;
 	}
 
