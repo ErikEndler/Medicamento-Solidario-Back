@@ -20,18 +20,18 @@ public class DoacaoRespostaDTO {
 	public DoacaoRespostaDTO(long id, LocalDate data, String obs, long idDoador, long idVoluntario, List<Medicamento> lista,
 			long idPonto) {
 		super();
+		
 		this.id = id;
 		this.data = data;
 		this.obs = obs;
 		this.idDoador = idDoador;
 		this.idVoluntario = idVoluntario;
 		this.idPonto = idPonto;
-		for (Medicamento medicamento : lista) {
-			List<MedicamentoRespostaDTO> listaMed = new ArrayList<MedicamentoRespostaDTO>();
-			listaMed.add(MedicamentoRespostaDTO.transformaEmDTOList(medicamento));
-			setMedicamentos(listaMed);
-			
-		}		
+		List<MedicamentoRespostaDTO> listaMed = new ArrayList<MedicamentoRespostaDTO>();
+		for (Medicamento medicamento : lista) {			
+			listaMed.add(MedicamentoRespostaDTO.transformaEmDTOList(medicamento));			
+		}	
+		this.setMedicamentos(listaMed);
 	}
 
 	public static DoacaoRespostaDTO transformaEmDTO(Doacao doacao) {

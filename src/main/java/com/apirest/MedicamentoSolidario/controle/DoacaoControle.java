@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
+import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.config.DataUtil;
 import com.apirest.MedicamentoSolidario.dto.DoacaoDTO;
 import com.apirest.MedicamentoSolidario.dto.DoacaoRespostaDTO;
@@ -38,6 +39,7 @@ public class DoacaoControle {
 		Doacao doacao = repository.save(doacaoDTO.transformarParaObjSalvar());
 
 		List<MedicamentoInDTO> medicamentoIn = doacaoDTO.getMedicamentos();
+		List<Medicamento> medicamentoList = new ArrayList<Medicamento>();
 		for (MedicamentoInDTO medicamento : medicamentoIn) {
 			// valida o formato da data
 			dataUtil.isDateValid(medicamento.getDataValidade());
@@ -49,8 +51,10 @@ public class DoacaoControle {
 			System.out.println("LOCALDATE:"+medicamento.getDataVencimentoLocalDate());
 			medicamento.setData(LocalDate.now());
 			medicamento = addIdDoacao(medicamento, doacao.getId());
-			medicamentoControle.salvar(medicamento.transformarParaObjSalvar());
+			Medicamento med =medicamentoControle.salvar(medicamento.transformarParaObjSalvar());
+			medicamentoList.add(med);
 		}
+		doacao.setMedicamento(medicamentoList);
 		return doacao;
 	}
 

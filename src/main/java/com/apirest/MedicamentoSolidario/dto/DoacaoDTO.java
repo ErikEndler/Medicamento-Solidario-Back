@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class DoacaoDTO {
 
 	private long id;
-	private LocalDate data;
+	
 	private String obs;
 	@NotNull(message="Falta referencia do doador 'ID'")
 	private long idDoador;
@@ -21,6 +21,9 @@ public class DoacaoDTO {
 	private long idVoluntario;
 	@NotNull(message="Falta referencia do Ponto de Coleta 'ID'")
 	private long idPonto;
+	
+	@JsonIgnore
+	private LocalDate data;
 	@JsonIgnore
 	private PontoColeta ponto;
 	@JsonIgnore

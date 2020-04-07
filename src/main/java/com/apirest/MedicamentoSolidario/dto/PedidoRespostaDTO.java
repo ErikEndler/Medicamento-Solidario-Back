@@ -31,9 +31,7 @@ public class PedidoRespostaDTO {
 		for (Medicamento medicamento : medicamentosID2) {
 			lista.add(medicamento.getId());
 		}
-		return lista;
-		
-				
+		return lista;				
 	}
 
 	public static PedidoRespostaDTO transformaEmDTO(Pedido pedido) {

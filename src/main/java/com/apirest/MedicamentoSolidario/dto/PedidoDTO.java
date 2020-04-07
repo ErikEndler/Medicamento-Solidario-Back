@@ -30,6 +30,8 @@ public class PedidoDTO {
 	private int idUsauruaio;
 
 	@JsonIgnore
+	private List<MedicamentoDTO> medicamentosDTO;
+	@JsonIgnore
 	private List<Medicamento> medicamentos;
 	private int idsMedicamentos[];
 
@@ -38,25 +40,12 @@ public class PedidoDTO {
 	private int idRecebimento;
 
 	public Pedido transformarParaObjSalvar() {
-		this.usuario = controleUsuario.listar(id).get();
-		this.medicamentos = listarMeds(this.idsMedicamentos);
 		return new Pedido(justificativa, data, usuario, medicamentos);
-	}
-
-	// metodo para preencher a lista de medicamentos com os ids recebidos pelo
-	// endpoint
-	private List<Medicamento> listarMeds(int[] idMedicamentos2) {
-		List<Medicamento> listaM = new ArrayList<Medicamento>();
-		for (int i : idMedicamentos2) {
-			listaM.add(controleMedicamento.listar(i).get());
-		}
-		return listaM;
 	}
 
 	public Pedido transformarParaObjEditar() {
 		this.usuario = controleUsuario.listar(id).get();
-		// this.medicamentos=controleMedicamento.listar(id).get();
-		this.medicamentos = listarMeds(this.idsMedicamentos);
+	
 		return new Pedido(id, justificativa, data, usuario, medicamentos);
 	}
 
@@ -128,5 +117,18 @@ public class PedidoDTO {
 	public void setRecebimentoID(int recebimentoID) {
 		this.idRecebimento = recebimentoID;
 	}
+
+	public List<Medicamento> getMedicamentos() {
+		return medicamentos;
+	}
+
+	public void setMedicamentos(List<Medicamento> medicamentos) {
+		this.medicamentos = medicamentos;
+	}
+
+	public List<MedicamentoDTO> getMedicamentosDTO() {
+		return medicamentosDTO;
+	}
+	
 
 }

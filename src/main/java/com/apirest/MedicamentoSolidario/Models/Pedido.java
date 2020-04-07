@@ -41,8 +41,7 @@ public class Pedido {
 		this.justificativa=justificativa2;
 		this.data=data2;
 		this.usuario=usuario;
-		this.medicamentos = medicamentos2;
-		
+		this.medicamentos = medicamentos2;		
 	}
 
 	public Pedido(String justificativa2, LocalDate data2, Usuario usuario2, List<Medicamento> medicamentos2) {
@@ -98,7 +97,5 @@ public class Pedido {
 
 	public void setRecebimento(Recebimento recebimento) {
 		this.recebimento = recebimento;
-	}
-	
-	
+	}	
 }
