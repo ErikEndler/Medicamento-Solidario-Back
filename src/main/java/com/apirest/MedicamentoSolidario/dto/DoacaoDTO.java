@@ -3,7 +3,7 @@ package com.apirest.MedicamentoSolidario.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.PontoColeta;
@@ -15,11 +15,11 @@ public class DoacaoDTO {
 	private long id;
 	private LocalDate data;
 	private String obs;
-	@NotBlank(message="Falta referencia do doador 'ID'")
+	@NotNull(message="Falta referencia do doador 'ID'")
 	private long idDoador;
-	@NotBlank(message="Falta referencia do Responsavel 'ID'")
+	@NotNull(message="Falta referencia do Responsavel 'ID'")
 	private long idVoluntario;
-	@NotBlank(message="Falta referencia do Ponto de Coleta 'ID'")
+	@NotNull(message="Falta referencia do Ponto de Coleta 'ID'")
 	private long idPonto;
 	@JsonIgnore
 	private PontoColeta ponto;
@@ -27,7 +27,7 @@ public class DoacaoDTO {
 	private Usuario doador;
 	@JsonIgnore
 	private Usuario voluntario;
-	@NotBlank(message="Deve haver medicamentos na Doação")
+	@NotNull(message="Deve haver medicamentos na Doação")
 	private List<MedicamentoInDTO> medicamentos;
 
 	public Doacao transformarParaObjSalvar() {		

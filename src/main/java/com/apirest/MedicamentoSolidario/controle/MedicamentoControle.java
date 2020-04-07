@@ -89,7 +89,9 @@ public class MedicamentoControle {
 
 	// verifica se a doação aq ual medicamento esta atrelado existe
 	private void verificadoacaoExiste(Medicamento med) {
-		med.getDoacao_in();
+		if(med.getDoacao_in()==null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " Falha ao pegar DOACAO ");
+		}
 	}
 
 	// busca a doação pelo id recebido na requisisao e coloca no medicamentoDTO

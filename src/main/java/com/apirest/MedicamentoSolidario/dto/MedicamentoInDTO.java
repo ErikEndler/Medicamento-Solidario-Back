@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
@@ -21,7 +22,7 @@ public class MedicamentoInDTO {
 	private String tarja;
 	@NotBlank(message="Tipo armazenamento erro")
 	private String tipoArmazenamento;
-	@NotBlank(message="Informe a Quantidade")
+	@NotNull(message="Informe a Quantidade")
 	private int quantidade;
 	@NotBlank(message="Data de validade Obrigatória")
 	private String dataValidade;

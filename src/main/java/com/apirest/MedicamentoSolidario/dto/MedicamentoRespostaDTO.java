@@ -3,7 +3,9 @@ package com.apirest.MedicamentoSolidario.dto;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.Models.Recebimento;
 
 public class MedicamentoRespostaDTO {
 	
@@ -34,7 +36,7 @@ public class MedicamentoRespostaDTO {
 	}
 	
 	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDate data,
-			LocalDate dataVencimento, String tarja, String tipoArmazenamento, long idIn, long idOut, int quantidade) {
+			LocalDate dataVencimento, String tarja, String tipoArmazenamento, Doacao doacao, Recebimento recebimento, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -44,8 +46,10 @@ public class MedicamentoRespostaDTO {
 		this.dataValidade = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
-		this.setIdDoacaoIn(idIn);
-		this.setIdDoacaoIn(idOut);
+		this.setIdDoacaoIn(doacao.getId());
+		if(recebimento!=null) {
+			this.setIdDoacaoIn(recebimento.getId());
+		}		
 		this.quantidade = quantidade;
 	}
 
@@ -61,7 +65,8 @@ public class MedicamentoRespostaDTO {
 				medicamento.getQuantidade());
 	}
 	public static MedicamentoRespostaDTO transformaEmDTOList(Medicamento medicamento) {
-		return new MedicamentoRespostaDTO(medicamento.getId(), 
+		return new MedicamentoRespostaDTO(
+				medicamento.getId(), 
 				medicamento.getNome(),
 				medicamento.getPrincipio(),
 				medicamento.getTipoReceita(), 
@@ -69,9 +74,10 @@ public class MedicamentoRespostaDTO {
 				medicamento.getDataVencimento(), 
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(),
-				medicamento.getDoacao_in().getId(),
-				medicamento.getDoacao_out().getId(),
-				medicamento.getQuantidade());				
+				medicamento.getDoacao_in(),
+				medicamento.getDoacao_out(),
+				medicamento.getQuantidade()
+				);				
 	}
 
 	public long getId() {

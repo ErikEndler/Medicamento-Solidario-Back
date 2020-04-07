@@ -33,17 +33,22 @@ public class DoacaoControle {
 
 	public Doacao salvar(DoacaoDTO doacaoDTO) {
 		doacaoDTO.setData(LocalDate.now());
+		System.out.println("DATA : " + doacaoDTO.getData());
+		doacaoDTO = setIDS(doacaoDTO);
 		Doacao doacao = repository.save(doacaoDTO.transformarParaObjSalvar());
-		doacaoDTO=setIDS(doacaoDTO);
+
 		List<MedicamentoInDTO> medicamentoIn = doacaoDTO.getMedicamentos();
 		for (MedicamentoInDTO medicamento : medicamentoIn) {
-			//valida o formato da data
+			// valida o formato da data
 			dataUtil.isDateValid(medicamento.getDataValidade());
-			//COnverte adata de string para tipo Localdate
+			// COnverte adata de string para tipo Localdate
 			LocalDate data = dataUtil.converterData(medicamento.getDataValidade());
-			//seta a data convertida na variavel
+			// seta a data convertida na variavel
 			medicamento.setDataVencimentoLocalDate(data);
-			addIdDoacao(medicamento, doacao.getId());			
+			System.out.println("STRING :"+medicamento.getDataValidade());
+			System.out.println("LOCALDATE:"+medicamento.getDataVencimentoLocalDate());
+			medicamento.setData(LocalDate.now());
+			medicamento = addIdDoacao(medicamento, doacao.getId());
 			medicamentoControle.salvar(medicamento.transformarParaObjSalvar());
 		}
 		return doacao;
@@ -90,6 +95,7 @@ public class DoacaoControle {
 		String msg = "Doação";
 		return msg;
 	}
+
 	public DoacaoDTO setIDS(DoacaoDTO doacaoDTO) {
 		doacaoDTO.setDoador(controleUsuario.listar(doacaoDTO.getIdDoador()).get());
 		doacaoDTO.setVoluntario(controleUsuario.listar(doacaoDTO.getIdVoluntario()).get());

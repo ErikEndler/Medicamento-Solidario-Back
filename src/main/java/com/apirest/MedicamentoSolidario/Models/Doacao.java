@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="TB_DOACAO")
@@ -20,7 +19,6 @@ public class Doacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@NotBlank
 	private LocalDate data;
 	private String obs;
 	
@@ -35,6 +33,10 @@ public class Doacao {
 	
 	@OneToMany(mappedBy = "doacao_in")
 	private List<Medicamento> medicamento;
+	
+	public Doacao() {
+		super();
+	}
 
 	public Doacao(long id2, LocalDate data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
 		this.id=id2;
