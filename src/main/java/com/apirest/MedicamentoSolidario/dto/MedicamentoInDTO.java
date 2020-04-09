@@ -24,7 +24,7 @@ public class MedicamentoInDTO {
 	@NotNull(message="Informe a Quantidade")
 	private int quantidade;
 	@NotBlank(message="Data de validade Obrigatória")
-	private String dataVencimento;
+	private String dataValidade;
 	
 	@JsonIgnore
 	private LocalDate data;	
@@ -140,10 +140,10 @@ public class MedicamentoInDTO {
 	}
 
 	public String getDataValidade() {
-		return dataVencimento;
+		return dataValidade;
 	}
 
 	public void setDataValidade(String dataValidade) {
-		this.dataVencimento = dataValidade;
+		this.dataValidade = dataValidade;
 	}
 }
