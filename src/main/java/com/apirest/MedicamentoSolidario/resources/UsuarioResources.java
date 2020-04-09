@@ -45,7 +45,7 @@ public class UsuarioResources {
 	@GetMapping("/cpf{cpf}")
 	public ResponseEntity<?> buscaCPF(@PathVariable(value = "cpf") String cpf) {
 		Usuario user = usuarioControle.buscaCpf(cpf);
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return new ResponseEntity<>(UsuarioRespostaDTO.transformaEmDTO(user), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Retorna um Usuario unico pelo ID")
