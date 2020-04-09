@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.controle.MedicamentoControle;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
+import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,12 +34,23 @@ public class MedicamentoResources {
 
 	@Autowired
 	MedicamentoControle controle;
-
+//	@Autowired
+//	MedicamentoRepository repository;
+//
+//	@ApiOperation(value = "Retorna medicamentos pelo ponto")
+//	@GetMapping("/ponto{ponto}")
+//	public ResponseEntity<?> listarPorPontos(@PathVariable(value = "ponto") PontoColeta ponto){
+//		repository.findByPonto(ponto);
+//		return new ResponseEntity<>(repository.findByPonto(ponto),HttpStatus.OK);		
+//	}
+	
 	@ApiOperation(value = "Retorna uma lista de Medicamentos")
 	@GetMapping("")
 	public ResponseEntity<?> listarTodos() {
 		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
+	
+
 
 	@ApiOperation(value = "Retorna um Medicamento unico")
 	@GetMapping("/{id}")
@@ -66,5 +79,7 @@ public class MedicamentoResources {
 		controle.deletarById(id);
 		return new ResponseEntity<>( HttpStatus.OK);
 	}
+	
+	
 
 }

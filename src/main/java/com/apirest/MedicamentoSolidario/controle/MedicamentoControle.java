@@ -63,7 +63,7 @@ public class MedicamentoControle {
 		//pega a data em string e converteem Localdate
 		LocalDate data =dataUtil.converterData(medicamentoDTO.getDataValidade());
 		//pega a data convertida e adiciona a variavel tipo localdate
-		medicamentoDTO.setDataVencimentoLocalDate(data);
+		medicamentoDTO.setDataValidadeLocalDate(data);
 		verifyIfObjectExists(medicamentoDTO.getId());
 		medicamentoDTO = setDoacao(medicamentoDTO);
 		return repository.save(medicamentoDTO.TransformarParaObjEditar());

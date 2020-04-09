@@ -8,5 +8,5 @@ import com.apirest.MedicamentoSolidario.Models.Medicamento;
 
 public interface MedicamentoRepository extends PagingAndSortingRepository<Medicamento, Long> {
 	Optional<Medicamento> findById(long id);
-
+	
 }

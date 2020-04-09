@@ -104,8 +104,8 @@ public class UsuarioControle {
 
 	public Usuario buscaCpf(String cpf) {
 		Usuario user = usuarioRepository.findByCpf(cpf);
-		if (user != null) {
-			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  CPF: " + user.getCpf());
+		if (user == null) {
+			throw new ResourceNotFoundException(MenssagemErro() + "  não existente para o  CPF: " + user.getCpf());
 		}
 		return user;
 	}
