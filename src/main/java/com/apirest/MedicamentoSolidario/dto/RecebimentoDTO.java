@@ -1,6 +1,5 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;

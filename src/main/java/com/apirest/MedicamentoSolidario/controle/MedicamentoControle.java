@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.config.DataUtil;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.DoacaoRepository;
 import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
+import com.apirest.MedicamentoSolidario.repository.PontoColetaRepository;
 
 @Service
 public class MedicamentoControle {
@@ -23,6 +25,8 @@ public class MedicamentoControle {
 	MedicamentoRepository repository;
 	@Autowired
 	DoacaoRepository doacaoRepositoy;
+	@Autowired
+	PontoColetaRepository pontoColetaRepository;
 	@Autowired
 	DataUtil dataUtil;
 
@@ -36,6 +40,22 @@ public class MedicamentoControle {
 			medicamento.setDoacao_out(null);
 			medicamento.setStatus(false);
 			return repository.save(medicamento);
+		}
+	}
+
+	public List<MedicamentoRespostaDTO> listarPorPonto(long pontoID) {
+		verificaPonto(pontoID);
+		List<Medicamento> lista = repository.findMedicamentosByPonto(pontoID);
+		List<MedicamentoRespostaDTO> result = new ArrayList<>();
+		for (Medicamento medicamento : lista) {
+			result.add(MedicamentoRespostaDTO.transformaEmDTOList(medicamento));
+		}
+		return result;
+	}
+	private void verificaPonto(long pontoID) {
+		Optional<PontoColeta> ponto = pontoColetaRepository.findById(pontoID);
+		if (!ponto.isPresent()) {
+			throw new ResourceNotFoundException( " Ponto de Coleta solicitado nao existente  " );
 		}
 	}
 
@@ -60,9 +80,9 @@ public class MedicamentoControle {
 	}
 
 	public Medicamento atualizar(MedicamentoDTO medicamentoDTO) {
-		//pega a data em string e converteem Localdate
-		LocalDate data =dataUtil.converterData(medicamentoDTO.getDataValidade());
-		//pega a data convertida e adiciona a variavel tipo localdate
+		// pega a data em string e converteem Localdate
+		LocalDate data = dataUtil.converterData(medicamentoDTO.getDataValidade());
+		// pega a data convertida e adiciona a variavel tipo localdate
 		medicamentoDTO.setDataValidadeLocalDate(data);
 		verifyIfObjectExists(medicamentoDTO.getId());
 		medicamentoDTO = setDoacao(medicamentoDTO);
@@ -89,7 +109,7 @@ public class MedicamentoControle {
 
 	// verifica se a doação aq ual medicamento esta atrelado existe
 	private void verificadoacaoExiste(Medicamento med) {
-		if(med.getDoacao_in()==null) {
+		if (med.getDoacao_in() == null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Falha ao pegar DOACAO ");
 		}
 	}

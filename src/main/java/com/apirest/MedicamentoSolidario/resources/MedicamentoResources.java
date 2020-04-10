@@ -1,5 +1,6 @@
 package com.apirest.MedicamentoSolidario.resources;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
-import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.controle.MedicamentoControle;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
@@ -34,23 +34,21 @@ public class MedicamentoResources {
 
 	@Autowired
 	MedicamentoControle controle;
-//	@Autowired
-//	MedicamentoRepository repository;
+	@Autowired
+	MedicamentoRepository repository;
 //
-//	@ApiOperation(value = "Retorna medicamentos pelo ponto")
-//	@GetMapping("/ponto{ponto}")
-//	public ResponseEntity<?> listarPorPontos(@PathVariable(value = "ponto") PontoColeta ponto){
-//		repository.findByPonto(ponto);
-//		return new ResponseEntity<>(repository.findByPonto(ponto),HttpStatus.OK);		
-//	}
+	@ApiOperation(value = "Retorna medicamentos pelo ponto")
+	@GetMapping("/ponto{ponto}")
+	public ResponseEntity<?> listarPorPontos(@PathVariable(value = "ponto") long ponto){
+		List<MedicamentoRespostaDTO> medList = controle.listarPorPonto(ponto);
+		return new ResponseEntity<>(medList,HttpStatus.OK);		
+	}
 	
 	@ApiOperation(value = "Retorna uma lista de Medicamentos")
 	@GetMapping("")
 	public ResponseEntity<?> listarTodos() {
 		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
-	
-
 
 	@ApiOperation(value = "Retorna um Medicamento unico")
 	@GetMapping("/{id}")

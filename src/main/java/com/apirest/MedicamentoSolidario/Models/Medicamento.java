@@ -1,6 +1,5 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="TB_MEDICAMENTO")

@@ -50,13 +50,10 @@ public class Usuario implements UserDetails {
 	
 	@OneToMany(mappedBy = "doador")
 	private List<Doacao> medicamentoDoado;
-	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "voluntario")
 	private List<Doacao> medicamentoIntermediado;
-	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "voluntario")
 	private List<Recebimento> medicamentoIntermediado_out;
-	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "usuario")
 	private List<Pedido> pedidos;
 	

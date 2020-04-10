@@ -1,6 +1,5 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
