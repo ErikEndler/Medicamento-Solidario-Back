@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.controle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.apirest.MedicamentoSolidario.Email.Mailer;
+import com.apirest.MedicamentoSolidario.Email.Mensagem;
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.config.DataUtil;
@@ -26,6 +29,8 @@ public class UsuarioControle {
 	RoleRepository roleRepository;
 	@Autowired
 	DataUtil dataUtil;
+	@Autowired
+	Mailer mailer;
 
 	public Usuario salvar2(UsuarioDTO userDTO) {
 		verificaData(userDTO);
@@ -123,6 +128,23 @@ public class UsuarioControle {
 	public void deletar(Usuario usuario) {
 		verifyIfObjectExists(usuario.getId());
 		usuarioRepository.delete(usuario);
+	}
+
+	public void emailSenha(String cpf) {
+		Usuario user = usuarioRepository.findByCpf(cpf);
+		if(user==null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " NAO ENCONTRADO para cpf "+cpf);
+		}
+		String remetente = "contato.medicamentosolidario@gmail.com";
+		String destino = user.getEmail();
+		if(destino == null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " Não possui Email cadastrado ");
+		}
+		String assunto= "Redfinição de senha";
+		String corpo =  "Olá! \n\n Segue seu codigo para redefinir senha \n\n XXXXX";
+
+				mailer.enviar(new Mensagem(remetente, destino,
+						assunto,corpo));
 	}
 
 	// ---------------------// METODOS DE VALISAÇAO //------------------------------

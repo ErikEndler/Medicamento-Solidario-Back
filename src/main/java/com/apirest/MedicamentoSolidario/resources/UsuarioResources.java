@@ -40,6 +40,12 @@ public class UsuarioResources {
 	public ResponseEntity<?> listarTodos() {
 		return new ResponseEntity<>(usuarioControle.listarTodosNormal(), HttpStatus.OK);
 	}
+	@ApiOperation(value = "Envia email de recuperação de senha")
+	@GetMapping("/email/{cpf}")
+	public ResponseEntity<?> enviarEmail(@PathVariable(value = "cpf") String cpf){
+		usuarioControle.emailSenha(cpf);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Retorna um Usuario unico pelo CPF")
 	@GetMapping("/cpf{cpf}")
