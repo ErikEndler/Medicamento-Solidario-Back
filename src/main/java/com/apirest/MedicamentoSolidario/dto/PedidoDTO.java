@@ -117,15 +117,15 @@ public class PedidoDTO {
 		this.idRecebimento = recebimentoID;
 	}
 
-	public List<Medicamento> getMedicamentos() {
+	public List<Medicamento> getMedicamentosFull() {
 		return medicamentosFull;
 	}
 
-	public void setMedicamentos(List<Medicamento> medicamentos) {
+	public void setMedicamentosFull(List<Medicamento> medicamentos) {
 		this.medicamentosFull = medicamentos;
 	}
 
-	public List<MedicamentoDTO> getMedicamentosDTO() {
+	public List<MedicamentoDTO> getMedicamentos() {
 		return medicamentos;
 	}
 }
