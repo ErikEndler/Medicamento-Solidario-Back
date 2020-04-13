@@ -77,19 +77,6 @@ public class UsuarioControle {
 		return userDTO;
 	}
 
-	// função que busca no banco a role recebida no formulario
-	private Role findRole(String pRole) {
-		pRole.toUpperCase();
-		if (pRole.contains("ADMIN")) {
-			return roleRepository.findByNameRole("ROLE_ADMIN");
-		} else if (pRole.contains("INTERMEDIADOR")) {
-			return roleRepository.findByNameRole("ROLE_INTERMEDIADOR");
-		} else if (pRole.contains("USER")) {
-			return roleRepository.findByNameRole("ROLE_USER");
-		} else
-			throw new ResourceNotFoundException(pRole + " ROLE INVALIDA PARA CADASTRO! ");
-	}
-
 	public Iterable<UsuarioRespostaDTO> listarTodosNormal() {
 		Iterable<Usuario> listar = usuarioRepository.findAll();
 		List<UsuarioRespostaDTO> result = new ArrayList<UsuarioRespostaDTO>();
@@ -132,40 +119,41 @@ public class UsuarioControle {
 
 	public void emailSenha(String cpf) {
 		Usuario user = usuarioRepository.findByCpf(cpf);
-		if(user==null) {
-			throw new ResourceNotFoundException(MenssagemErro() + " NAO ENCONTRADO para cpf "+cpf);
+		if (user == null) {
+			throw new ResourceNotFoundException(MenssagemErro() + " NAO ENCONTRADO para cpf " + cpf);
 		}
 		String remetente = "contato.medicamentosolidario@gmail.com";
 		String destino = user.getEmail();
-		if(destino == null) {
+		if (destino == null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Não possui Email cadastrado ");
 		}
-		String assunto= "Redfinição de senha";
-		String corpo =  "Olá! \n\n Segue seu codigo para redefinir senha \n\n XXXXX";
+		String assunto = "Redfinição de senha";
+		//implementar geração de codigo
+		String corpo = "Olá! \n\n Segue seu codigo para redefinir senha \n\n XXXXX";
 
-				mailer.enviar(new Mensagem(remetente, destino,
-						assunto,corpo));
+		mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
 	}
 
-	// ---------------------// METODOS DE VALISAÇAO //------------------------------
+	// função que busca no banco a role recebida no formulario
+	private Role findRole(String pRole) {
+		pRole.toUpperCase();
+		if (pRole.contains("ADMIN")) {
+			return roleRepository.findByNameRole("ROLE_ADMIN");
+		} else if (pRole.contains("INTERMEDIADOR")) {
+			return roleRepository.findByNameRole("ROLE_INTERMEDIADOR");
+		} else if (pRole.contains("USER")) {
+			return roleRepository.findByNameRole("ROLE_USER");
+		} else
+			throw new ResourceNotFoundException(pRole + " ROLE INVALIDA PARA CADASTRO! ");
+	}
+
+	// ---------------------// METODOS DE VALIDAÇAO //------------------------------
 	private void verificaData(UsuarioDTO userDTO) {
 		if (userDTO.getDataNascimento() != null) {
 			// isDateValid(userDTO.getDataNascimento());
 			dataUtil.isDateValid(userDTO.getDataNascimento());
 		}
 	}
-
-//	public void isDateValid(String dataString) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		sdf.setLenient(false); // aqui o pulo do gato
-//		try {
-//			sdf.parse(dataString);
-//			// data válida
-//		} catch (ParseException ex) {
-//			throw new ResourceNotFoundException(
-//					"Data é invalida : " + "'" + dataString + "'" + " Formato valido 'yyyy-MM-dd'");
-//		}
-//	}
 
 	private void validaRole(UsuarioDTO userDTO) {
 		if (userDTO.getRole().isEmpty()) {
@@ -184,11 +172,6 @@ public class UsuarioControle {
 		if (user != null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  CPF: " + user.getCpf());
 		}
-	}
-
-	private Optional<Usuario> verifySave(long id) {
-		Optional<Usuario> retorno = usuarioRepository.findById(id);
-		return retorno;
 	}
 
 	protected String MenssagemErro() {

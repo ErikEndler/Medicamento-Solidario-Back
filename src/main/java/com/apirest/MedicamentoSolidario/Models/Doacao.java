@@ -3,6 +3,7 @@ package com.apirest.MedicamentoSolidario.Models;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,8 @@ import javax.persistence.Table;
 // MEDICAMENTO_IN
 public class Doacao {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", insertable=false, updatable=false)
 	private long id;
 	private LocalDate data;
 	private String obs;

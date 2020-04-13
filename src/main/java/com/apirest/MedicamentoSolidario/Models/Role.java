@@ -2,6 +2,7 @@ package com.apirest.MedicamentoSolidario.Models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,8 @@ public class Role implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", insertable=false, updatable=false)
 	private long id;
 	
 	private String nameRole;

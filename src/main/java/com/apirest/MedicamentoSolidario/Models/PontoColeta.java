@@ -3,6 +3,7 @@ package com.apirest.MedicamentoSolidario.Models;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 @Table(name="TB_PONTO_DE_COLETA")
 public class PontoColeta {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", insertable=false, updatable=false)
 	private long id;
 	
 	private String nome;
