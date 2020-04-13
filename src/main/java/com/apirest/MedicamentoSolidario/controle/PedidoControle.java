@@ -32,7 +32,7 @@ public class PedidoControle {
 
 		} else {
 			pedidoDTO.setData(LocalDate.now());
-			pedidoDTO.setMedicamentos(listaMedicamentos(pedidoDTO.getMedicamentosDTO()));
+			pedidoDTO.setMedicamentosFull(listaMedicamentos(pedidoDTO.getMedicamentos()));
 			pedidoDTO.setUsuario(usuarioControle.listar(pedidoDTO.getIdUsauruaio()).get());
 			return repository.save(pedidoDTO.transformarParaObjSalvar());
 		}
