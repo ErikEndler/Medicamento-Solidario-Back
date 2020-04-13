@@ -27,11 +27,10 @@ public class PedidoDTO {
 	@JsonIgnore
 	private Usuario usuario;
 	private int idUsauruaio;
-
 	
-	private List<MedicamentoDTO> medicamentosDTO;
+	private List<MedicamentoDTO> medicamentos;
 	@JsonIgnore
-	private List<Medicamento> medicamentos;
+	private List<Medicamento> medicamentosFull;
 	@JsonIgnore
 	private int idsMedicamentos[];
 
@@ -40,13 +39,13 @@ public class PedidoDTO {
 	private int idRecebimento;
 
 	public Pedido transformarParaObjSalvar() {
-		return new Pedido(justificativa, data, usuario, medicamentos);
+		return new Pedido(justificativa, data, usuario, medicamentosFull);
 	}
 
 	public Pedido transformarParaObjEditar() {
 		this.usuario = controleUsuario.listar(id).get();
 	
-		return new Pedido(id, justificativa, data, usuario, medicamentos);
+		return new Pedido(id, justificativa, data, usuario, medicamentosFull);
 	}
 
 	public long getId() {
@@ -119,14 +118,14 @@ public class PedidoDTO {
 	}
 
 	public List<Medicamento> getMedicamentos() {
-		return medicamentos;
+		return medicamentosFull;
 	}
 
 	public void setMedicamentos(List<Medicamento> medicamentos) {
-		this.medicamentos = medicamentos;
+		this.medicamentosFull = medicamentos;
 	}
 
 	public List<MedicamentoDTO> getMedicamentosDTO() {
-		return medicamentosDTO;
+		return medicamentos;
 	}
 }
