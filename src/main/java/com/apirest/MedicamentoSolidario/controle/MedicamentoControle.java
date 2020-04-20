@@ -17,6 +17,7 @@ import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.DoacaoRepository;
 import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.PontoColetaRepository;
+import com.apirest.MedicamentoSolidario.repository.RecebimentoRepository;
 
 @Service
 public class MedicamentoControle {
@@ -25,6 +26,8 @@ public class MedicamentoControle {
 	MedicamentoRepository repository;
 	@Autowired
 	DoacaoRepository doacaoRepositoy;
+	@Autowired
+	RecebimentoRepository recebimentoRepository;
 	@Autowired
 	PontoColetaRepository pontoColetaRepository;
 	@Autowired
@@ -86,6 +89,10 @@ public class MedicamentoControle {
 		medicamentoDTO.setDataValidadeLocalDate(data);
 		verifyIfObjectExists(medicamentoDTO.getId());
 		medicamentoDTO = setDoacao(medicamentoDTO);
+		System.out.println("ID DOAÇAO OUT È : "+medicamentoDTO.getIdDoacaoOut()+"\n\n");
+		if(medicamentoDTO.getIdDoacaoOut() != 0) {
+			medicamentoDTO = setDoacaoOut(medicamentoDTO);
+		}
 		return repository.save(medicamentoDTO.TransformarParaObjEditar());
 	}
 
@@ -117,6 +124,11 @@ public class MedicamentoControle {
 	// busca a doação pelo id recebido na requisisao e coloca no medicamentoDTO
 	private MedicamentoDTO setDoacao(MedicamentoDTO medicamentoDTO) {
 		medicamentoDTO.setFullDoacaoIn(doacaoRepositoy.findById(medicamentoDTO.getIdDoacaoIn()).get());
+		return medicamentoDTO;
+	}
+	
+	private MedicamentoDTO setDoacaoOut(MedicamentoDTO medicamentoDTO) {
+		medicamentoDTO.setFullDoacaoOut(recebimentoRepository.findById(medicamentoDTO.getIdDoacaoIn()).get());
 		return medicamentoDTO;
 	}
 
