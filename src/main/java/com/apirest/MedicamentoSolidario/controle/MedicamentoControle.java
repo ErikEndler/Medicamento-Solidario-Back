@@ -117,7 +117,7 @@ public class MedicamentoControle {
 	// busca a doação pelo id recebido na requisisao e coloca no medicamentoDTO
 	private MedicamentoDTO setDoacao(MedicamentoDTO medicamentoDTO) {
 		medicamentoDTO.setFullDoacaoIn(doacaoRepositoy.findById(medicamentoDTO.getIdDoacaoIn()).get());
-		return null;
+		return medicamentoDTO;
 	}
 
 }
