@@ -30,7 +30,7 @@ public class MedicamentoDTO {
 	
 	//edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
-		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidadeLocalDate, tarja, tipoArmazenamento, quantidade, fullDoacaoIn);
+		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidadeLocalDate, tarja, tipoArmazenamento, quantidade, fullDoacaoIn,fullDoacaoOut);
 	}
 
 	public long getId() {

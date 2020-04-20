@@ -68,7 +68,7 @@ public class MedicamentoResources {
 	@PutMapping("")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid MedicamentoDTO dto) {
 		Medicamento resposta = controle.atualizar(dto);
-		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTO(resposta), HttpStatus.OK);
+		return new ResponseEntity<>(MedicamentoRespostaDTO.transformaEmDTOList(resposta), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Deleta um Medicamento por Id")

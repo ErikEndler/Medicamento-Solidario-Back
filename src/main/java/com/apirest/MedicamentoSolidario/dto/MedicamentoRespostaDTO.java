@@ -62,6 +62,7 @@ public class MedicamentoRespostaDTO {
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(), 
 				medicamento.getQuantidade());
+				
 	}
 	public static MedicamentoRespostaDTO transformaEmDTOList(Medicamento medicamento) {
 		return new MedicamentoRespostaDTO(

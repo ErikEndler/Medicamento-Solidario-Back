@@ -41,7 +41,7 @@ public class Medicamento {
 	}
 	
 	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
-			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
+			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn, Recebimento fullDoacaoOut) {
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
@@ -52,6 +52,8 @@ public class Medicamento {
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
 		this.doacao_in = fullDoacaoIn;
+		if(fullDoacaoOut != null)
+		this.doacao_out = fullDoacaoOut;
 	}
 	
 	public Medicamento( String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
