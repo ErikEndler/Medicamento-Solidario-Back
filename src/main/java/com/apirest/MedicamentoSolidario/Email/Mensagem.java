@@ -1,7 +1,5 @@
 package com.apirest.MedicamentoSolidario.Email;
 
-import java.util.List;
-
 public class Mensagem {
 
 	private String remetente;
