@@ -3,6 +3,7 @@ package com.apirest.MedicamentoSolidario.controle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -127,10 +128,26 @@ public class UsuarioControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " Não possui Email cadastrado ");
 		}
 		String assunto = "Redfinição de senha";
-		//implementar geração de codigo
-		String corpo = "Olá! \n\n Segue seu codigo para redefinir senha \n\n XXXXX";
+		// implementar geração de codigo
+		String senha = novaSenha(user);
+		String corpo = "Olá! \n\n Segue seu codigo para redefinir senha \n\n "+senha;
 
 		mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
+	}
+
+	private String novaSenha(Usuario user) {
+		Random random = new Random();
+		int numeroInteiroAleatorio = random.nextInt(10);
+		String novaSenha = new String();
+		for (int i = 6; i < 6; i++) {
+			novaSenha = novaSenha.concat(String.valueOf(numeroInteiroAleatorio));
+			System.out.println("SENHA  GERADA : " + novaSenha + "\n");
+		}
+		// criptografa a senha
+		String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
+		user.setSenha(senhaCriptografada);
+		usuarioRepository.save(user);
+		return novaSenha;
 	}
 
 	// função que busca no banco a role recebida no formulario
