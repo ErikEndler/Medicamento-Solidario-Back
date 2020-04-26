@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +10,17 @@ import com.apirest.MedicamentoSolidario.Models.Pedido;
 public class PedidoRespostaDTO {
 	private long id;
 	private String justificativa;
-	private LocalDate data;
+	private LocalDateTime dataCriacao;
 	private long usuarioID;
 	private List<Long> medicamentosID;
 	private long recebimento;
 	
-	public PedidoRespostaDTO(long id, String justificativa, LocalDate data, long usuarioID, List<Medicamento> medicamentosID,
+	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID, List<Medicamento> medicamentosID,
 			long recebimento) {
 		super();
 		this.setId(id);
 		this.setJustificativa(justificativa);
-		this.setData(data);
+		this.setDataCriacao(dataCriacao);
 		this.setUsuarioID(usuarioID);
 		this.setMedicamentosID(listar(medicamentosID));
 		this.setRecebimento(recebimento);
@@ -38,7 +38,7 @@ public class PedidoRespostaDTO {
 		return new PedidoRespostaDTO(
 				pedido.getId(), 
 				pedido.getJustificativa(), 
-				pedido.getData(), 
+				pedido.getDataCriacao(), 
 				pedido.getUsuario().getId(), 
 				pedido.getMedicamentos(), 
 				pedido.getRecebimento().getId());
@@ -60,13 +60,6 @@ public class PedidoRespostaDTO {
 		this.justificativa = justificativa;
 	}
 
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
 
 	public long getRecebimento() {
 		return recebimento;
@@ -90,6 +83,14 @@ public class PedidoRespostaDTO {
 
 	public void setMedicamentosID(List<Long> medicamentosID) {
 		this.medicamentosID = medicamentosID;
+	}
+
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
@@ -12,7 +13,7 @@ public class MedicamentoRespostaDTO {
 	private String nome;
 	private String principio;
 	private String tipoReceita;
-	private LocalDate data;
+	private LocalDateTime dataInsercao;
 	private LocalDate dataValidade;
 	private String tarja;
 	private String tipoArmazenamento;
@@ -20,28 +21,28 @@ public class MedicamentoRespostaDTO {
 	private long idDoacaoOut;
 	private long idDoacaoIn;	
 	
-	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDate data,
+	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
 			LocalDate dataVencimento, String tarja, String tipoArmazenamento, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.data = data;
+		this.dataInsercao =dataInsercao;
 		this.dataValidade = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
 	}
 	
-	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDate data,
+	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
 			LocalDate dataValidade, String tarja, String tipoArmazenamento, Doacao doacao, Recebimento recebimento, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.data = data;
+		this.dataInsercao =dataInsercao;
 		this.dataValidade = dataValidade;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
@@ -57,7 +58,7 @@ public class MedicamentoRespostaDTO {
 				medicamento.getNome(),
 				medicamento.getPrincipio(),
 				medicamento.getTipoReceita(), 
-				medicamento.getData(), 
+				medicamento.getDataInsercao(), 
 				medicamento.getDataVencimento(), 
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(), 
@@ -70,7 +71,7 @@ public class MedicamentoRespostaDTO {
 				medicamento.getNome(),
 				medicamento.getPrincipio(),
 				medicamento.getTipoReceita(), 
-				medicamento.getData(), 
+				medicamento.getDataInsercao(), 
 				medicamento.getDataVencimento(), 
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(),
@@ -110,14 +111,6 @@ public class MedicamentoRespostaDTO {
 
 	public void setTipoReceita(String tipoReceita) {
 		this.tipoReceita = tipoReceita;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
 	}
 
 	public LocalDate getDataVencimento() {
@@ -166,6 +159,14 @@ public class MedicamentoRespostaDTO {
 
 	public void setIdDoacaoIn(long idDoacaoIn) {
 		this.idDoacaoIn = idDoacaoIn;
+	}
+
+	public LocalDateTime getDataInsercao() {
+		return dataInsercao;
+	}
+
+	public void setDataInsercao(LocalDateTime dataInsercao) {
+		this.dataInsercao = dataInsercao;
 	}
 	
 }

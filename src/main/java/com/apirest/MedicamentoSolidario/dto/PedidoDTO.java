@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class PedidoDTO {
 
 	private long id;
 	private String justificativa;
-	private LocalDate data;
+	private LocalDateTime dataCriacao;
 
 	@JsonIgnore
 	private Usuario usuario;
 	private int idUsauruaio;
-	
+
 	private List<MedicamentoDTO> medicamentos;
 	@JsonIgnore
 	private List<Medicamento> medicamentosFull;
@@ -39,13 +39,13 @@ public class PedidoDTO {
 	private int idRecebimento;
 
 	public Pedido transformarParaObjSalvar() {
-		return new Pedido(justificativa, data, usuario, medicamentosFull);
+		return new Pedido(justificativa, dataCriacao, usuario, medicamentosFull);
 	}
 
 	public Pedido transformarParaObjEditar() {
 		this.usuario = controleUsuario.listar(id).get();
-	
-		return new Pedido(id, justificativa, data, usuario, medicamentosFull);
+
+		return new Pedido(id, justificativa, dataCriacao, usuario, medicamentosFull);
 	}
 
 	public long getId() {
@@ -64,14 +64,6 @@ public class PedidoDTO {
 		this.justificativa = justificativa;
 	}
 
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -80,11 +72,14 @@ public class PedidoDTO {
 		this.usuario = usuario;
 	}
 
-	/*
-	 * public List<Medicamento> getMedicamento() { return medicamentos; } public
-	 * void setMedicamento(List<Medicamento> medicamento) { this.medicamentos =
-	 * medicamento; }
-	 */
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
 	public Recebimento getRecebimento() {
 		return recebimento;
 	}

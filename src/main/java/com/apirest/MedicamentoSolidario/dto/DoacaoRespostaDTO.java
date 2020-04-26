@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,40 +8,35 @@ import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 
 public class DoacaoRespostaDTO {
-	
+
 	private long id;
-	private LocalDate data;
+	private LocalDateTime dataDoacao;
 	private String obs;
 	private long idDoador;
 	private long idVoluntario;
 	private long idPonto;
 	private List<MedicamentoRespostaDTO> medicamentos;
 
-	public DoacaoRespostaDTO(long id, LocalDate data, String obs, long idDoador, long idVoluntario, List<Medicamento> lista,
-			long idPonto) {
+	public DoacaoRespostaDTO(long id, LocalDateTime dataDoacao, String obs, long idDoador, long idVoluntario,
+			List<Medicamento> lista, long idPonto) {
 		super();
-		
+
 		this.id = id;
-		this.data = data;
+		this.setDataDoacao(dataDoacao);
 		this.obs = obs;
 		this.idDoador = idDoador;
 		this.idVoluntario = idVoluntario;
 		this.idPonto = idPonto;
 		List<MedicamentoRespostaDTO> listaMed = new ArrayList<MedicamentoRespostaDTO>();
-		for (Medicamento medicamento : lista) {			
-			listaMed.add(MedicamentoRespostaDTO.transformaEmDTOList(medicamento));			
-		}	
+		for (Medicamento medicamento : lista) {
+			listaMed.add(MedicamentoRespostaDTO.transformaEmDTOList(medicamento));
+		}
 		this.setMedicamentos(listaMed);
 	}
 
 	public static DoacaoRespostaDTO transformaEmDTO(Doacao doacao) {
-		return new DoacaoRespostaDTO(
-				doacao.getId(), 
-				doacao.getData(), 
-				doacao.getObs(), 
-				doacao.getDoador().getId(),
-				doacao.getVoluntario().getId(), 
-				doacao.getMedicamento(), 
+		return new DoacaoRespostaDTO(doacao.getId(), doacao.getDataDoacao(), doacao.getObs(),
+				doacao.getDoador().getId(), doacao.getVoluntario().getId(), doacao.getMedicamento(),
 				doacao.getPonto().getId());
 	}
 
@@ -51,14 +46,6 @@ public class DoacaoRespostaDTO {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
 	}
 
 	public String getObs() {
@@ -99,6 +86,14 @@ public class DoacaoRespostaDTO {
 
 	public void setMedicamentos(List<MedicamentoRespostaDTO> medicamentos) {
 		this.medicamentos = medicamentos;
+	}
+
+	public LocalDateTime getDataDoacao() {
+		return dataDoacao;
+	}
+
+	public void setDataDoacao(LocalDateTime dataDoacao) {
+		this.dataDoacao = dataDoacao;
 	}
 
 }

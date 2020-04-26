@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ public class Pedido {
 	@Column(name = "id", insertable=false, updatable=false)
 	private long id;
 	private String justificativa;
-	private LocalDate data;
+	private LocalDateTime dataCriacao;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -38,17 +38,17 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Recebimento recebimento;
 
-	public Pedido(long id2, String justificativa2, LocalDate data2,Usuario usuario,List<Medicamento> medicamentos2) {
+	public Pedido(long id2, String justificativa2, LocalDateTime data2,Usuario usuario,List<Medicamento> medicamentos2) {
 		this.id=id2;
 		this.justificativa=justificativa2;
-		this.data=data2;
+		this.setDataCriacao(data2);
 		this.usuario=usuario;
 		this.medicamentos = medicamentos2;		
 	}
 
-	public Pedido(String justificativa2, LocalDate data2, Usuario usuario2, List<Medicamento> medicamentos2) {
+	public Pedido(String justificativa2, LocalDateTime data2, Usuario usuario2, List<Medicamento> medicamentos2) {
 		this.justificativa=justificativa2;
-		this.data=data2;
+		this.setDataCriacao(data2);
 		this.usuario=usuario2;
 		this.medicamentos = medicamentos2;
 	}
@@ -77,14 +77,6 @@ public class Pedido {
 		this.justificativa = justificativa;
 	}
 
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -99,5 +91,13 @@ public class Pedido {
 
 	public void setRecebimento(Recebimento recebimento) {
 		this.recebimento = recebimento;
+	}
+
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}	
 }

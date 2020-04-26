@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 
@@ -16,11 +16,11 @@ public class PontoColetaRespostaDTO {
 	private String complemento;
 	private String cep;
 	private String atividadePrincipal;
-	private Date dataCadastro;	
-	
+	private LocalDateTime dataCadastro;
+
 	public PontoColetaRespostaDTO(long id, String nome, String cnpj, String cidade, String estado, String rua,
 			String bairro, String numero, String complemento, String cep, String atividadePrincipal,
-			Date dataCadastro) {
+			LocalDateTime dataCadastro) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -35,18 +35,12 @@ public class PontoColetaRespostaDTO {
 		this.atividadePrincipal = atividadePrincipal;
 		this.dataCadastro = dataCadastro;
 	}
-	
+
 	public static PontoColetaRespostaDTO transformaEmDTO(PontoColeta pontoColeta) {
-		return new PontoColetaRespostaDTO(pontoColeta.getId(), pontoColeta.getNome(), pontoColeta.getCnpj(), 
-				pontoColeta.getCidade(),
-				pontoColeta.getEstado(),
-				pontoColeta.getRua(), 
-				pontoColeta.getBairro(), 
-				pontoColeta.getNumero(),
-				pontoColeta.getComplemento(),
-				pontoColeta.getCep(),
-				pontoColeta.getAtividadePrincipal(), 
-				pontoColeta.getDataCadastro());		
+		return new PontoColetaRespostaDTO(pontoColeta.getId(), pontoColeta.getNome(), pontoColeta.getCnpj(),
+				pontoColeta.getCidade(), pontoColeta.getEstado(), pontoColeta.getRua(), pontoColeta.getBairro(),
+				pontoColeta.getNumero(), pontoColeta.getComplemento(), pontoColeta.getCep(),
+				pontoColeta.getAtividadePrincipal(), pontoColeta.getDataCadastro());
 	}
 
 	public long getId() {
@@ -137,12 +131,11 @@ public class PontoColetaRespostaDTO {
 		this.atividadePrincipal = atividadePrincipal;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
 }

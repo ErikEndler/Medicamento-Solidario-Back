@@ -1,36 +1,45 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 public class MedicamentoDTO {
-	
+
 	private long id;
 	private String nome;
 	private String principio;
-	private String tipoReceita;	
+	private String tipoReceita;
 	private String tarja;
 	private String tipoArmazenamento;
-	private int quantidade;	
-	private long idDoacaoIn;	
+	private int quantidade;
+	private long idDoacaoIn;
 	private long idDoacaoOut;
 	private String dataValidade;
+
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDate dataValidadeLocalDate;
 	@JsonIgnore
-	private LocalDate data;	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataInsercao;
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private Recebimento fullDoacaoOut;
-	
-	//edita sem interagir com as doaçoes
+
+	// edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
-		return new Medicamento(id,nome, principio, tipoReceita, data, dataValidadeLocalDate, tarja, tipoArmazenamento, quantidade, fullDoacaoIn,fullDoacaoOut);
+		return new Medicamento(id, nome, principio, tipoReceita, dataInsercao, dataValidadeLocalDate, tarja,
+				tipoArmazenamento, quantidade, fullDoacaoIn, fullDoacaoOut);
 	}
 
 	public long getId() {
@@ -65,12 +74,12 @@ public class MedicamentoDTO {
 		this.tipoReceita = tipoReceita;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public LocalDateTime getDataInsercao() {
+		return dataInsercao;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setDataInsercao(LocalDateTime dataInsercao) {
+		this.dataInsercao = dataInsercao;
 	}
 
 	public LocalDate getDataValidadeLocalDate() {
@@ -144,5 +153,5 @@ public class MedicamentoDTO {
 	public void setDataValidade(String dataValidade) {
 		this.dataValidade = dataValidade;
 	}
-	
+
 }

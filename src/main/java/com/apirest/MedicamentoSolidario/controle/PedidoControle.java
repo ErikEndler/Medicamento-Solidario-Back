@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.controle;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class PedidoControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
 
 		} else {
-			pedidoDTO.setData(LocalDate.now());
+			pedidoDTO.setDataCriacao(LocalDateTime.now());
 			pedidoDTO.setMedicamentosFull(listaMedicamentos(pedidoDTO.getMedicamentos()));
 			pedidoDTO.setUsuario(usuarioControle.listar(pedidoDTO.getIdUsauruaio()).get());
 			return repository.save(pedidoDTO.transformarParaObjSalvar());

@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,38 +10,46 @@ import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 public class MedicamentoInDTO {
 	@JsonIgnore
 	private long id;
 	@NotBlank
 	private String nome;
-	@NotBlank(message="Informe o Principio Ativo")
-	private String principio;	
+	@NotBlank(message = "Informe o Principio Ativo")
+	private String principio;
 	private String tipoReceita;
 	private String tarja;
-	@NotBlank(message="Tipo armazenamento erro")
+	@NotBlank(message = "Tipo armazenamento erro")
 	private String tipoArmazenamento;
-	@NotNull(message="Informe a Quantidade")
+	@NotNull(message = "Informe a Quantidade")
 	private int quantidade;
-	@NotBlank(message="Data de validade Obrigatória")
+	@NotBlank(message = "Data de validade Obrigatória")
 	private String dataValidade;
-	
+
 	@JsonIgnore
-	private LocalDate data;	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataInsercao;
+
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDate localDateDataValidade;
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private long idDoacaoIn;
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
 	private Recebimento fullDoacaoOut;
 
 //salvar medicamento sem interagir com as doaçoes
 	public Medicamento transformarParaObjSalvar() {
-		return new Medicamento( nome, principio, tipoReceita, data, localDateDataValidade, tarja, tipoArmazenamento,
-				quantidade, fullDoacaoIn);
+		return new Medicamento(nome, principio, tipoReceita, dataInsercao, localDateDataValidade, tarja,
+				tipoArmazenamento, quantidade, fullDoacaoIn);
 	}
 
 	public long getId() {
@@ -73,14 +82,6 @@ public class MedicamentoInDTO {
 
 	public void setTipoReceita(String tipoReceita) {
 		this.tipoReceita = tipoReceita;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
 	}
 
 	public LocalDate getlocalDateDataValidade() {
@@ -145,5 +146,13 @@ public class MedicamentoInDTO {
 
 	public void setDataValidade(String dataValidade) {
 		this.dataValidade = dataValidade;
+	}
+
+	public LocalDateTime getDataInsercao() {
+		return dataInsercao;
+	}
+
+	public void setDataInsercao(LocalDateTime dataInsercao) {
+		this.dataInsercao = dataInsercao;
 	}
 }

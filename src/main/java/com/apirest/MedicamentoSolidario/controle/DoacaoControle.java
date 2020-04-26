@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.controle;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,8 @@ public class DoacaoControle {
 	PontoColetaControle controlePonto;
 
 	public Doacao salvar(DoacaoDTO doacaoDTO) {
-		doacaoDTO.setData(LocalDate.now());
-		System.out.println("DATA : " + doacaoDTO.getData());
+		doacaoDTO.setDataDoacao(LocalDateTime.now());
+		System.out.println("DATA : " + doacaoDTO.getDataDoacao());
 		doacaoDTO = setIDS(doacaoDTO);
 		Doacao doacao = repository.save(doacaoDTO.transformarParaObjSalvar());
 
@@ -49,7 +50,7 @@ public class DoacaoControle {
 			medicamento.setlocalDateDataValidade(data);
 			System.out.println("STRING :"+medicamento.getDataValidade());
 			System.out.println("LOCALDATE:"+medicamento.getlocalDateDataValidade());
-			medicamento.setData(LocalDate.now());
+			medicamento.setDataInsercao(LocalDateTime.now());
 			medicamento = addIdDoacao(medicamento, doacao.getId());
 			Medicamento med =medicamentoControle.salvar(medicamento.transformarParaObjSalvar());
 			medicamentoList.add(med);

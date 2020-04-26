@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -9,36 +9,42 @@ import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 public class DoacaoDTO {
 
 	private long id;
-	
+
 	private String obs;
-	@NotNull(message="Falta referencia do doador 'ID'")
+	@NotNull(message = "Falta referencia do doador 'ID'")
 	private long idDoador;
-	@NotNull(message="Falta referencia do Responsavel 'ID'")
+	@NotNull(message = "Falta referencia do Responsavel 'ID'")
 	private long idVoluntario;
-	@NotNull(message="Falta referencia do Ponto de Coleta 'ID'")
+	@NotNull(message = "Falta referencia do Ponto de Coleta 'ID'")
 	private long idPonto;
-	
-	@JsonIgnore
-	private LocalDate data;
-	@JsonIgnore
-	private PontoColeta ponto;
-	@JsonIgnore
-	private Usuario doador;
-	@JsonIgnore
-	private Usuario voluntario;
-	@NotNull(message="Deve haver medicamentos na Doação")
+	@NotNull(message = "Deve haver medicamentos na Doação")
 	private List<MedicamentoInDTO> medicamentos;
 
-	public Doacao transformarParaObjSalvar() {		
-		return new Doacao(data, obs, doador, voluntario, ponto);
+	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime dataDoacao;
+	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
+	private PontoColeta ponto;
+	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
+	private Usuario doador;
+	@JsonIgnore
+	@JsonProperty(access = Access.READ_ONLY)
+	private Usuario voluntario;
+
+	public Doacao transformarParaObjSalvar() {
+		return new Doacao(dataDoacao, obs, doador, voluntario, ponto);
 	}
 
-	public Doacao transformarParaObjEditar() {		
-		return new Doacao(id, data, obs, doador, voluntario, ponto);
+	public Doacao transformarParaObjEditar() {
+		return new Doacao(id, dataDoacao, obs, doador, voluntario, ponto);
 	}
 
 	public long getId() {
@@ -47,14 +53,6 @@ public class DoacaoDTO {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
 	}
 
 	public String getObs() {
@@ -119,5 +117,13 @@ public class DoacaoDTO {
 
 	public void setMedicamentos(List<MedicamentoInDTO> medicamentos) {
 		this.medicamentos = medicamentos;
+	}
+
+	public LocalDateTime getDataDoacao() {
+		return dataDoacao;
+	}
+
+	public void setDataDoacao(LocalDateTime dataDoacao) {
+		this.dataDoacao = dataDoacao;
 	}
 }

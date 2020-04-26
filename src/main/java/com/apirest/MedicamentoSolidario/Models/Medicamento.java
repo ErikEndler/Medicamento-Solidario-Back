@@ -1,6 +1,7 @@
 package com.apirest.MedicamentoSolidario.Models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class Medicamento {
 	private String nome;	
 	private String principio;
 	private String tipoReceita;
-	private LocalDate data;
+	private LocalDateTime dataInsercao;
 	private LocalDate dataVencimento;
 	private String tarja;
 	private String tipoArmazenamento;
@@ -40,13 +41,13 @@ public class Medicamento {
 		super();
 	}
 	
-	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
+	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao, LocalDate dataVencimento,
 			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn, Recebimento fullDoacaoOut) {
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.data = data;
+		this.setDataInsercao(dataInsercao);
 		this.dataVencimento = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
@@ -56,12 +57,12 @@ public class Medicamento {
 		this.doacao_out = fullDoacaoOut;
 	}
 	
-	public Medicamento( String nome, String principio, String tipoReceita, LocalDate data, LocalDate dataVencimento,
+	public Medicamento( String nome, String principio, String tipoReceita, LocalDateTime dataInsercao, LocalDate dataVencimento,
 			String tarja, String tipoArmazenamento, int quantidade,Doacao fullDoacaoIn) {
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.data = data;
+		this.setDataInsercao(dataInsercao);
 		this.dataVencimento = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
@@ -101,12 +102,7 @@ public class Medicamento {
 	public void setTipoReceita(String tipoReceita) {
 		this.tipoReceita = tipoReceita;
 	}
-	public LocalDate getData() {
-		return data;
-	}
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
+	
 	public LocalDate getDataVencimento() {
 		return dataVencimento;
 	}
@@ -150,6 +146,14 @@ public class Medicamento {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public LocalDateTime getDataInsercao() {
+		return dataInsercao;
+	}
+
+	public void setDataInsercao(LocalDateTime dataInsercao) {
+		this.dataInsercao = dataInsercao;
 	}
 	
 }

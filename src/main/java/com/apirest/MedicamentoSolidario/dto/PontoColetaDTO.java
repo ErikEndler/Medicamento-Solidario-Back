@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotBlank;
 
@@ -28,7 +28,7 @@ public class PontoColetaDTO {
 	private String cep;
 	@NotBlank
 	private String atividadePrincipal;
-	private Date dataCadastro;
+	private LocalDateTime dataCadastro;
 	
 	public PontoColeta transformarParaObjSalvar() {
 		return new PontoColeta(nome, cnpj, cidade, estado, rua, bairro,
@@ -104,10 +104,10 @@ public class PontoColetaDTO {
 	public void setAtividadePrincipal(String atividadePrincipal) {
 		this.atividadePrincipal = atividadePrincipal;
 	}
-	public Date getDataCadastro() {
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	

@@ -1,6 +1,6 @@
 package com.apirest.MedicamentoSolidario.Models;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,7 +31,7 @@ public class PontoColeta {
 	private String complemento;
 	private String cep;
 	private String atividadePrincipal;
-	private Date dataCadastro;
+	private LocalDateTime dataCadastro;
 	
 	@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "ponto")
@@ -128,14 +128,6 @@ public class PontoColeta {
 		this.atividadePrincipal = atividadePrincipal;
 	}
 
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
 	public List<Doacao> getDoacao() {
 		return doacao;
 	}
@@ -157,7 +149,7 @@ public class PontoColeta {
 	}
 
 	public PontoColeta(long id, String nome, String cnpj, String cidade, String estado, String rua, String bairro,
-			String numero, String complemento, String cep, String atividadePrincipal, Date dataCadastro) {
+			String numero, String complemento, String cep, String atividadePrincipal, LocalDateTime dataCadastro) {
 		
 		this.id = id;
 		this.nome = nome;
@@ -170,11 +162,11 @@ public class PontoColeta {
 		this.complemento = complemento;
 		this.cep = cep;
 		this.atividadePrincipal = atividadePrincipal;
-		this.dataCadastro = dataCadastro;
+		this.setDataCadastro(dataCadastro);
 	}
 
 	public PontoColeta(String nome, String cnpj, String cidade, String estado, String rua, String bairro, String numero,
-			String complemento, String cep, String atividadePrincipal, Date dataCadastro) {		
+			String complemento, String cep, String atividadePrincipal, LocalDateTime dataCadastro) {		
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.cidade = cidade;
@@ -185,6 +177,14 @@ public class PontoColeta {
 		this.complemento = complemento;
 		this.cep = cep;
 		this.atividadePrincipal = atividadePrincipal;
+		this.setDataCadastro(dataCadastro);
+	}
+
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	
