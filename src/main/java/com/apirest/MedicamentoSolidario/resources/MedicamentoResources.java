@@ -38,7 +38,7 @@ public class MedicamentoResources {
 	MedicamentoRepository repository;
 //
 	@ApiOperation(value = "Retorna medicamentos pelo ponto")
-	@GetMapping("/ponto{ponto}")
+	@GetMapping("/ponto/{ponto}")
 	public ResponseEntity<?> listarPorPontos(@PathVariable(value = "ponto") long ponto){
 		List<MedicamentoRespostaDTO> medList = controle.listarPorPonto(ponto);
 		return new ResponseEntity<>(medList,HttpStatus.OK);		
