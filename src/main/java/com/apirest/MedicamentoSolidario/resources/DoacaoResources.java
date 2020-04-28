@@ -28,6 +28,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/api/doacao")
 @Api(value = "API REST doacao")
 @CrossOrigin(origins = "*")
+//-------------------MEDICAMENTO_IN---------------------------//
+//-------------------ENTRADA DE MEDICAMENTO-------------------//
 public class DoacaoResources {
 	@Autowired
 	DoacaoControle controle;
