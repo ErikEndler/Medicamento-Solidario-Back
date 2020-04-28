@@ -45,7 +45,11 @@ public class PedidoControle {
 		Iterable<Pedido> listar = repository.findAll();
 		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
 		for (Pedido str : listar) {
-			result.add(PedidoRespostaDTO.transformaEmDTO(str));
+			if(str.getRecebimento()!=null) {
+				result.add(PedidoRespostaDTO.transformaEmDTO(str));
+			}else {
+				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
+			}			
 		}
 		return result;
 	}

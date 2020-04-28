@@ -43,14 +43,17 @@ public class PedidoResources {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<Pedido> pedido = controle.listar(id);
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido.get()), HttpStatus.OK);
+		if(pedido.get().getRecebimento() != null) {
+			return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido.get()), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(pedido.get()), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
 		Pedido pedido = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido), HttpStatus.CREATED);
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(pedido), HttpStatus.CREATED);
 
 	}
 
@@ -58,7 +61,11 @@ public class PedidoResources {
 	@PutMapping("")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid PedidoDTO dto) {
 		Pedido resposta = controle.atualizar(dto.transformarParaObjEditar());
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(resposta),HttpStatus.OK);
+		if(resposta.getRecebimento()!=null) {
+			return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(resposta),HttpStatus.OK);
+		}
+		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(resposta),HttpStatus.OK);
+
 	}
 
 	@ApiOperation(value = "Deleta um Pedido por Id")

@@ -14,9 +14,9 @@ public class PedidoRespostaDTO {
 	private long usuarioID;
 	private List<Long> medicamentosID;
 	private long recebimento;
-	
-	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID, List<Medicamento> medicamentosID,
-			long recebimento) {
+
+	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID,
+			List<Medicamento> medicamentosID, long recebimento) {
 		super();
 		this.setId(id);
 		this.setJustificativa(justificativa);
@@ -25,41 +25,34 @@ public class PedidoRespostaDTO {
 		this.setMedicamentosID(listar(medicamentosID));
 		this.setRecebimento(recebimento);
 	}
-	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID, List<Medicamento> medicamentosID
-			) {
+
+	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID,
+			List<Medicamento> medicamentosID) {
 		super();
 		this.setId(id);
 		this.setJustificativa(justificativa);
 		this.setDataCriacao(dataCriacao);
 		this.setUsuarioID(usuarioID);
 		this.setMedicamentosID(listar(medicamentosID));
-		
+
 	}
-	
+
 	private List<Long> listar(List<Medicamento> medicamentosID2) {
-		List<Long> lista =  new ArrayList<Long>();
+		List<Long> lista = new ArrayList<Long>();
 		for (Medicamento medicamento : medicamentosID2) {
 			lista.add(medicamento.getId());
 		}
-		return lista;				
+		return lista;
 	}
 
 	public static PedidoRespostaDTO transformaEmDTO(Pedido pedido) {
-		return new PedidoRespostaDTO(
-				pedido.getId(), 
-				pedido.getJustificativa(), 
-				pedido.getDataCriacao(), 
-				pedido.getUsuario().getId(), 
-				pedido.getMedicamentos(),
-				pedido.getRecebimento().getId());
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getJustificativa(), pedido.getDataCriacao(),
+				pedido.getUsuario().getId(), pedido.getMedicamentos(), pedido.getRecebimento().getId());
 	}
+
 	public static PedidoRespostaDTO transformaEmDTOSave(Pedido pedido) {
-		return new PedidoRespostaDTO(
-				pedido.getId(), 
-				pedido.getJustificativa(), 
-				pedido.getDataCriacao(), 
-				pedido.getUsuario().getId(), 
-				pedido.getMedicamentos());				
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getJustificativa(), pedido.getDataCriacao(),
+				pedido.getUsuario().getId(), pedido.getMedicamentos());
 	}
 
 	public long getId() {
@@ -77,7 +70,6 @@ public class PedidoRespostaDTO {
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
-
 
 	public long getRecebimento() {
 		return recebimento;
@@ -110,5 +102,5 @@ public class PedidoRespostaDTO {
 	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
+
 }
