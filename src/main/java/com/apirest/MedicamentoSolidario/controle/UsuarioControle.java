@@ -138,7 +138,7 @@ public class UsuarioControle {
 	}
 
 	private void comparaEmail(RecuperarSenha recuperarSenha, Usuario user) {
-		if(user.getEmail()!= recuperarSenha.getEmail()) {
+		if(!user.getEmail().equals(recuperarSenha.getEmail())) {
 			throw new ResourceNotFoundException( " Email informado invalido "+ recuperarSenha.getEmail());
 		}		
 	}
