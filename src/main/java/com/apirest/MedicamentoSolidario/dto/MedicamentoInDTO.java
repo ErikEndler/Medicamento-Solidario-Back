@@ -30,20 +30,20 @@ public class MedicamentoInDTO {
 	private String dataValidade;
 
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime dataInsercao;
 
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private LocalDate localDateDataValidade;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private long idDoacaoIn;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Recebimento fullDoacaoOut;
 
 //salvar medicamento sem interagir com as doaçoes

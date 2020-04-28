@@ -24,16 +24,16 @@ public class MedicamentoDTO {
 	private String dataValidade;
 
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private LocalDate dataValidadeLocalDate;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime dataInsercao;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Doacao fullDoacaoIn;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Recebimento fullDoacaoOut;
 
 	// edita sem interagir com as doaçoes

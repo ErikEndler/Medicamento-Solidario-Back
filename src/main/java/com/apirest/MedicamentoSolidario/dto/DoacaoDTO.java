@@ -27,16 +27,16 @@ public class DoacaoDTO {
 	private List<MedicamentoInDTO> medicamentos;
 
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime dataDoacao;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private PontoColeta ponto;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Usuario doador;
 	@JsonIgnore
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Usuario voluntario;
 
 	public Doacao transformarParaObjSalvar() {
