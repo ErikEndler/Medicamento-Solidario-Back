@@ -31,10 +31,10 @@ public class PedidoControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
 
 		} else {
-			System.out.println("ID VINDO DO FRONT :"+pedidoDTO.getIdUsauruaio());
+			System.out.println("ID VINDO DO FRONT :"+pedidoDTO.getIdUsuario());
 			pedidoDTO.setDataCriacao(LocalDateTime.now());
 			pedidoDTO.setMedicamentosFull(listaMedicamentos(pedidoDTO.getMedicamentos()));
-			pedidoDTO.setUsuario(usuarioControle.listar(pedidoDTO.getIdUsauruaio()).get());
+			pedidoDTO.setUsuario(usuarioControle.listar(pedidoDTO.getIdUsuario()).get());
 			
 			System.out.println("ID VINDO DO BACK :"+pedidoDTO.getUsuario().getId());
 			return repository.save(pedidoDTO.transformarParaObjSalvar());

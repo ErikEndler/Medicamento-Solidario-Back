@@ -87,12 +87,12 @@ public class PedidoDTO {
 		this.recebimento = recebimento;
 	}
 
-	public long getIdUsauruaio() {
+	public long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsauruaio(long idUsauruaio) {
-		this.idUsuario = idUsauruaio;
+	public void setIdUsuario(long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public long[] getIdsMedicamentos() {

@@ -25,6 +25,16 @@ public class PedidoRespostaDTO {
 		this.setMedicamentosID(listar(medicamentosID));
 		this.setRecebimento(recebimento);
 	}
+	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID, List<Medicamento> medicamentosID
+			) {
+		super();
+		this.setId(id);
+		this.setJustificativa(justificativa);
+		this.setDataCriacao(dataCriacao);
+		this.setUsuarioID(usuarioID);
+		this.setMedicamentosID(listar(medicamentosID));
+		
+	}
 	
 	private List<Long> listar(List<Medicamento> medicamentosID2) {
 		List<Long> lista =  new ArrayList<Long>();
@@ -40,8 +50,16 @@ public class PedidoRespostaDTO {
 				pedido.getJustificativa(), 
 				pedido.getDataCriacao(), 
 				pedido.getUsuario().getId(), 
-				pedido.getMedicamentos(), 
+				pedido.getMedicamentos(),
 				pedido.getRecebimento().getId());
+	}
+	public static PedidoRespostaDTO transformaEmDTOSave(Pedido pedido) {
+		return new PedidoRespostaDTO(
+				pedido.getId(), 
+				pedido.getJustificativa(), 
+				pedido.getDataCriacao(), 
+				pedido.getUsuario().getId(), 
+				pedido.getMedicamentos());				
 	}
 
 	public long getId() {
