@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Email.Mailer;
 import com.apirest.MedicamentoSolidario.Email.Mensagem;
+import com.apirest.MedicamentoSolidario.Models.RecuperarSenha;
 import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.config.DataUtil;
@@ -117,11 +118,12 @@ public class UsuarioControle {
 		usuarioRepository.delete(usuario);
 	}
 
-	public void emailSenha(String cpf) {
-		Usuario user = usuarioRepository.findByCpf(cpf);
+	public void emailSenha(RecuperarSenha recuperarSenha) {
+		Usuario user = usuarioRepository.findByCpf(recuperarSenha.getCpf());
 		if (user == null) {
-			throw new ResourceNotFoundException(MenssagemErro() + " NAO ENCONTRADO para cpf " + cpf);
+			throw new ResourceNotFoundException(MenssagemErro() + " NAO ENCONTRADO para cpf " + recuperarSenha.getCpf());
 		}
+		comparaEmail(recuperarSenha, user);
 		String remetente = "contato.medicamentosolidario@gmail.com";
 		String destino = user.getEmail();
 		if (destino == null) {
@@ -133,6 +135,12 @@ public class UsuarioControle {
 		String corpo = "Olá! \n\n Segue seu codigo para redefinir senha \n\n "+senha;
 
 		mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
+	}
+
+	private void comparaEmail(RecuperarSenha recuperarSenha, Usuario user) {
+		if(user.getEmail()!= recuperarSenha.getEmail()) {
+			throw new ResourceNotFoundException(MenssagemErro() + " Email informado invalido " );
+		}		
 	}
 
 	private String novaSenha(Usuario user) {

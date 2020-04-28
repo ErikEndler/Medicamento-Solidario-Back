@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apirest.MedicamentoSolidario.Models.RecuperarSenha;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.controle.UsuarioControle;
 import com.apirest.MedicamentoSolidario.dto.UsuarioDTO;
@@ -41,9 +42,9 @@ public class UsuarioResources {
 		return new ResponseEntity<>(usuarioControle.listarTodosNormal(), HttpStatus.OK);
 	}
 	@ApiOperation(value = "Envia email de recuperação de senha")
-	@GetMapping("/email/{cpf}")
-	public ResponseEntity<?> enviarEmail(@PathVariable(value = "cpf") String cpf){
-		usuarioControle.emailSenha(cpf);
+	@PostMapping("/recuperar-senha")
+	public ResponseEntity<?> enviarEmail(@RequestBody @Valid RecuperarSenha recuperarSenha){
+		usuarioControle.emailSenha(recuperarSenha);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
