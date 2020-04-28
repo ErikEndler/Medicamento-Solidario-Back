@@ -26,17 +26,17 @@ public class PedidoDTO {
 
 	@JsonIgnore
 	private Usuario usuario;
-	private int idUsauruaio;
+	private long idUsauruaio;
 
 	private List<MedicamentoDTO> medicamentos;
 	@JsonIgnore
 	private List<Medicamento> medicamentosFull;
 	@JsonIgnore
-	private int idsMedicamentos[];
+	private long idsMedicamentos[];
 
 	@JsonIgnore
 	private Recebimento recebimento;
-	private int idRecebimento;
+	private long idRecebimento;
 
 	public Pedido transformarParaObjSalvar() {
 		return new Pedido(justificativa, dataCriacao, usuario, medicamentosFull);
@@ -88,27 +88,27 @@ public class PedidoDTO {
 		this.recebimento = recebimento;
 	}
 
-	public int getIdUsauruaio() {
+	public long getIdUsauruaio() {
 		return idUsauruaio;
 	}
 
-	public void setIdUsauruaio(int idUsauruaio) {
+	public void setIdUsauruaio(long idUsauruaio) {
 		this.idUsauruaio = idUsauruaio;
 	}
 
-	public int[] getIdsMedicamentos() {
+	public long[] getIdsMedicamentos() {
 		return idsMedicamentos;
 	}
 
-	public void setIdsMedicamentos(int[] idMedicamento) {
+	public void setIdsMedicamentos(long[] idMedicamento) {
 		this.idsMedicamentos = idMedicamento;
 	}
 
-	public int getRecebimentoID() {
+	public long getRecebimentoID() {
 		return idRecebimento;
 	}
 
-	public void setRecebimentoID(int recebimentoID) {
+	public void setRecebimentoID(long recebimentoID) {
 		this.idRecebimento = recebimentoID;
 	}
 

@@ -84,7 +84,7 @@ public class PedidoControle {
 	}
 
 	protected String MenssagemErro() {
-		String msg = "Medicamento";
+		String msg = "Pedido";
 		return msg;
 	}
 
