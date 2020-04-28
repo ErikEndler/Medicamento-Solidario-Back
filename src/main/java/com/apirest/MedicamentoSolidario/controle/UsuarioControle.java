@@ -129,10 +129,11 @@ public class UsuarioControle {
 		if (destino == null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Não possui Email cadastrado ");
 		}
-		String assunto = "Redfinição de senha";
+		String assunto = "Redefinição de senha";
 		// implementar geração de codigo
 		String senha = novaSenha(user);
-		String corpo = "Olá! \n\n Segue seu codigo para redefinir senha \n\n "+senha;
+		String corpo = "Olá! \n\n Segue sua nova senha \n\n "+senha;
+		System.out.println("NOVA SENHA :"+senha+"\n");
 
 		mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
 	}
