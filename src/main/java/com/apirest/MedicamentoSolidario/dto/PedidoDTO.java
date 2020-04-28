@@ -24,7 +24,7 @@ public class PedidoDTO {
 	private String justificativa;
 	private LocalDateTime dataCriacao;
 	private long idRecebimento;
-	private long idUsauruaio;
+	private long idUsuario;
 	private List<MedicamentoDTO> medicamentos;
 	
 	@JsonIgnore
@@ -88,11 +88,11 @@ public class PedidoDTO {
 	}
 
 	public long getIdUsauruaio() {
-		return idUsauruaio;
+		return idUsuario;
 	}
 
 	public void setIdUsauruaio(long idUsauruaio) {
-		this.idUsauruaio = idUsauruaio;
+		this.idUsuario = idUsauruaio;
 	}
 
 	public long[] getIdsMedicamentos() {
