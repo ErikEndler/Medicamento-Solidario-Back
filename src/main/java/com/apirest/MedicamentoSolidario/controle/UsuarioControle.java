@@ -146,12 +146,13 @@ public class UsuarioControle {
 
 	private String novaSenha(Usuario user) {
 		Random random = new Random();
-		int numeroInteiroAleatorio = random.nextInt(10);
-		String novaSenha = new String();
-		for (int i = 6; i < 6; i++) {
-			novaSenha = novaSenha.concat(String.valueOf(numeroInteiroAleatorio));
-			System.out.println("SENHA  GERADA : " + novaSenha + "\n");
-		}
+		int numeroInteiroAleatorio = random.nextInt((900000-100000)+1)+100000;
+		String novaSenha = String.valueOf(numeroInteiroAleatorio);
+		System.out.println("SENHA  GERADA : " + novaSenha + "\n");
+//		for (int i = 6; i < 6; i++) {
+//			novaSenha = novaSenha.concat(String.valueOf(numeroInteiroAleatorio));
+//			System.out.println("SENHA  GERADA : " + novaSenha + "\n");
+//		}
 		// criptografa a senha
 		String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
 		user.setSenha(senhaCriptografada);
