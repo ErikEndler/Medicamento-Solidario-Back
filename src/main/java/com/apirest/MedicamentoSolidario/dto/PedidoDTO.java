@@ -23,20 +23,19 @@ public class PedidoDTO {
 	private long id;
 	private String justificativa;
 	private LocalDateTime dataCriacao;
-
-	@JsonIgnore
-	private Usuario usuario;
+	private long idRecebimento;
 	private long idUsauruaio;
-
 	private List<MedicamentoDTO> medicamentos;
+	
 	@JsonIgnore
 	private List<Medicamento> medicamentosFull;
 	@JsonIgnore
 	private long idsMedicamentos[];
-
+	@JsonIgnore
+	private Usuario usuario;
 	@JsonIgnore
 	private Recebimento recebimento;
-	private long idRecebimento;
+	
 
 	public Pedido transformarParaObjSalvar() {
 		return new Pedido(justificativa, dataCriacao, usuario, medicamentosFull);
