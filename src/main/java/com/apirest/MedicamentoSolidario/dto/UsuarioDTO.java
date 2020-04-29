@@ -19,14 +19,15 @@ public class UsuarioDTO {
 	private String email;
 	private String telefone;
 	@NotBlank
-	private String dataNascimento;
-	@JsonIgnore
-	private LocalDate nascimento;
+	private String dataNascimento;	
 	@NotBlank
 	private String senha;
 	private String sexo;
 	@NotBlank
 	private String role;
+	
+	@JsonIgnore
+	private LocalDate nascimento;
 	@JsonIgnore
 	private Role fullRole;
 	
