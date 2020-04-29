@@ -77,7 +77,7 @@ public class MedicamentoRespostaDTO {
 				medicamento.getDoacao_in(),
 				medicamento.getDoacao_out(),
 				medicamento.getQuantidade(),
-				medicamento.getDoacao_in().getId()
+				medicamento.getDoacao_in().getPonto().getId()
 				);
 	}
 
