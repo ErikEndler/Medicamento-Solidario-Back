@@ -8,7 +8,7 @@ import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
 
 public class MedicamentoRespostaDTO {
-	
+
 	private long id;
 	private String nome;
 	private String principio;
@@ -19,66 +19,66 @@ public class MedicamentoRespostaDTO {
 	private String tipoArmazenamento;
 	private int quantidade;
 	private long idDoacaoOut;
-	private long idDoacaoIn;	
-	
-	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
-			LocalDate dataVencimento, String tarja, String tipoArmazenamento, int quantidade) {
+	private long idDoacaoIn;
+	private long idPonto;
+
+	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita,
+			LocalDateTime dataInsercao, LocalDate dataVencimento, String tarja, String tipoArmazenamento,
+			int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.dataInsercao =dataInsercao;
+		this.dataInsercao = dataInsercao;
 		this.dataValidade = dataVencimento;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
 	}
-	
-	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
-			LocalDate dataValidade, String tarja, String tipoArmazenamento, Doacao doacao, Recebimento recebimento, int quantidade) {
+
+	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita,
+			LocalDateTime dataInsercao, LocalDate dataValidade, String tarja, String tipoArmazenamento, Doacao doacao,
+			Recebimento recebimento, int quantidade, long idPonto) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
 		this.tipoReceita = tipoReceita;
-		this.dataInsercao =dataInsercao;
+		this.dataInsercao = dataInsercao;
 		this.dataValidade = dataValidade;
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.setIdDoacaoIn(doacao.getId());
-		if(recebimento!=null) {
+		if (recebimento != null) {
 			this.setIdDoacaoIn(recebimento.getId());
-		}		
+		}
 		this.quantidade = quantidade;
+		this.idPonto = idPonto;
 	}
 
 	public static MedicamentoRespostaDTO transformaEmDTO(Medicamento medicamento) {
-		return new MedicamentoRespostaDTO(medicamento.getId(), 
-				medicamento.getNome(),
-				medicamento.getPrincipio(),
-				medicamento.getTipoReceita(), 
-				medicamento.getDataInsercao(), 
-				medicamento.getDataVencimento(), 
-				medicamento.getTarja(),
-				medicamento.getTipoArmazenamento(), 
-				medicamento.getQuantidade());
-				
+		return new MedicamentoRespostaDTO(medicamento.getId(), medicamento.getNome(), medicamento.getPrincipio(),
+				medicamento.getTipoReceita(), medicamento.getDataInsercao(), medicamento.getDataVencimento(),
+				medicamento.getTarja(), medicamento.getTipoArmazenamento(), medicamento.getQuantidade());
+
 	}
+
 	public static MedicamentoRespostaDTO transformaEmDTOList(Medicamento medicamento) {
 		return new MedicamentoRespostaDTO(
 				medicamento.getId(), 
 				medicamento.getNome(),
 				medicamento.getPrincipio(),
-				medicamento.getTipoReceita(), 
-				medicamento.getDataInsercao(), 
-				medicamento.getDataVencimento(), 
+				medicamento.getTipoReceita(),
+				medicamento.getDataInsercao(),
+				medicamento.getDataVencimento(),
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(),
 				medicamento.getDoacao_in(),
 				medicamento.getDoacao_out(),
-				medicamento.getQuantidade()
-				);				
+				medicamento.getQuantidade(),
+				medicamento.getDoacao_in().getId()
+				);
 	}
 
 	public long getId() {
@@ -168,5 +168,13 @@ public class MedicamentoRespostaDTO {
 	public void setDataInsercao(LocalDateTime dataInsercao) {
 		this.dataInsercao = dataInsercao;
 	}
-	
+
+	public long getIdPonto() {
+		return idPonto;
+	}
+
+	public void setIdPonto(long idPonto) {
+		this.idPonto = idPonto;
+	}
+
 }

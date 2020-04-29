@@ -9,8 +9,6 @@ import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 public class DoacaoDTO {
 
