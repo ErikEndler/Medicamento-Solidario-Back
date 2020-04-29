@@ -43,7 +43,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	public void cadastraUsuario(UsuarioRepository usuarioRepository) {
 		Usuario usuario = new Usuario();
-		usuario.setCpf("admin");
+		usuario.setCpf("00000000000");
 		usuario.setSenha(passwordEncoder().encode("admin"));
 		usuario.setRole(rolerepository.findByNameRole("ROLE_ADMIN"));
 		usuarioRepository.save(usuario);

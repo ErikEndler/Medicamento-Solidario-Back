@@ -48,6 +48,12 @@ public class PedidoResources {
 		}
 		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(pedido.get()), HttpStatus.OK);
 	}
+	@ApiOperation(value = "Retorna um Pedido unico")
+	@GetMapping("/usuario/{id}")
+	public ResponseEntity<?> listarPorUsuario(@PathVariable(value = "id") long id){
+		
+		return new ResponseEntity<>(controle.listarPorUsuario(id),HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")

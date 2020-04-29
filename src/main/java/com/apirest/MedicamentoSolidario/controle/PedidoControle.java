@@ -53,6 +53,18 @@ public class PedidoControle {
 		}
 		return result;
 	}
+	public List<PedidoRespostaDTO> listarPorUsuario(long id){
+		List<Pedido> pedidos = repository.findByUsuario(id);
+		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
+		for (Pedido str : pedidos) {
+			if(str.getRecebimento()!=null) {
+				result.add(PedidoRespostaDTO.transformaEmDTO(str));
+			}else {
+				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
+			}			
+		}
+		return result;
+	}
 	
 	public Optional<Pedido> listar(long id) {
 		verifyIfObjectExists(id);
