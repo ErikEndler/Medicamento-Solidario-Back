@@ -38,6 +38,11 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Recebimento recebimento;
 
+	
+	public Pedido() {
+		
+	}
+
 	public Pedido(long id2, String justificativa2, LocalDateTime data2,Usuario usuario,List<Medicamento> medicamentos2) {
 		this.id=id2;
 		this.justificativa=justificativa2;
