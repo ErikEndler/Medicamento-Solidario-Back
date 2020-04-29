@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 import com.apirest.MedicamentoSolidario.Models.Pedido;
+import com.apirest.MedicamentoSolidario.Models.Usuario;
 
 public interface PedidoRepository extends CrudRepository<Pedido, Long>{
 	Optional<Pedido> findById(long id);
-	List<Pedido> findByUsuario(long id);
+	List<Pedido> findByUsuario(Usuario usuario);
 }

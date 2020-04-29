@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Pedido;
+import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.PedidoRepository;
+import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
 @Service
 public class PedidoControle {
@@ -24,6 +26,8 @@ public class PedidoControle {
 	MedicamentoControle medicamentoControle;
 	@Autowired
 	UsuarioControle usuarioControle;
+	@Autowired
+	UsuarioRepository usuarioRepository;
 
 	public Pedido salvar(PedidoDTO pedidoDTO) {
 		Optional<Pedido> ret = verifySave(pedidoDTO.getId());
@@ -54,7 +58,8 @@ public class PedidoControle {
 		return result;
 	}
 	public List<PedidoRespostaDTO> listarPorUsuario(long id){
-		List<Pedido> pedidos = repository.findByUsuario(id);
+		Usuario usuario = usuarioRepository.findById(id).get();
+		List<Pedido> pedidos = repository.findByUsuario(usuario);
 		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
 		for (Pedido str : pedidos) {
 			if(str.getRecebimento()!=null) {
