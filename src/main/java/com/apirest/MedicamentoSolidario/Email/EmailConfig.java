@@ -21,7 +21,7 @@ public class EmailConfig {
 	
 	@Bean
 	public JavaMailSender mailSender() {
-		try {
+		
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 			
 			mailSender.setHost(env.getProperty("mail.smtp.host"));
@@ -33,16 +33,11 @@ public class EmailConfig {
 			props.put("mail.transport.protocol", "smtp");
 			props.put("mail.smtp.auth", true);
 			props.put("mail.smtp.starttls.enable", true);
+			props.put("mail.smtp.socketFactory.fallback", "false");
 			props.put("mail.debug", true);
-			//props.put("mail.smtp.connectiontimeout", 10000);
-			
-			mailSender.setJavaMailProperties(props);
-			
-			return mailSender;	
-		} catch (Exception e) {
-			return (JavaMailSender) e;
-		}
-			
+			//props.put("mail.smtp.connectiontimeout", 10000);			
+			mailSender.setJavaMailProperties(props);			
+			return mailSender;			
 	}
 
 }

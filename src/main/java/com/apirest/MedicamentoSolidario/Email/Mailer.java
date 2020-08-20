@@ -9,16 +9,17 @@ import org.springframework.stereotype.Component;
 public class Mailer {
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+
 	public void enviar(Mensagem mensagem) {
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		
+
 		simpleMailMessage.setFrom(mensagem.getRemetente());
 		simpleMailMessage.setTo(mensagem.getDestinatario());
 		simpleMailMessage.setSubject(mensagem.getAssunto());
 		simpleMailMessage.setText(mensagem.getCorpo());
-		
 		javaMailSender.send(simpleMailMessage);
+		System.out.println("Email enviado..");
+
 	}
 
 }

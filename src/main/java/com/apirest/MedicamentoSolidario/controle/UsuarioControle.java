@@ -125,7 +125,7 @@ public class UsuarioControle {
 					MenssagemErro() + " NAO ENCONTRADO para cpf " + recuperarSenha.getCpf());
 		}
 		comparaEmail(recuperarSenha, user);
-		String remetente = "contato.medicamentosolidario@gmail.com";
+		String remetente = "medicamentosolidario@hotmail.com";
 		String destino = user.getEmail();
 		if (destino == null) {
 			throw new ResourceNotFoundException(MenssagemErro() + " Não possui Email cadastrado ");
@@ -134,14 +134,14 @@ public class UsuarioControle {
 		// implementar geração de codigo
 		String senha = novaSenha(user);
 		String corpo = "Olá! \n\n Segue sua nova senha: \n\n " + senha;
-		try {
+		//try {
 			mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
 			System.out.println("Email enviado.");
 			salvaNovaSenha(senha,user);
 			System.out.println("Nova senha salva no banco.");
-		} catch (Exception e) {
-			throw new ResourceNotFoundException(" Erro ao enviar email para : " + user.getEmail());
-		}		
+		//} catch (Exception e) {
+		//	throw new ResourceNotFoundException(" Erro ao enviar email para : " + user.getEmail());
+		//}		
 	}
 
 	private void comparaEmail(RecuperarSenha recuperarSenha, Usuario user) {
