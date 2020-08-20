@@ -134,8 +134,14 @@ public class UsuarioControle {
 		// implementar geração de codigo
 		String senha = novaSenha(user);
 		String corpo = "Olá! \n\n Segue sua nova senha: \n\n " + senha;
-
-		mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
+		try {
+			mailer.enviar(new Mensagem(remetente, destino, assunto, corpo));
+			System.out.println("Email enviado.");
+			salvaNovaSenha(senha,user);
+			System.out.println("Nova senha salva no banco.");
+		} catch (Exception e) {
+			throw new ResourceNotFoundException(" Erro ao enviar email para : " + user.getEmail());
+		}		
 	}
 
 	private void comparaEmail(RecuperarSenha recuperarSenha, Usuario user) {
@@ -149,10 +155,15 @@ public class UsuarioControle {
 		int numeroInteiroAleatorio = random.nextInt((9000000 - 100000) + 1) + 100000;
 		String novaSenha = String.valueOf(numeroInteiroAleatorio);
 		// criptografa a senha
+		//String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
+		//user.setSenha(senhaCriptografada);
+		//usuarioRepository.save(user);
+		return novaSenha;
+	}
+	private void salvaNovaSenha(String novaSenha, Usuario user) {
 		String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
 		user.setSenha(senhaCriptografada);
 		usuarioRepository.save(user);
-		return novaSenha;
 	}
 
 	// função que busca no banco a role recebida no formulario
