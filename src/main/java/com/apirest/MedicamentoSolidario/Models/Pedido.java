@@ -8,62 +8,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TB_PEDIDO")
+@Table(name = "TB_PEDIDO")
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", insertable=false, updatable=false)
+	@Column(name = "id", insertable = false, updatable = false)
 	private long id;
 	private String justificativa;
 	private LocalDateTime dataCriacao;
-	
+	private String status;
 	@ManyToOne
 	private Usuario usuario;
-		
-	@ManyToMany
-	@JoinTable(name = "pedido_medicamento",
-	joinColumns = @JoinColumn(name="pedido_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name="medicamento_id",referencedColumnName = "id")
-			)
-    private List<Medicamento> medicamentos;
-	
 	@OneToOne(mappedBy = "pedido")
 	private Recebimento recebimento;
+	@OneToMany(mappedBy = "pedido")
+	private PedidoMedicamento pedido_med;
 
-	
 	public Pedido() {
-		
 	}
 
-	public Pedido(long id2, String justificativa2, LocalDateTime data2,Usuario usuario,List<Medicamento> medicamentos2) {
-		this.id=id2;
-		this.justificativa=justificativa2;
+	public Pedido(long id2, String justificativa2, LocalDateTime data2, Usuario usuario) {
+		this.id = id2;
+		this.justificativa = justificativa2;
 		this.setDataCriacao(data2);
-		this.usuario=usuario;
-		this.medicamentos = medicamentos2;		
+		this.usuario = usuario;
 	}
 
-	public Pedido(String justificativa2, LocalDateTime data2, Usuario usuario2, List<Medicamento> medicamentos2) {
-		this.justificativa=justificativa2;
-		this.setDataCriacao(data2);
-		this.usuario=usuario2;
-		this.medicamentos = medicamentos2;
-	}
-	
-	public List<Medicamento> getMedicamentos() {
-		return medicamentos;
-	}
+	public Pedido(String justificativa, LocalDateTime dataCriacao, Usuario usuario) {
+		this.justificativa = justificativa;
+		this.setDataCriacao(dataCriacao);
+		this.usuario = usuario;
 
-	public void setMedicamentos(List<Medicamento> medicamentos) {
-		this.medicamentos = medicamentos;
 	}
 
 	public long getId() {
@@ -104,5 +85,21 @@ public class Pedido {
 
 	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
-	}	
+	}
+
+	public PedidoMedicamento getPedido_med() {
+		return pedido_med;
+	}
+
+	public void setPedido_med(PedidoMedicamento pedido_med) {
+		this.pedido_med = pedido_med;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

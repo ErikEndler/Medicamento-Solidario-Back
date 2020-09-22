@@ -113,11 +113,11 @@ public class MedicamentoRespostaDTO {
 		this.tipoReceita = tipoReceita;
 	}
 
-	public LocalDate getDataVencimento() {
+	public LocalDate getDataValidade() {
 		return dataValidade;
 	}
 
-	public void setDataVencimento(LocalDate dataVencimento) {
+	public void setDataValidade(LocalDate dataVencimento) {
 		this.dataValidade = dataVencimento;
 	}
 

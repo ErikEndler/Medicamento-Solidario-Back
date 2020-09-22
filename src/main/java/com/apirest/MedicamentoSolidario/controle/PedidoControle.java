@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Pedido;
+import com.apirest.MedicamentoSolidario.Models.PedidoMedicamento;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
+import com.apirest.MedicamentoSolidario.dto.PedidoMedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
+import com.apirest.MedicamentoSolidario.repository.PedidoMedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.PedidoRepository;
 import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
@@ -28,6 +31,8 @@ public class PedidoControle {
 	UsuarioControle usuarioControle;
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	@Autowired
+	PedidoMedicamentoRepository pedidomeMedicamentoRepository;
 
 	public Pedido salvar(PedidoDTO pedidoDTO) {
 		Optional<Pedido> ret = verifySave(pedidoDTO.getId());
@@ -35,59 +40,80 @@ public class PedidoControle {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
 
 		} else {
-			System.out.println("ID VINDO DO FRONT :"+pedidoDTO.getIdUsuario());
-			pedidoDTO.setDataCriacao(LocalDateTime.now());
-			pedidoDTO.setMedicamentosFull(listaMedicamentos(pedidoDTO.getMedicamentos()));
-			pedidoDTO.setUsuario(usuarioControle.listar(pedidoDTO.getIdUsuario()).get());
-			
-			System.out.println("ID VINDO DO BACK :"+pedidoDTO.getUsuario().getId());
-			return repository.save(pedidoDTO.transformarParaObjSalvar());
+			Pedido pedido = repository.save(transformaSalvarPedido(pedidoDTO));
+			System.out.println("Pedido salvo");
+			salvarPed_med(pedidoDTO);
+			System.out.println("Pedido_medicamento salvo");
+			return pedido;
 		}
+	}
+
+	private void salvarPed_med(PedidoDTO dto) {
+		for (PedidoMedicamentoDTO item : dto.getListaMedicamentos()) {
+			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(dto.getId()).get(),
+					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
+		}
+	}
+
+	private Pedido transformaSalvarPedido(PedidoDTO dto) {
+		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto));
+	}
+
+	private Usuario getUsuario(PedidoDTO dto) {
+		return usuarioControle.listar(dto.getIdUsuario()).get();
+	}
+
+	private LocalDateTime dataCriacao() {
+		return LocalDateTime.now();
 	}
 
 	public Iterable<PedidoRespostaDTO> listarTodosNormal() {
 		Iterable<Pedido> listar = repository.findAll();
 		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
 		for (Pedido str : listar) {
-			if(str.getRecebimento()!=null) {
+			if (str.getRecebimento() != null) {
 				result.add(PedidoRespostaDTO.transformaEmDTO(str));
-			}else {
+			} else {
 				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
-			}			
+			}
 		}
 		return result;
 	}
-	public List<PedidoRespostaDTO> listarPorUsuario(long id){
+
+	public List<PedidoRespostaDTO> listarPorUsuario(long id) {
 		Usuario usuario = usuarioRepository.findById(id).get();
 		List<Pedido> pedidos = repository.findByUsuario(usuario);
 		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
 		for (Pedido str : pedidos) {
-			if(str.getRecebimento()!=null) {
+			if (str.getRecebimento() != null) {
 				result.add(PedidoRespostaDTO.transformaEmDTO(str));
-			}else {
+			} else {
 				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
-			}			
+			}
 		}
 		return result;
 	}
-	
+
 	public Optional<Pedido> listar(long id) {
 		verifyIfObjectExists(id);
 		Optional<Pedido> findById = repository.findById(id);
 		return findById;
 	}
-	
+
 	public void deletarById(long id) {
 		verifyIfObjectExists(id);
 		repository.deleteById(id);
 	}
-	
+
 	public Pedido atualizar(Pedido pedido) {
 		verifyIfObjectExists(pedido.getId());
 		return repository.save(pedido);
-	}	
-	
+	}
+
 //---------------------------------------------------------------------//
+
+	// transforma a lista de medicamentos no formato de DTO para formato de
+	// Medicamento
 	private List<Medicamento> listaMedicamentos(List<MedicamentoDTO> listMedicamDto) {
 		List<Medicamento> listaMedicamento = new ArrayList<Medicamento>();
 		for (MedicamentoDTO medicamentoDTO : listMedicamDto) {
@@ -95,6 +121,7 @@ public class PedidoControle {
 		}
 		return listaMedicamento;
 	}
+
 	private void verifyIfObjectExists(long id) {
 		String msg = MenssagemErro();
 		Optional<Pedido> retorno = repository.findById(id);
@@ -111,6 +138,5 @@ public class PedidoControle {
 		String msg = "Pedido";
 		return msg;
 	}
-
 
 }
