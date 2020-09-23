@@ -108,6 +108,7 @@ public class PedidoControle {
 	}
 
 	private PedidoRespostaDTO transformaEmRespostaSemRecebimento(Pedido pedido) {
+		System.out.println("lISTA BUGADA: "+pedido.getPedido_med().toString());
 		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
 				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
 	}
