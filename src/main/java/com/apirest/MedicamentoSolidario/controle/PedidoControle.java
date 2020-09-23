@@ -55,7 +55,7 @@ public class PedidoControle {
 			pedido = repository.findById(pedido.getId()).get();
 			
 			
-			return transformaEmRespostaSemRecebimento(repository.findById(pedido.getId()).get());
+			return transformaEmRespostaSemRecebimento(pedido);
 		}
 	}
 
