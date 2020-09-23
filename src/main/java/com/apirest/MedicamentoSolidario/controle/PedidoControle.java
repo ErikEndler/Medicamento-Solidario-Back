@@ -19,6 +19,7 @@ import com.apirest.MedicamentoSolidario.dto.PedidoMedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
+import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.PedidoMedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.PedidoRepository;
 import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
@@ -35,6 +36,8 @@ public class PedidoControle {
 	UsuarioRepository usuarioRepository;
 	@Autowired
 	PedidoMedicamentoRepository pedidomeMedicamentoRepository;
+	@Autowired
+	MedicamentoRepository medicamentoRepository;
 
 	// --------------METODO SALVAR--------------
 	public PedidoRespostaDTO salvar(PedidoDTO pedidoDTO) {
@@ -50,6 +53,7 @@ public class PedidoControle {
 			salvarPed_med(pedidoDTO, pedido);
 			System.out.println("Pedido_medicamento salvo");
 			pedido = repository.findById(pedido.getId()).get();
+			
 
 			return transformaEmRespostaSemRecebimento(pedido);
 		}
@@ -71,6 +75,9 @@ public class PedidoControle {
 		for (PedidoMedicamentoDTO item : dto.getListaMedicamentos()) {
 			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(pedido.getId()).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
+			Medicamento medicamento = medicamentoControle.listar(item.getMedicamentoID()).get();
+			medicamento.setQuantidade(item.getQtd());
+			medicamentoRepository.save(medicamento);
 		}
 	}
 
@@ -145,7 +152,9 @@ public class PedidoControle {
 		List<PedidoMedicamento> listPedidoMedicamentos = pedido.getPedido_med();
 		PedidoRespostaListDTO resposta = null;
 		for (PedidoMedicamento pedidoMedicamento : listPedidoMedicamentos) {
-			medicamentos.add(MedicamentoRespostaDTO.transformaEmDTOList(pedidoMedicamento.getMedicamento()));
+			Medicamento med = pedidoMedicamento.getMedicamento();
+			med.setQuantidade(pedidoMedicamento.getQtd());
+			medicamentos.add(MedicamentoRespostaDTO.transformaEmDTOList(med));
 		}
 
 		return new PedidoRespostaListDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
