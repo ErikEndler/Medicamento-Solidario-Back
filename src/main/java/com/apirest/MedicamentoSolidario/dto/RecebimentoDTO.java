@@ -40,13 +40,13 @@ public class RecebimentoDTO {
 	public Recebimento transformarParaObjSalvar() {
 		this.voluntario = controleUsuario.listar(idVoluntario).get();
 		this.ponto = controlePonto.listar(idPonto).get();
-		this.pedido = controlePedido.listar(idPedido).get();
+		this.pedido = controlePedido.listarNormal(idPedido).get();
 
 		return new Recebimento(id, dataRetirada, obs, voluntario, ponto, pedido);
 	}
 
 	public Recebimento transformarParaObjEditar() {
-		this.pedido = controlePedido.listar(id).get();
+		this.pedido = controlePedido.listarNormal(idPedido).get();
 		this.voluntario = controleUsuario.listar(id).get();
 		this.ponto = controlePonto.listar(id).get();
 		return new Recebimento(dataRetirada, obs, voluntario, ponto, pedido);

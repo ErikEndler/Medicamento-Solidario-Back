@@ -13,9 +13,11 @@ import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.Models.PedidoMedicamento;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
+import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoMedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
+import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.PedidoMedicamentoRepository;
 import com.apirest.MedicamentoSolidario.repository.PedidoRepository;
@@ -47,8 +49,8 @@ public class PedidoControle {
 			// Cahama metodo para salvar relaça ode medicamentos com pedido
 			salvarPed_med(pedidoDTO, pedido);
 			System.out.println("Pedido_medicamento salvo");
-			pedido =repository.findById(pedido.getId()).get();
-			
+			pedido = repository.findById(pedido.getId()).get();
+
 			return transformaEmRespostaSemRecebimento(pedido);
 		}
 	}
@@ -123,11 +125,31 @@ public class PedidoControle {
 		}
 		return listResposta;
 	}
-
-	public Optional<Pedido> listar(long id) {
+	
+	public Optional<Pedido> listarNormal(long id) {
 		verifyIfObjectExists(id);
 		Optional<Pedido> findById = repository.findById(id);
 		return findById;
+		
+	}
+
+	// -------------LISTA UM PEDIDO ---------------
+	public PedidoRespostaListDTO listar(long id) {
+		verifyIfObjectExists(id);
+		Optional<Pedido> findById = repository.findById(id);
+		return respostaListar(findById.get());
+	}
+
+	private PedidoRespostaListDTO respostaListar(Pedido pedido) {
+		List<MedicamentoRespostaDTO> medicamentos = new ArrayList();
+		List<PedidoMedicamento> listPedidoMedicamentos = pedido.getPedido_med();
+		PedidoRespostaListDTO resposta = null;
+		for (PedidoMedicamento pedidoMedicamento : listPedidoMedicamentos) {
+			medicamentos.add(MedicamentoRespostaDTO.transformaEmDTOList(pedidoMedicamento.getMedicamento()));
+		}
+
+		return new PedidoRespostaListDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
+				pedido.getDataCriacao(), pedido.getUsuario().getId(), medicamentos, pedido.getRecebimento());
 	}
 
 	public void deletarById(long id) {

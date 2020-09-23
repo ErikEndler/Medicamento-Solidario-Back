@@ -21,6 +21,7 @@ import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.controle.PedidoControle;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
+import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,11 +43,13 @@ public class PedidoResources {
 	@ApiOperation(value = "Retorna um Pedido unico")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
-		Optional<Pedido> pedido = controle.listar(id);
-		if (pedido.get().getStatus().equals("aberto")) {
-			return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido.get()), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido.get()), HttpStatus.OK);
+		PedidoRespostaListDTO pedido = controle.listar(id);
+		//if (pedido.getStatus().equals("aberto") || pedido.getStatus() == null) {
+		//	return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido), HttpStatus.OK);
+		//}
+		//return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido), HttpStatus.OK);
+		return new ResponseEntity<>(pedido, HttpStatus.OK);
+		
 	}
 
 	@ApiOperation(value = "Retorna um Pedido unico")
