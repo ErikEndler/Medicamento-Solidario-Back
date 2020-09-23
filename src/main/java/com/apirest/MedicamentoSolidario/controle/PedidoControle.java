@@ -52,10 +52,10 @@ public class PedidoControle {
 			// Cahama metodo para salvar relaça ode medicamentos com pedido
 			salvarPed_med(pedidoDTO, pedido);
 			System.out.println("Pedido_medicamento salvo");
-			pedido = repository.findById(pedido.getId()).get();
+			//pedido = repository.findById(pedido.getId()).get();
 			
 			
-			return transformaEmRespostaSemRecebimento(pedido);
+			return transformaEmRespostaSemRecebimento(repository.findById(pedido.getId()).get());
 		}
 	}
 
