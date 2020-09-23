@@ -36,7 +36,7 @@ public class Medicamento {
 	@ManyToOne
 	private Recebimento doacao_out;
 	@OneToMany(mappedBy = "medicamento")
-	private PedidoMedicamento peido_med;
+	private List<PedidoMedicamento> pedido_med;
 
 	public Medicamento() {
 		super();
@@ -168,12 +168,12 @@ public class Medicamento {
 		this.dataInsercao = dataInsercao;
 	}
 
-	public PedidoMedicamento getPeido_med() {
-		return peido_med;
+	public List<PedidoMedicamento> getPeido_med() {
+		return pedido_med;
 	}
 
-	public void setPeido_med(PedidoMedicamento peido_med) {
-		this.peido_med = peido_med;
+	public void setPeido_med(List<PedidoMedicamento> peido_med) {
+		this.pedido_med = peido_med;
 	}
 
 }
