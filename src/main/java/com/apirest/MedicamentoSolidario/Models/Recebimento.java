@@ -24,8 +24,7 @@ public class Recebimento {
 	private long id;
 	private LocalDateTime dataRetirada;
 	private String obs;
-	@OneToMany(mappedBy = "doacao_out")
-	private List<Medicamento> medicamento;
+
 	@ManyToOne
 	@JoinColumn(name = "voluntario_id")
 	private Usuario voluntario;
@@ -71,14 +70,6 @@ public class Recebimento {
 
 	public void setObs(String obs) {
 		this.obs = obs;
-	}
-
-	public List<Medicamento> getMedicamento() {
-		return medicamento;
-	}
-
-	public void setMedicamento(List<Medicamento> medicamento) {
-		this.medicamento = medicamento;
 	}
 
 	public Usuario getVoluntario() {
