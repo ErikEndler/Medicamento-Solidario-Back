@@ -43,8 +43,7 @@ public class PedidoResources {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<Pedido> pedido = controle.listar(id);
-		if (pedido.get().getRecebimento() != null || pedido.get().getRecebimento().getId() == 0
-				|| pedido.get().getStatus().equals("aberto")) {
+		if (pedido.get().getStatus().equals("aberto")) {
 			return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido.get()), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido.get()), HttpStatus.OK);
