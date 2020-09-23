@@ -76,7 +76,7 @@ public class PedidoControle {
 			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(pedido.getId()).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
 			Medicamento medicamento = medicamentoControle.listar(item.getMedicamentoID()).get();
-			medicamento.setQuantidade(item.getQtd());
+			medicamento.setQuantidade(medicamento.getQuantidade()-item.getQtd());
 			medicamentoRepository.save(medicamento);
 		}
 	}
