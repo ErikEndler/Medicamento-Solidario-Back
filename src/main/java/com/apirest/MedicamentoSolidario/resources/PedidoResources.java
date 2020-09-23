@@ -22,6 +22,7 @@ import com.apirest.MedicamentoSolidario.controle.PedidoControle;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
+import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,12 +45,14 @@ public class PedidoResources {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		PedidoRespostaListDTO pedido = controle.listar(id);
-		//if (pedido.getStatus().equals("aberto") || pedido.getStatus() == null) {
-		//	return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido), HttpStatus.OK);
-		//}
-		//return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido), HttpStatus.OK);
+		// if (pedido.getStatus().equals("aberto") || pedido.getStatus() == null) {
+		// return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido),
+		// HttpStatus.OK);
+		// }
+		// return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido),
+		// HttpStatus.OK);
 		return new ResponseEntity<>(pedido, HttpStatus.OK);
-		
+
 	}
 
 	@ApiOperation(value = "Retorna um Pedido unico")
@@ -62,8 +65,8 @@ public class PedidoResources {
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
-		PedidoRespostaDTO pedido = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>(pedido, HttpStatus.CREATED);
+		long pedidoID = controle.salvar(pedidoDTO);
+		return new ResponseEntity<>(controle.listar(pedidoID), HttpStatus.CREATED);
 
 	}
 

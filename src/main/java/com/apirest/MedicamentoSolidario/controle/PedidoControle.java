@@ -40,23 +40,32 @@ public class PedidoControle {
 	MedicamentoRepository medicamentoRepository;
 
 	// --------------METODO SALVAR--------------
-	public PedidoRespostaDTO salvar(PedidoDTO pedidoDTO) {
+	public long salvar(PedidoDTO pedidoDTO) {
 		Optional<Pedido> ret = verifySave(pedidoDTO.getId());
 		if (ret.isPresent()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
 
 		} else {
-			// Salva pedido
-			long idPedidoSalvo = repository.save(transformaSalvarPedido(pedidoDTO)).getId();
-			System.out.println("Pedido salvo");
-			// Cahama metodo para salvar relaça ode medicamentos com pedido
-			salvarPed_med(pedidoDTO, idPedidoSalvo);
-			System.out.println("Pedido_medicamento salvo");
-			//pedido = repository.findById(pedido.getId()).get();
-			
-			verifyIfObjectExists(idPedidoSalvo);
-			return transformaEmRespostaSemRecebimento(repository.findById(idPedidoSalvo).get());
+			try {
+				// Salva pedido
+				long idPedidoSalvo = repository.save(transformaSalvarPedido(pedidoDTO)).getId();
+				System.out.println("Pedido salvo");
+				// Cahama metodo para salvar relaça ode medicamentos com pedido
+				salvarPed_med(pedidoDTO, idPedidoSalvo);
+				System.out.println("Pedido_medicamento salvo");
+				// pedido = repository.findById(pedido.getId()).get();
+
+				verifyIfObjectExists(idPedidoSalvo);
+				// return
+				// transformaEmRespostaSemRecebimento(repository.findById(idPedidoSalvo).get());
+				return idPedidoSalvo;
+
+			} catch (Exception e) {
+				 new ResourceNotFoundException("Erro ao salvar PEDIDO !!");
+			}
+
 		}
+		return 0;
 	}
 
 	// -----------------METODO ATUALIZAR------------------
@@ -76,7 +85,7 @@ public class PedidoControle {
 			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(idPedido).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
 			Medicamento medicamento = medicamentoControle.listar(item.getMedicamentoID()).get();
-			medicamento.setQuantidade(medicamento.getQuantidade()-item.getQtd());
+			medicamento.setQuantidade(medicamento.getQuantidade() - item.getQtd());
 			medicamentoRepository.save(medicamento);
 		}
 	}
@@ -108,7 +117,6 @@ public class PedidoControle {
 	}
 
 	private PedidoRespostaDTO transformaEmRespostaSemRecebimento(Pedido pedido) {
-		System.out.println("lISTA BUGADA: "+pedido.getPedido_med().toString());
 		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
 				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
 	}
@@ -133,12 +141,12 @@ public class PedidoControle {
 		}
 		return listResposta;
 	}
-	
+
 	public Optional<Pedido> listarNormal(long id) {
 		verifyIfObjectExists(id);
 		Optional<Pedido> findById = repository.findById(id);
 		return findById;
-		
+
 	}
 
 	// -------------LISTA UM PEDIDO ---------------

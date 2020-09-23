@@ -42,9 +42,7 @@ public class PedidoRespostaDTO {
 
 	private List<PedidoMedicamentoDTO> transformaLista(List<PedidoMedicamento> listPedidoMedicamentos) {
 		List<PedidoMedicamentoDTO> listaMedicamentosDTO = new ArrayList<>();
-		if(listPedidoMedicamentos == null) {
-			new ResourceNotFoundException("listPedidoMedicamentos esta vindo vazia");
-		}
+		
 		for (PedidoMedicamento pedidoMedicamento : listPedidoMedicamentos) {
 			listaMedicamentosDTO.add(
 					new PedidoMedicamentoDTO(pedidoMedicamento.getQtd(), pedidoMedicamento.getMedicamento().getId()));
