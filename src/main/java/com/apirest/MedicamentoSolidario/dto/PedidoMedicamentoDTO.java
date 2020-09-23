@@ -4,6 +4,14 @@ public class PedidoMedicamentoDTO {
 	private int qtd;
 	private long medicamentoID;
 
+	
+
+	public PedidoMedicamentoDTO(int qtd, long medicamentoID) {
+		super();
+		this.qtd = qtd;
+		this.medicamentoID = medicamentoID;
+	}
+
 	public int getQtd() {
 		return qtd;
 	}

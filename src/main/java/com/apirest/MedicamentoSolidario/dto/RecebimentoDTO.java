@@ -23,6 +23,7 @@ public class RecebimentoDTO {
 	PontoColetaControle controlePonto;
 	@Autowired
 	PedidoControle controlePedido;
+
 	private long id;
 	private LocalDateTime dataRetirada;
 	private String obs;

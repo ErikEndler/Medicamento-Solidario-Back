@@ -17,7 +17,6 @@ public class PedidoDTO {
 	private long id;
 	private String justificativa;
 	private long idUsuario;
-	private List<MedicamentoDTO> medicamentos;
 	private List<PedidoMedicamentoDTO> listaMedicamentos;
 
 	public long getId() {
@@ -42,10 +41,6 @@ public class PedidoDTO {
 
 	public void setIdUsuario(long idUsuario) {
 		this.idUsuario = idUsuario;
-	}
-
-	public List<MedicamentoDTO> getMedicamentos() {
-		return medicamentos;
 	}
 
 	public List<PedidoMedicamentoDTO> getListaMedicamentos() {

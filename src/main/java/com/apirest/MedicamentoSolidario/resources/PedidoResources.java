@@ -36,41 +36,42 @@ public class PedidoResources {
 	@ApiOperation(value = "Retorna uma lista de Pedidos")
 	@GetMapping("")
 	public ResponseEntity<?> listarTodos() {
-		return new ResponseEntity<> (controle.listarTodosNormal(),HttpStatus.OK);
+		return new ResponseEntity<>(controle.listarTodosNormal(), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Retorna um Pedido unico")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> listar(@PathVariable(value = "id") long id) {
 		Optional<Pedido> pedido = controle.listar(id);
-		if(pedido.get().getRecebimento() != null) {
-			return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(pedido.get()), HttpStatus.OK);
+		if (pedido.get().getRecebimento() != null) {
+			return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido.get()), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(pedido.get()), HttpStatus.OK);
+		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(pedido.get()), HttpStatus.OK);
 	}
+
 	@ApiOperation(value = "Retorna um Pedido unico")
 	@GetMapping("/usuario/{id}")
-	public ResponseEntity<?> listarPorUsuario(@PathVariable(value = "id") long id){
-		
-		return new ResponseEntity<>(controle.listarPorUsuario(id),HttpStatus.OK);
+	public ResponseEntity<?> listarPorUsuario(@PathVariable(value = "id") long id) {
+
+		return new ResponseEntity<>(controle.listarPorUsuario(id), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
 		Pedido pedido = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(pedido), HttpStatus.CREATED);
+		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido), HttpStatus.CREATED);
 
 	}
 
 	@ApiOperation(value = "Atualiza um Pedido")
 	@PutMapping("")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid PedidoDTO dto) {
-		Pedido resposta = controle.atualizar(dto.transformarParaObjEditar());
-		if(resposta.getRecebimento()!=null) {
-			return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTO(resposta),HttpStatus.OK);
+		Pedido resposta = controle.atualizar(dto);
+		if (resposta.getRecebimento() != null) {
+			return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(resposta), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(PedidoRespostaDTO.transformaEmDTOSave(resposta),HttpStatus.OK);
+		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(resposta), HttpStatus.OK);
 
 	}
 

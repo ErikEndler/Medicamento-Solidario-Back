@@ -28,15 +28,14 @@ public class Pedido {
 	@OneToOne(mappedBy = "pedido")
 	private Recebimento recebimento;
 	@OneToMany(mappedBy = "pedido")
-	private PedidoMedicamento pedido_med;
+	private List<PedidoMedicamento> pedido_med;
 
 	public Pedido() {
 	}
 
-	public Pedido(long id2, String justificativa2, LocalDateTime data2, Usuario usuario) {
+	public Pedido(long id2, String justificativa2, Usuario usuario) {
 		this.id = id2;
 		this.justificativa = justificativa2;
-		this.setDataCriacao(data2);
 		this.usuario = usuario;
 	}
 
@@ -71,14 +70,6 @@ public class Pedido {
 		this.usuario = usuario;
 	}
 
-	public Recebimento getRecebimento() {
-		return recebimento;
-	}
-
-	public void setRecebimento(Recebimento recebimento) {
-		this.recebimento = recebimento;
-	}
-
 	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
@@ -87,19 +78,27 @@ public class Pedido {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public PedidoMedicamento getPedido_med() {
-		return pedido_med;
-	}
-
-	public void setPedido_med(PedidoMedicamento pedido_med) {
-		this.pedido_med = pedido_med;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Recebimento getRecebimento() {
+		return recebimento;
+	}
+
+	public void setRecebimento(Recebimento recebimento) {
+		this.recebimento = recebimento;
+	}
+
+	public List<PedidoMedicamento> getPedido_med() {
+		return pedido_med;
+	}
+
+	public void setPedido_med(List<PedidoMedicamento> pedido_med) {
+		this.pedido_med = pedido_med;
 	}
 }

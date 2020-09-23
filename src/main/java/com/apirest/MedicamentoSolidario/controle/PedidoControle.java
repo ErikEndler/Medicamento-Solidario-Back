@@ -34,18 +34,32 @@ public class PedidoControle {
 	@Autowired
 	PedidoMedicamentoRepository pedidomeMedicamentoRepository;
 
+	// --------------METODO SALVAR--------------
 	public Pedido salvar(PedidoDTO pedidoDTO) {
 		Optional<Pedido> ret = verifySave(pedidoDTO.getId());
 		if (ret.isPresent()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
 
 		} else {
+			// Salva pedido
 			Pedido pedido = repository.save(transformaSalvarPedido(pedidoDTO));
 			System.out.println("Pedido salvo");
+			// Cahama metodo para salvar relaça ode medicamentos com pedido
 			salvarPed_med(pedidoDTO);
 			System.out.println("Pedido_medicamento salvo");
 			return pedido;
 		}
+	}
+
+	// -----------------METODO ATUALIZAR------------------
+	public Pedido atualizar(PedidoDTO dto) {
+		verifyIfObjectExists(dto.getId());
+		transformaEditarPedido(dto);
+		return repository.save(transformaEditarPedido(dto));
+	}
+
+	private Pedido transformaEditarPedido(PedidoDTO dto) {
+		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto));
 	}
 
 	private void salvarPed_med(PedidoDTO dto) {
@@ -67,31 +81,44 @@ public class PedidoControle {
 		return LocalDateTime.now();
 	}
 
+	// ----------------METODO LISTAR TODOS-------------------
 	public Iterable<PedidoRespostaDTO> listarTodosNormal() {
-		Iterable<Pedido> listar = repository.findAll();
+		Iterable<Pedido> listaPedidos = repository.findAll();
 		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
-		for (Pedido str : listar) {
-			if (str.getRecebimento() != null) {
-				result.add(PedidoRespostaDTO.transformaEmDTO(str));
+		for (Pedido pedido : listaPedidos) {
+			if (pedido.getRecebimento() != null) {
+				result.add(transformaEmResposta(pedido));
 			} else {
-				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
+				result.add(transformaEmRespostaSemRecebimento(pedido));
 			}
 		}
 		return result;
 	}
 
+	private PedidoRespostaDTO transformaEmRespostaSemRecebimento(Pedido pedido) {
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
+				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
+	}
+
+	private PedidoRespostaDTO transformaEmResposta(Pedido pedido) {
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
+				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med(),
+				pedido.getRecebimento().getId());
+	}
+
+	// -------------------- LISTAR PEDIDOS POR USUARIO----------
 	public List<PedidoRespostaDTO> listarPorUsuario(long id) {
-		Usuario usuario = usuarioRepository.findById(id).get();
-		List<Pedido> pedidos = repository.findByUsuario(usuario);
-		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
-		for (Pedido str : pedidos) {
-			if (str.getRecebimento() != null) {
-				result.add(PedidoRespostaDTO.transformaEmDTO(str));
+		Usuario usuario = usuarioControle.listar(id).get();
+		List<Pedido> pedidosUsuario = repository.findByUsuario(usuario);
+		List<PedidoRespostaDTO> listResposta = new ArrayList<PedidoRespostaDTO>();
+		for (Pedido pedido : pedidosUsuario) {
+			if (pedido.getRecebimento() != null) {
+				listResposta.add(transformaEmResposta(pedido));
 			} else {
-				result.add(PedidoRespostaDTO.transformaEmDTOSave(str));
+				listResposta.add(transformaEmRespostaSemRecebimento(pedido));
 			}
 		}
-		return result;
+		return listResposta;
 	}
 
 	public Optional<Pedido> listar(long id) {
@@ -103,11 +130,6 @@ public class PedidoControle {
 	public void deletarById(long id) {
 		verifyIfObjectExists(id);
 		repository.deleteById(id);
-	}
-
-	public Pedido atualizar(Pedido pedido) {
-		verifyIfObjectExists(pedido.getId());
-		return repository.save(pedido);
 	}
 
 //---------------------------------------------------------------------//

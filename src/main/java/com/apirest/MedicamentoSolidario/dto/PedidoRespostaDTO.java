@@ -4,55 +4,58 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Pedido;
+import com.apirest.MedicamentoSolidario.Models.PedidoMedicamento;
 
 public class PedidoRespostaDTO {
 	private long id;
+	private String status;
 	private String justificativa;
 	private LocalDateTime dataCriacao;
 	private long usuarioID;
-	private List<Long> medicamentosID;
+	private List<PedidoMedicamentoDTO> pedidoMedicamentos;
 	private long recebimento;
 
-	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID,
-			List<Medicamento> medicamentosID, long recebimento) {
+	public PedidoRespostaDTO(long id, String status, String justificativa, LocalDateTime dataCriacao, long usuarioID,
+			List<PedidoMedicamento> pedidoMedicamentos, long recebimento) {
 		super();
-		this.setId(id);
-		this.setJustificativa(justificativa);
-		this.setDataCriacao(dataCriacao);
-		this.setUsuarioID(usuarioID);
-		this.setMedicamentosID(listar(medicamentosID));
-		this.setRecebimento(recebimento);
+		this.id = id;
+		this.status = status;
+		this.justificativa = justificativa;
+		this.dataCriacao = dataCriacao;
+		this.usuarioID = usuarioID;
+		this.pedidoMedicamentos = transformaLista(pedidoMedicamentos);
+		this.recebimento = recebimento;
 	}
 
-	public PedidoRespostaDTO(long id, String justificativa, LocalDateTime dataCriacao, long usuarioID,
-			List<Medicamento> medicamentosID) {
+	public PedidoRespostaDTO(long id, String status, String justificativa, LocalDateTime dataCriacao, long usuarioID,
+			List<PedidoMedicamento> pedidoMedicamentos) {
 		super();
-		this.setId(id);
-		this.setJustificativa(justificativa);
-		this.setDataCriacao(dataCriacao);
-		this.setUsuarioID(usuarioID);
-		this.setMedicamentosID(listar(medicamentosID));
-
+		this.id = id;
+		this.status = status;
+		this.justificativa = justificativa;
+		this.dataCriacao = dataCriacao;
+		this.usuarioID = usuarioID;
+		this.pedidoMedicamentos = transformaLista(pedidoMedicamentos);
 	}
 
-	private List<Long> listar(List<Medicamento> medicamentosID2) {
-		List<Long> lista = new ArrayList<Long>();
-		for (Medicamento medicamento : medicamentosID2) {
-			lista.add(medicamento.getId());
+	private List<PedidoMedicamentoDTO> transformaLista(List<PedidoMedicamento> listPedidoMedicamentos) {
+		List<PedidoMedicamentoDTO> listaMedicamentosDTO = new ArrayList<>();
+		for (PedidoMedicamento pedidoMedicamento : listPedidoMedicamentos) {
+			listaMedicamentosDTO.add(
+					new PedidoMedicamentoDTO(pedidoMedicamento.getQtd(), pedidoMedicamento.getMedicamento().getId()));
 		}
-		return lista;
+		return listaMedicamentosDTO;
 	}
 
-	public static PedidoRespostaDTO transformaEmDTO(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getJustificativa(), pedido.getDataCriacao(),
-				pedido.getUsuario().getId(), pedido.getMedicamentos(), pedido.getRecebimento().getId());
+	public static Object respostaPedido(Pedido pedido) {
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
+				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
 	}
 
-	public static PedidoRespostaDTO transformaEmDTOSave(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getJustificativa(), pedido.getDataCriacao(),
-				pedido.getUsuario().getId(), pedido.getMedicamentos());
+	public static Object respostaPedidoFull(Pedido pedido) {
+		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
+				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med(),pedido.getRecebimento().getId());
 	}
 
 	public long getId() {
@@ -71,6 +74,30 @@ public class PedidoRespostaDTO {
 		this.justificativa = justificativa;
 	}
 
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public long getUsuarioID() {
+		return usuarioID;
+	}
+
+	public void setUsuarioID(long usuarioID) {
+		this.usuarioID = usuarioID;
+	}
+
+	public List<PedidoMedicamentoDTO> getMedicamentos() {
+		return pedidoMedicamentos;
+	}
+
+	public void setMedicamentos(List<PedidoMedicamentoDTO> medicamentos) {
+		this.pedidoMedicamentos = medicamentos;
+	}
+
 	public long getRecebimento() {
 		return recebimento;
 	}
@@ -79,28 +106,12 @@ public class PedidoRespostaDTO {
 		this.recebimento = recebimento;
 	}
 
-	public long getUsuarioID() {
-		return usuarioID;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setUsuarioID(long usuarioID2) {
-		this.usuarioID = usuarioID2;
-	}
-
-	public List<Long> getMedicamentosID() {
-		return medicamentosID;
-	}
-
-	public void setMedicamentosID(List<Long> medicamentosID) {
-		this.medicamentosID = medicamentosID;
-	}
-
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
