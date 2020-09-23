@@ -71,7 +71,7 @@ public class PedidoControle {
 	}
 
 	private Pedido transformaSalvarPedido(PedidoDTO dto) {
-		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto));
+		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto), "aberto");
 	}
 
 	private Usuario getUsuario(PedidoDTO dto) {

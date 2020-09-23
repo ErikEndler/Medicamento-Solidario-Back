@@ -39,10 +39,11 @@ public class Pedido {
 		this.usuario = usuario;
 	}
 
-	public Pedido(String justificativa, LocalDateTime dataCriacao, Usuario usuario) {
+	public Pedido(String justificativa, LocalDateTime dataCriacao, Usuario usuario, String status) {
 		this.justificativa = justificativa;
 		this.setDataCriacao(dataCriacao);
 		this.usuario = usuario;
+		this.status = status;
 
 	}
 

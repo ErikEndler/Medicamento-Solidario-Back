@@ -60,7 +60,7 @@ public class PedidoResources {
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
 		Pedido pedido = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(pedido), HttpStatus.CREATED);
+		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(controle.listar(pedido.getId()).get()), HttpStatus.CREATED);
 
 	}
 
