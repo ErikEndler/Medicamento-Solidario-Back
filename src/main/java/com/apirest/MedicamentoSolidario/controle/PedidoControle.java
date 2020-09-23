@@ -35,7 +35,7 @@ public class PedidoControle {
 	PedidoMedicamentoRepository pedidomeMedicamentoRepository;
 
 	// --------------METODO SALVAR--------------
-	public Pedido salvar(PedidoDTO pedidoDTO) {
+	public PedidoRespostaDTO salvar(PedidoDTO pedidoDTO) {
 		Optional<Pedido> ret = verifySave(pedidoDTO.getId());
 		if (ret.isPresent()) {
 			throw new ResourceNotFoundException(MenssagemErro() + " existente para o  ID: " + pedidoDTO.getId());
@@ -47,7 +47,9 @@ public class PedidoControle {
 			// Cahama metodo para salvar relaça ode medicamentos com pedido
 			salvarPed_med(pedidoDTO, pedido);
 			System.out.println("Pedido_medicamento salvo");
-			return pedido;
+			pedido =repository.findById(pedido.getId()).get();
+			
+			return transformaEmRespostaSemRecebimento(pedido);
 		}
 	}
 

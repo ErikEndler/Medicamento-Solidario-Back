@@ -59,8 +59,8 @@ public class PedidoResources {
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
-		Pedido pedido = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(controle.listar(pedido.getId()).get()), HttpStatus.CREATED);
+		PedidoRespostaDTO pedido = controle.salvar(pedidoDTO);
+		return new ResponseEntity<>(pedido, HttpStatus.CREATED);
 
 	}
 
