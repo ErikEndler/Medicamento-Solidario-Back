@@ -33,8 +33,7 @@ public class Medicamento {
 	private boolean status;
 	@ManyToOne
 	private Doacao doacao_in;
-	@ManyToOne
-	private Recebimento doacao_out;
+
 	@OneToMany(mappedBy = "medicamento")
 	private List<PedidoMedicamento> pedido_med;
 
@@ -43,8 +42,7 @@ public class Medicamento {
 	}
 
 	public Medicamento(long id, String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
-			LocalDate dataVencimento, String tarja, String tipoArmazenamento, int quantidade, Doacao fullDoacaoIn,
-			Recebimento fullDoacaoOut) {
+			LocalDate dataVencimento, String tarja, String tipoArmazenamento, int quantidade, Doacao fullDoacaoIn) {
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
@@ -55,8 +53,7 @@ public class Medicamento {
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.quantidade = quantidade;
 		this.doacao_in = fullDoacaoIn;
-		if (fullDoacaoOut != null)
-			this.doacao_out = fullDoacaoOut;
+
 	}
 
 	public Medicamento(String nome, String principio, String tipoReceita, LocalDateTime dataInsercao,
@@ -142,14 +139,6 @@ public class Medicamento {
 
 	public void setDoacao_in(Doacao doacao_in) {
 		this.doacao_in = doacao_in;
-	}
-
-	public Recebimento getDoacao_out() {
-		return doacao_out;
-	}
-
-	public void setDoacao_out(Recebimento doacao_out) {
-		this.doacao_out = doacao_out;
 	}
 
 	public boolean isStatus() {

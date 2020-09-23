@@ -18,7 +18,6 @@ public class MedicamentoDTO {
 	private String tipoArmazenamento;
 	private int quantidade;
 	private long idDoacaoIn;
-	private long idDoacaoOut;
 	private String dataValidade;
 
 	@JsonIgnore
@@ -37,7 +36,7 @@ public class MedicamentoDTO {
 	// edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
 		return new Medicamento(id, nome, principio, tipoReceita, dataInsercao, dataValidadeLocalDate, tarja,
-				tipoArmazenamento, quantidade, fullDoacaoIn, fullDoacaoOut);
+				tipoArmazenamento, quantidade, fullDoacaoIn);
 	}
 
 	public long getId() {
@@ -134,14 +133,6 @@ public class MedicamentoDTO {
 
 	public void setIdDoacaoIn(long idDoacaoIn) {
 		this.idDoacaoIn = idDoacaoIn;
-	}
-
-	public long getIdDoacaoOut() {
-		return idDoacaoOut;
-	}
-
-	public void setIdDoacaoOut(int idDoacaoOut) {
-		this.idDoacaoOut = idDoacaoOut;
 	}
 
 	public String getDataValidade() {

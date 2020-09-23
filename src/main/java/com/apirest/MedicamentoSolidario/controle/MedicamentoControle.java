@@ -40,7 +40,6 @@ public class MedicamentoControle {
 
 		} else {
 			verificadoacaoExiste(medicamento);
-			medicamento.setDoacao_out(null);
 			medicamento.setStatus(false);
 			return repository.save(medicamento);
 		}
@@ -89,10 +88,7 @@ public class MedicamentoControle {
 		medicamentoDTO.setDataValidadeLocalDate(data);
 		verifyIfObjectExists(medicamentoDTO.getId());
 		medicamentoDTO = setDoacao(medicamentoDTO);
-		System.out.println("ID DOAÇAO OUT È : "+medicamentoDTO.getIdDoacaoOut()+"\n\n");
-		if(medicamentoDTO.getIdDoacaoOut() != 0) {
-			medicamentoDTO = setDoacaoOut(medicamentoDTO);
-		}
+		
 		return repository.save(medicamentoDTO.TransformarParaObjEditar());
 	}
 

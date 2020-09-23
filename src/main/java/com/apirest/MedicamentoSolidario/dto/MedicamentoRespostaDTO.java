@@ -18,7 +18,6 @@ public class MedicamentoRespostaDTO {
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;
-	private long idDoacaoOut;
 	private long idDoacaoIn;
 	private long idPonto;
 
@@ -39,7 +38,7 @@ public class MedicamentoRespostaDTO {
 
 	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita,
 			LocalDateTime dataInsercao, LocalDate dataValidade, String tarja, String tipoArmazenamento, Doacao doacao,
-			Recebimento recebimento, int quantidade, long idPonto) {
+			  int quantidade, long idPonto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -50,9 +49,6 @@ public class MedicamentoRespostaDTO {
 		this.tarja = tarja;
 		this.tipoArmazenamento = tipoArmazenamento;
 		this.setIdDoacaoIn(doacao.getId());
-		if (recebimento != null) {
-			this.setIdDoacaoIn(recebimento.getId());
-		}
 		this.quantidade = quantidade;
 		this.idPonto = idPonto;
 	}
@@ -75,7 +71,6 @@ public class MedicamentoRespostaDTO {
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(),
 				medicamento.getDoacao_in(),
-				medicamento.getDoacao_out(),
 				medicamento.getQuantidade(),
 				medicamento.getDoacao_in().getPonto().getId()
 				);
@@ -145,13 +140,6 @@ public class MedicamentoRespostaDTO {
 		this.quantidade = quantidade;
 	}
 
-	public long getIdDoacaoOut() {
-		return idDoacaoOut;
-	}
-
-	public void setIdDoacaoOut(long idDoacaoOut) {
-		this.idDoacaoOut = idDoacaoOut;
-	}
 
 	public long getIdDoacaoIn() {
 		return idDoacaoIn;

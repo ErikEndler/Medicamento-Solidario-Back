@@ -36,12 +36,12 @@ public class RecebimentoControle {
 			//pega o pedido para buscar a lista de mediamento dele
 			List<Medicamento> meds = listarMed(recebimento.getPedido());
 			//percorre a lista de medicamentos para atribuir o recebimento a eles
-			for (Medicamento medicamento : meds) {
+			//for (Medicamento medicamento : meds) {
 				//atribui o recebimento ao medicamento
-				medicamento.setDoacao_out(recebimento);
+				//medicamento.setDoacao_out(recebimento);
 				// altera o medicamento
-				medicamentoRepository.save(medicamento);
-			}
+				//medicamentoRepository.save(medicamento);
+			//}
 			return receb ;		
 		}
 	}
