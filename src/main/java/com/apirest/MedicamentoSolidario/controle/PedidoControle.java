@@ -54,7 +54,7 @@ public class PedidoControle {
 			System.out.println("Pedido_medicamento salvo");
 			//pedido = repository.findById(pedido.getId()).get();
 			
-			
+			verifyIfObjectExists(pedido.getId());
 			return transformaEmRespostaSemRecebimento(repository.findById(pedido.getId()).get());
 		}
 	}
