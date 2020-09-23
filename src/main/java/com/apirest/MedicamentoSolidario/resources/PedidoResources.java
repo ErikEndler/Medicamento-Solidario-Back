@@ -55,7 +55,7 @@ public class PedidoResources {
 
 	}
 
-	@ApiOperation(value = "Retorna um Pedido unico")
+	@ApiOperation(value = "Retorna pedidos por usuario")
 	@GetMapping("/usuario/{id}")
 	public ResponseEntity<?> listarPorUsuario(@PathVariable(value = "id") long id) {
 
@@ -66,18 +66,16 @@ public class PedidoResources {
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
 		long pedidoID = controle.salvar(pedidoDTO);
-		return new ResponseEntity<>( HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 
 	}
 
 	@ApiOperation(value = "Atualiza um Pedido")
 	@PutMapping("")
 	public ResponseEntity<?> atualizar(@RequestBody @Valid PedidoDTO dto) {
-		Pedido resposta = controle.atualizar(dto);
-		if (resposta.getRecebimento() != null) {
-			return new ResponseEntity<>(PedidoRespostaDTO.respostaPedido(resposta), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(PedidoRespostaDTO.respostaPedidoFull(resposta), HttpStatus.OK);
+		// Pedido resposta = controle.atualizar(dto);
+
+		return new ResponseEntity<>(controle.atualizar(dto), HttpStatus.OK);
 
 	}
 

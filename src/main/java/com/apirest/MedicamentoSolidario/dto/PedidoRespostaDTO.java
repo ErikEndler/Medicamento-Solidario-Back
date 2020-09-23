@@ -14,31 +14,33 @@ public class PedidoRespostaDTO {
 	private String justificativa;
 	private LocalDateTime dataCriacao;
 	private long usuarioID;
-	private List<PedidoMedicamentoDTO> pedidoMedicamentos;
+	private List<MedicamentoRespostaDTO> pedidoMedicamentos;
 	private long recebimento;
 
 	public PedidoRespostaDTO(long id, String status, String justificativa, LocalDateTime dataCriacao, long usuarioID,
-			List<PedidoMedicamento> pedidoMedicamentos, long recebimento) {
+			List<MedicamentoRespostaDTO> medicamentos, long recebimento) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.justificativa = justificativa;
 		this.dataCriacao = dataCriacao;
 		this.usuarioID = usuarioID;
-		this.pedidoMedicamentos = transformaLista(pedidoMedicamentos);
+		this.pedidoMedicamentos = medicamentos;
 		this.recebimento = recebimento;
 	}
 
 	public PedidoRespostaDTO(long id, String status, String justificativa, LocalDateTime dataCriacao, long usuarioID,
-			List<PedidoMedicamento> pedidoMedicamentos) {
+			List<MedicamentoRespostaDTO> medicamentos) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.justificativa = justificativa;
 		this.dataCriacao = dataCriacao;
 		this.usuarioID = usuarioID;
-		this.pedidoMedicamentos = transformaLista(pedidoMedicamentos);
+		this.pedidoMedicamentos = medicamentos;
 	}
+
+	
 
 	private List<PedidoMedicamentoDTO> transformaLista(List<PedidoMedicamento> listPedidoMedicamentos) {
 		List<PedidoMedicamentoDTO> listaMedicamentosDTO = new ArrayList<>();
@@ -50,15 +52,7 @@ public class PedidoRespostaDTO {
 		return listaMedicamentosDTO;
 	}
 
-	public static Object respostaPedido(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
-	}
-
-	public static Object respostaPedidoFull(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med(),pedido.getRecebimento().getId());
-	}
+	
 
 	public long getId() {
 		return id;
@@ -92,11 +86,11 @@ public class PedidoRespostaDTO {
 		this.usuarioID = usuarioID;
 	}
 
-	public List<PedidoMedicamentoDTO> getMedicamentos() {
+	public List<MedicamentoRespostaDTO> getMedicamentos() {
 		return pedidoMedicamentos;
 	}
 
-	public void setMedicamentos(List<PedidoMedicamentoDTO> medicamentos) {
+	public void setMedicamentos(List<MedicamentoRespostaDTO> medicamentos) {
 		this.pedidoMedicamentos = medicamentos;
 	}
 

@@ -61,7 +61,7 @@ public class PedidoControle {
 				return idPedidoSalvo;
 
 			} catch (Exception e) {
-				 new ResourceNotFoundException("Erro ao salvar PEDIDO !!");
+				new ResourceNotFoundException("Erro ao salvar PEDIDO !!");
 			}
 
 		}
@@ -69,10 +69,10 @@ public class PedidoControle {
 	}
 
 	// -----------------METODO ATUALIZAR------------------
-	public Pedido atualizar(PedidoDTO dto) {
+	public PedidoRespostaListDTO atualizar(PedidoDTO dto) {
 		verifyIfObjectExists(dto.getId());
-		transformaEditarPedido(dto);
-		return repository.save(transformaEditarPedido(dto));
+		Pedido pedido = repository.save(transformaEditarPedido(dto));
+		return respostaListar(pedido);
 	}
 
 	private Pedido transformaEditarPedido(PedidoDTO dto) {
@@ -103,41 +103,22 @@ public class PedidoControle {
 	}
 
 	// ----------------METODO LISTAR TODOS-------------------
-	public Iterable<PedidoRespostaDTO> listarTodosNormal() {
+	public Iterable<PedidoRespostaListDTO> listarTodosNormal() {
 		Iterable<Pedido> listaPedidos = repository.findAll();
-		List<PedidoRespostaDTO> result = new ArrayList<PedidoRespostaDTO>();
+		List<PedidoRespostaListDTO> result = new ArrayList<PedidoRespostaListDTO>();
 		for (Pedido pedido : listaPedidos) {
-			if (pedido.getRecebimento() != null) {
-				result.add(transformaEmResposta(pedido));
-			} else {
-				result.add(transformaEmRespostaSemRecebimento(pedido));
-			}
+			result.add(respostaListar(pedido));
 		}
 		return result;
 	}
 
-	private PedidoRespostaDTO transformaEmRespostaSemRecebimento(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med());
-	}
-
-	private PedidoRespostaDTO transformaEmResposta(Pedido pedido) {
-		return new PedidoRespostaDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario().getId(), pedido.getPedido_med(),
-				pedido.getRecebimento().getId());
-	}
-
 	// -------------------- LISTAR PEDIDOS POR USUARIO----------
-	public List<PedidoRespostaDTO> listarPorUsuario(long id) {
+	public List<PedidoRespostaListDTO> listarPorUsuario(long id) {
 		Usuario usuario = usuarioControle.listar(id).get();
 		List<Pedido> pedidosUsuario = repository.findByUsuario(usuario);
-		List<PedidoRespostaDTO> listResposta = new ArrayList<PedidoRespostaDTO>();
+		List<PedidoRespostaListDTO> listResposta = new ArrayList<PedidoRespostaListDTO>();
 		for (Pedido pedido : pedidosUsuario) {
-			if (pedido.getRecebimento() != null) {
-				listResposta.add(transformaEmResposta(pedido));
-			} else {
-				listResposta.add(transformaEmRespostaSemRecebimento(pedido));
-			}
+			listResposta.add(respostaListar(pedido));
 		}
 		return listResposta;
 	}
@@ -146,7 +127,6 @@ public class PedidoControle {
 		verifyIfObjectExists(id);
 		Optional<Pedido> findById = repository.findById(id);
 		return findById;
-
 	}
 
 	// -------------LISTA UM PEDIDO ---------------
