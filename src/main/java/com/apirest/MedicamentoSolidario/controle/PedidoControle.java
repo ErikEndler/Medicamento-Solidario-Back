@@ -45,7 +45,7 @@ public class PedidoControle {
 			Pedido pedido = repository.save(transformaSalvarPedido(pedidoDTO));
 			System.out.println("Pedido salvo");
 			// Cahama metodo para salvar relaça ode medicamentos com pedido
-			salvarPed_med(pedidoDTO);
+			salvarPed_med(pedidoDTO, pedido);
 			System.out.println("Pedido_medicamento salvo");
 			return pedido;
 		}
@@ -62,9 +62,10 @@ public class PedidoControle {
 		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto));
 	}
 
-	private void salvarPed_med(PedidoDTO dto) {
+	private void salvarPed_med(PedidoDTO dto, Pedido pedido) {
+		verifyIfObjectExists(pedido.getId());
 		for (PedidoMedicamentoDTO item : dto.getListaMedicamentos()) {
-			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(dto.getId()).get(),
+			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(pedido.getId()).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
 		}
 	}
