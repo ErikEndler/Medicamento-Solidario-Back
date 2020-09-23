@@ -47,15 +47,15 @@ public class PedidoControle {
 
 		} else {
 			// Salva pedido
-			Pedido pedido = repository.save(transformaSalvarPedido(pedidoDTO));
+			long idPedidoSalvo = repository.save(transformaSalvarPedido(pedidoDTO)).getId();
 			System.out.println("Pedido salvo");
 			// Cahama metodo para salvar relaça ode medicamentos com pedido
-			salvarPed_med(pedidoDTO, pedido);
+			salvarPed_med(pedidoDTO, idPedidoSalvo);
 			System.out.println("Pedido_medicamento salvo");
 			//pedido = repository.findById(pedido.getId()).get();
 			
-			verifyIfObjectExists(pedido.getId());
-			return transformaEmRespostaSemRecebimento(repository.findById(pedido.getId()).get());
+			verifyIfObjectExists(idPedidoSalvo);
+			return transformaEmRespostaSemRecebimento(repository.findById(idPedidoSalvo).get());
 		}
 	}
 
@@ -70,10 +70,10 @@ public class PedidoControle {
 		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto));
 	}
 
-	private void salvarPed_med(PedidoDTO dto, Pedido pedido) {
-		verifyIfObjectExists(pedido.getId());
+	private void salvarPed_med(PedidoDTO dto, long idPedido) {
+		verifyIfObjectExists(idPedido);
 		for (PedidoMedicamentoDTO item : dto.getListaMedicamentos()) {
-			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(pedido.getId()).get(),
+			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(idPedido).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
 			Medicamento medicamento = medicamentoControle.listar(item.getMedicamentoID()).get();
 			medicamento.setQuantidade(medicamento.getQuantidade()-item.getQtd());
