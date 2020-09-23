@@ -20,6 +20,11 @@ public class PedidoMedicamento {
 	@ManyToOne
 	private Medicamento medicamento;
 	private int qtd;
+	
+
+	public PedidoMedicamento() {
+		super();
+	}
 
 	public PedidoMedicamento(long id, Pedido pedido, Medicamento medicamento, int qtd) {
 		super();
