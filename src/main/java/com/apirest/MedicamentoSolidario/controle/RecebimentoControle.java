@@ -46,8 +46,10 @@ public class RecebimentoControle {
 		}
 	}
 	//função que retorna a lista de medicamentos de um pedido
-	private List<Medicamento>listarMed(Pedido pedido){		
-		return pedido.getMedicamentos();
+	private List<Medicamento>listarMed(Pedido pedido){
+		return null;		
+		  
+				//pedido.getMedicamentos();
 		
 	}
 	public Iterable<RecebimentoRespostaDTO> listarTodosNormal() {
