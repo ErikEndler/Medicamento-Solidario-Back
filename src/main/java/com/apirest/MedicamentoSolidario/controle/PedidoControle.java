@@ -54,8 +54,8 @@ public class PedidoControle {
 			System.out.println("Pedido_medicamento salvo");
 			pedido = repository.findById(pedido.getId()).get();
 			
-
-			return transformaEmRespostaSemRecebimento(pedido);
+			
+			return transformaEmRespostaSemRecebimento(repository.findById(pedido.getId()).get());
 		}
 	}
 
