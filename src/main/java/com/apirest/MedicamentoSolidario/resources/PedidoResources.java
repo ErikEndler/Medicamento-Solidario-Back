@@ -1,7 +1,5 @@
 package com.apirest.MedicamentoSolidario.resources;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.controle.PedidoControle;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
-import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
-import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -16,7 +16,6 @@ import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoMedicamentoDTO;
-import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
 import com.apirest.MedicamentoSolidario.dto.PedidoRespostaListDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;

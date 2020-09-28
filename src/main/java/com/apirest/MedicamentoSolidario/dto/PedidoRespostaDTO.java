@@ -4,9 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.Models.PedidoMedicamento;
-import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 
 public class PedidoRespostaDTO {
 	private long id;

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
-import com.apirest.MedicamentoSolidario.Models.Recebimento;
 
 public class MedicamentoRespostaDTO {
 
