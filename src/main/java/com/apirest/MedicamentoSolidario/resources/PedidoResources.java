@@ -57,6 +57,13 @@ public class PedidoResources {
 		return new ResponseEntity<>(controle.listarPorUsuario(id), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Retorna pedidos por Ponto")
+	@GetMapping("/usuario/{id}")
+	public ResponseEntity<?> listarPorPonto(@PathVariable(value = "id") long id) {
+
+		return new ResponseEntity<>(controle.listarPorPonto(id), HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {

@@ -129,6 +129,16 @@ public class PedidoControle {
 		}
 		return listResposta;
 	}
+	// ------------- LISTA PEDIDOS POR PONTO -------------
+	public List<PedidoRespostaListDTO> listarPorPonto(long id) {
+		PontoColeta ponto = pontoControle.listar(id).get();
+		List<Pedido> pedidosUsuario = repository.findByPontoColeta(ponto);
+		List<PedidoRespostaListDTO> listResposta = new ArrayList<PedidoRespostaListDTO>();
+		for (Pedido pedido : pedidosUsuario) {
+			listResposta.add(respostaListar(pedido));
+		}
+		return listResposta;
+	}
 
 	public Optional<Pedido> listarNormal(long id) {
 		verifyIfObjectExists(id);
