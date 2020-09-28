@@ -3,7 +3,9 @@ package com.apirest.MedicamentoSolidario.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.Models.Recebimento;
+import com.apirest.MedicamentoSolidario.Models.Usuario;
 
 public class PedidoRespostaListDTO {
 	private long id;
@@ -11,22 +13,28 @@ public class PedidoRespostaListDTO {
 	private String justificativa;
 	private LocalDateTime dataCriacao;
 	private long usuarioID;
+	private String usuarioNome;
+	private String usuarioCPF;
 	private List<MedicamentoRespostaDTO> medicamentos;
 	private long recebimento;
-	
-	
+	private long pontoId;
+	private String pontoNome;
 
 	public PedidoRespostaListDTO(long id, String status, String justificativa, LocalDateTime dataCriacao,
-			long usuarioID, List<MedicamentoRespostaDTO> medicamentos, Recebimento recebimento) {
+			Usuario usuario, List<MedicamentoRespostaDTO> medicamentos, Recebimento recebimento, PontoColeta pontoColeta) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.justificativa = justificativa;
 		this.dataCriacao = dataCriacao;
-		this.usuarioID = usuarioID;
+		this.usuarioID = usuario.getId();
+		this.usuarioCPF = usuario.getCpf();
+		this.usuarioNome = usuario.getNome();
 		this.medicamentos = medicamentos;
-		if(recebimento != null)
-		this.recebimento = recebimento.getId();
+		this.pontoId = pontoColeta.getId();
+		this.pontoNome = pontoColeta.getNome();
+		if (recebimento != null)
+			this.recebimento = recebimento.getId();
 	}
 
 	public long getId() {
@@ -83,6 +91,38 @@ public class PedidoRespostaListDTO {
 
 	public void setMedicamentos(List<MedicamentoRespostaDTO> medicamentos) {
 		this.medicamentos = medicamentos;
+	}
+
+	public long getPontoId() {
+		return pontoId;
+	}
+
+	public void setPontoId(long pontoId) {
+		this.pontoId = pontoId;
+	}
+
+	public String getUsuarioCPF() {
+		return usuarioCPF;
+	}
+
+	public void setUsuarioCPF(String usuarioCPF) {
+		this.usuarioCPF = usuarioCPF;
+	}
+
+	public String getUsuarioNome() {
+		return usuarioNome;
+	}
+
+	public void setUsuarioNome(String usuarioNome) {
+		this.usuarioNome = usuarioNome;
+	}
+
+	public String getPontoNome() {
+		return pontoNome;
+	}
+
+	public void setPontoNome(String pontoNome) {
+		this.pontoNome = pontoNome;
 	}
 
 }

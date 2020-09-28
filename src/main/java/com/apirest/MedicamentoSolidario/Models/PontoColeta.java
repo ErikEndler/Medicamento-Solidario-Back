@@ -39,6 +39,8 @@ public class PontoColeta {
 	@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "ponto")
 	private List<Recebimento> doacao_out;
+	@OneToMany(mappedBy = "ponto")
+	private List<Pedido> pedidos;
 
 	public long getId() {
 		return id;

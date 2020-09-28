@@ -14,6 +14,7 @@ public class PedidoRespostaDTO {
 	private long usuarioID;
 	private List<MedicamentoRespostaDTO> pedidoMedicamentos;
 	private long recebimento;
+	private long pontoId;
 
 	public PedidoRespostaDTO(long id, String status, String justificativa, LocalDateTime dataCriacao, long usuarioID,
 			List<MedicamentoRespostaDTO> medicamentos, long recebimento) {
@@ -106,6 +107,14 @@ public class PedidoRespostaDTO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public long getPontoId() {
+		return pontoId;
+	}
+
+	public void setPontoId(long pontoId) {
+		this.pontoId = pontoId;
 	}
 
 }

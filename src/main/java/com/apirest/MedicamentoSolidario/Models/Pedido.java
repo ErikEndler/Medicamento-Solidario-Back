@@ -29,21 +29,26 @@ public class Pedido {
 	private Recebimento recebimento;
 	@OneToMany(mappedBy = "pedido")
 	private List<PedidoMedicamento> pedido_med;
+	@ManyToOne
+	private PontoColeta ponto;
 
 	public Pedido() {
 	}
 
-	public Pedido(long id2, String justificativa2, Usuario usuario) {
+	public Pedido(long id2, String justificativa2, Usuario usuario, PontoColeta ponto) {
 		this.id = id2;
 		this.justificativa = justificativa2;
 		this.usuario = usuario;
+		this.ponto = ponto;
+
 	}
 
-	public Pedido(String justificativa, LocalDateTime dataCriacao, Usuario usuario, String status) {
+	public Pedido(String justificativa, LocalDateTime dataCriacao, Usuario usuario, String status, PontoColeta ponto) {
 		this.justificativa = justificativa;
 		this.setDataCriacao(dataCriacao);
 		this.usuario = usuario;
 		this.status = status;
+		this.ponto = ponto;
 
 	}
 
@@ -102,4 +107,13 @@ public class Pedido {
 	public void setPedido_med(List<PedidoMedicamento> pedido_med) {
 		this.pedido_med = pedido_med;
 	}
+
+	public PontoColeta getPonto() {
+		return ponto;
+	}
+
+	public void setPonto(PontoColeta ponto) {
+		this.ponto = ponto;
+	}
+	
 }

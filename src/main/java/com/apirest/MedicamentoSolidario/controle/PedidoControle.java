@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
 import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.Models.PedidoMedicamento;
+import com.apirest.MedicamentoSolidario.Models.PontoColeta;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoDTO;
 import com.apirest.MedicamentoSolidario.dto.MedicamentoRespostaDTO;
@@ -37,6 +38,8 @@ public class PedidoControle {
 	PedidoMedicamentoRepository pedidomeMedicamentoRepository;
 	@Autowired
 	MedicamentoRepository medicamentoRepository;
+	@Autowired
+	PontoColetaControle pontoControle;
 
 	// --------------METODO SALVAR--------------
 	public long salvar(PedidoDTO pedidoDTO) {
@@ -75,7 +78,7 @@ public class PedidoControle {
 	}
 
 	private Pedido transformaEditarPedido(PedidoDTO dto) {
-		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto));
+		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto),getPonto(dto));
 	}
 
 	private void salvarPed_med(PedidoDTO dto, long idPedido) {
@@ -90,7 +93,12 @@ public class PedidoControle {
 	}
 
 	private Pedido transformaSalvarPedido(PedidoDTO dto) {
-		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto), "aberto");
+		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto), "aberto",getPonto(dto));
+	}
+
+	private PontoColeta getPonto(PedidoDTO dto) {
+		
+		return pontoControle.listar(dto.getIdPonto()).get();
 	}
 
 	private Usuario getUsuario(PedidoDTO dto) {
@@ -146,7 +154,7 @@ public class PedidoControle {
 		}
 
 		return new PedidoRespostaListDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario().getId(), medicamentos, pedido.getRecebimento());
+				pedido.getDataCriacao(), pedido.getUsuario(), medicamentos, pedido.getRecebimento(),pedido.getPonto());
 	}
 
 	public void deletarById(long id) {

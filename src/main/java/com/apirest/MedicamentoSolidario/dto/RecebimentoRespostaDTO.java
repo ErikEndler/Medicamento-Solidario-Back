@@ -11,6 +11,8 @@ public class RecebimentoRespostaDTO {
 	private long idPonto;
 	private long idVoluntario;
 	private long idPedido;
+	private long idUsuario;
+	private String cpf;
 
 	public RecebimentoRespostaDTO(long id, LocalDateTime dataRetirada, String obs, long idVoluntario, long idPonto, long idPedido) {
 		super();
