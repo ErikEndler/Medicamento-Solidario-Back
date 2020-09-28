@@ -132,7 +132,7 @@ public class PedidoControle {
 	// ------------- LISTA PEDIDOS POR PONTO -------------
 	public List<PedidoRespostaListDTO> listarPorPonto(long id) {
 		PontoColeta ponto = pontoControle.listar(id).get();
-		List<Pedido> pedidosUsuario = repository.findByPontoColeta(ponto);
+		List<Pedido> pedidosUsuario = repository.findByPonto(ponto);
 		List<PedidoRespostaListDTO> listResposta = new ArrayList<PedidoRespostaListDTO>();
 		for (Pedido pedido : pedidosUsuario) {
 			listResposta.add(respostaListar(pedido));

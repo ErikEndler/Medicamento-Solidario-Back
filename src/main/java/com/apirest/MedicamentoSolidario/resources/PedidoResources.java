@@ -58,7 +58,7 @@ public class PedidoResources {
 	}
 
 	@ApiOperation(value = "Retorna pedidos por Ponto")
-	@GetMapping("/usuario/{id}")
+	@GetMapping("/ponto/{id}")
 	public ResponseEntity<?> listarPorPonto(@PathVariable(value = "id") long id) {
 
 		return new ResponseEntity<>(controle.listarPorPonto(id), HttpStatus.OK);

@@ -42,6 +42,14 @@ public class PontoColeta {
 	@OneToMany(mappedBy = "ponto")
 	private List<Pedido> pedidos;
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	public long getId() {
 		return id;
 	}

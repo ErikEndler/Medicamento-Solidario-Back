@@ -13,6 +13,6 @@ public interface PedidoRepository extends CrudRepository<Pedido, Long> {
 	Optional<Pedido> findById(long id);
 
 	List<Pedido> findByUsuario(Usuario usuario);
-	List<Pedido> findByPontoColeta(PontoColeta ponto);
+	List<Pedido> findByPonto(PontoColeta ponto);
 
 }
