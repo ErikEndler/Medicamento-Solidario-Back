@@ -17,6 +17,7 @@ import com.apirest.MedicamentoSolidario.dto.RecebimentoDTO;
 import com.apirest.MedicamentoSolidario.dto.RecebimentoRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.MedicamentoRepository;
+import com.apirest.MedicamentoSolidario.repository.PedidoRepository;
 import com.apirest.MedicamentoSolidario.repository.RecebimentoRepository;
 
 @Service
@@ -35,6 +36,8 @@ public class RecebimentoControle {
 	UsuarioControle usuarioControle;
 	@Autowired
 	PontoColetaControle pontoColetaControle;
+	@Autowired
+	PedidoRepository pedidoRepository;
 	
 	public Recebimento salvar(RecebimentoDTO recebimentoDTO) {
 		Optional<Recebimento> ret = verifySave(recebimentoDTO.getId());
@@ -44,6 +47,7 @@ public class RecebimentoControle {
 		} else{
 			//instancia pedido e medicamento para alterar o status do medicamento do recebimento
 			Recebimento receb = repository.save(transformaSalvar(recebimentoDTO)) ;
+			fechaPedido(recebimentoDTO);
 			//pega o pedido para buscar a lista de mediamento dele
 			List<Medicamento> meds = listarMed(recebimentoDTO.getPedido());
 			//percorre a lista de medicamentos para atribuir o recebimento a eles
@@ -56,6 +60,13 @@ public class RecebimentoControle {
 			return receb ;		
 		}
 	}
+	private void fechaPedido(RecebimentoDTO recebimentoDTO) {
+		Optional<Pedido> pedido = pedidocontrol.listarNormal(recebimentoDTO.getIdPedido());
+		pedido.get().setStatus("concluido");
+		Pedido pedidoo = pedidoRepository.save(pedido.get());
+		System.out.println("Pedido atualizado- STATUS : "+pedidoo.getStatus());
+
+	}
 	private Recebimento transformaSalvar(RecebimentoDTO recebimentoDTO) {
 		
 		return new Recebimento(dataRetirada(), recebimentoDTO.getObs(), voluntario(recebimentoDTO), ponto(recebimentoDTO), pedido(recebimentoDTO));
@@ -67,7 +78,6 @@ public class RecebimentoControle {
 		return pontoColetaControle.listar(recebimentoDTO.getIdPonto()).get();
 	}
 	private Usuario voluntario(RecebimentoDTO recebimentoDTO) {
-		System.out.println("ID VOLUNTARIO: "+recebimentoDTO.getIdVoluntario());
 		return usuarioControle.listar(recebimentoDTO.getIdVoluntario()).get();
 	}
 	private LocalDateTime dataRetirada() {
