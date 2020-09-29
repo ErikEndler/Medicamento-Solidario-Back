@@ -25,10 +25,15 @@ import com.apirest.MedicamentoSolidario.repository.RecebimentoRepository;
 public class RecebimentoControle {
 	@Autowired
 	RecebimentoRepository repository;
+	@Autowired
 	PedidoControle pedidocontrol;
+	@Autowired
 	MedicamentoControle medicamentoControl;
+	@Autowired
 	MedicamentoRepository medicamentoRepository;
+	@Autowired
 	UsuarioControle usuarioControle;
+	@Autowired
 	PontoColetaControle pontoColetaControle;
 	
 	public Recebimento salvar(RecebimentoDTO recebimentoDTO) {
