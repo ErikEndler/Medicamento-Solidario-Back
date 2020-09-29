@@ -49,7 +49,7 @@ public class RecebimentoResources {
 	@ApiOperation(value = "Salva um Recebimento")
 	@PostMapping("")
 	public ResponseEntity<?> salvar(@RequestBody @Valid RecebimentoDTO recebimentoDTO) {
-		Recebimento recebimento = controle.salvar(recebimentoDTO.transformarParaObjSalvar());
+		Recebimento recebimento = controle.salvar(recebimentoDTO);
 		return new ResponseEntity<>(RecebimentoRespostaDTO.transformaEmDTO(recebimento), HttpStatus.CREATED);
 	}
 
