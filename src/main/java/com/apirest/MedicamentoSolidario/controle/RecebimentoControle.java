@@ -62,6 +62,7 @@ public class RecebimentoControle {
 		return pontoColetaControle.listar(recebimentoDTO.getIdPonto()).get();
 	}
 	private Usuario voluntario(RecebimentoDTO recebimentoDTO) {
+		System.out.println("ID VOLUNTARIO: "+recebimentoDTO.getIdVoluntario());
 		return usuarioControle.listar(recebimentoDTO.getIdVoluntario()).get();
 	}
 	private LocalDateTime dataRetirada() {
