@@ -81,10 +81,11 @@ public class PedidoResources {
 
 	}
 
-	@ApiOperation(value = "Deleta um Pedido por Id")
+	@ApiOperation(value = "Deleta (Cancela) um Pedido por Id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable(value = "id") long id) {
-		controle.deletarById(id);
+		//controle.deletarById(id);
+		controle.cancelamentoPedido(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

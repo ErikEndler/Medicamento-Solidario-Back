@@ -78,7 +78,7 @@ public class PedidoControle {
 	}
 
 	private Pedido transformaEditarPedido(PedidoDTO dto) {
-		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto),getPonto(dto));
+		return new Pedido(dto.getId(), dto.getJustificativa(), getUsuario(dto), getPonto(dto));
 	}
 
 	private void salvarPed_med(PedidoDTO dto, long idPedido) {
@@ -92,12 +92,23 @@ public class PedidoControle {
 		}
 	}
 
+	public void cancelamentoPedido(long idPedido) {
+		Pedido pedido = verifyIfObjectExists(idPedido);
+		for (PedidoMedicamento item : pedido.getPedido_med()) {
+			Medicamento medicamento = medicamentoControle.listar(item.getMedicamento().getId()).get();
+			medicamento.setQuantidade(medicamento.getQuantidade() + item.getQtd());
+			medicamentoRepository.save(medicamento);
+		}
+		pedido.setStatus("cancelado");
+		repository.save(pedido);
+	}
+
 	private Pedido transformaSalvarPedido(PedidoDTO dto) {
-		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto), "aberto",getPonto(dto));
+		return new Pedido(dto.getJustificativa(), dataCriacao(), getUsuario(dto), "aberto", getPonto(dto));
 	}
 
 	private PontoColeta getPonto(PedidoDTO dto) {
-		
+
 		return pontoControle.listar(dto.getIdPonto()).get();
 	}
 
@@ -129,6 +140,7 @@ public class PedidoControle {
 		}
 		return listResposta;
 	}
+
 	// ------------- LISTA PEDIDOS POR PONTO -------------
 	public List<PedidoRespostaListDTO> listarPorPonto(long id) {
 		PontoColeta ponto = pontoControle.listar(id).get();
@@ -164,7 +176,7 @@ public class PedidoControle {
 		}
 
 		return new PedidoRespostaListDTO(pedido.getId(), pedido.getStatus(), pedido.getJustificativa(),
-				pedido.getDataCriacao(), pedido.getUsuario(), medicamentos, pedido.getRecebimento(),pedido.getPonto());
+				pedido.getDataCriacao(), pedido.getUsuario(), medicamentos, pedido.getRecebimento(), pedido.getPonto());
 	}
 
 	public void deletarById(long id) {
@@ -184,10 +196,10 @@ public class PedidoControle {
 		return listaMedicamento;
 	}
 
-	private void verifyIfObjectExists(long id) {
+	private Pedido verifyIfObjectExists(long id) {
 		String msg = MenssagemErro();
 		Optional<Pedido> retorno = repository.findById(id);
-		retorno.orElseThrow(() -> new ResourceNotFoundException(msg + " nao encontrado para o ID: " + id));
+		return retorno.orElseThrow(() -> new ResourceNotFoundException(msg + " nao encontrado para o ID: " + id));
 	}
 
 	private Optional<Pedido> verifySave(long id) {
