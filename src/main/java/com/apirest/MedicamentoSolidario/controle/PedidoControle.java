@@ -83,6 +83,19 @@ public class PedidoControle {
 
 	private void salvarPed_med(PedidoDTO dto, long idPedido) {
 		verifyIfObjectExists(idPedido);
+		
+		// forEach com expressao lambda
+		/*
+		 * dto.getListaMedicamentos().forEach(item -> {
+		 * pedidomeMedicamentoRepository.save(new
+		 * PedidoMedicamento(repository.findById(idPedido).get(),
+		 * medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
+		 * Medicamento medicamento =
+		 * medicamentoControle.listar(item.getMedicamentoID()).get();
+		 * medicamento.setQuantidade(medicamento.getQuantidade() - item.getQtd());
+		 * medicamentoRepository.save(medicamento); });
+		 */
+		
 		for (PedidoMedicamentoDTO item : dto.getListaMedicamentos()) {
 			pedidomeMedicamentoRepository.save(new PedidoMedicamento(repository.findById(idPedido).get(),
 					medicamentoControle.listar(item.getMedicamentoID()).get(), item.getQtd()));
